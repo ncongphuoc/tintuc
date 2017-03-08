@@ -1,0 +1,696 @@
+<?php
+$arr_category = unserialize(ARR_CATEGORY)
+?>
+<div class="vc_row wpb_row td-pb-row td-ss-row">
+    <div class="wpb_column vc_column_container td-pb-span8">
+        <div class="vc_column-inner ">
+            <div class=wpb_wrapper>
+                <div class="td_block_wrap td_block_1 td_world td-pb-border-top">
+                    <style scoped>
+                        .td_world .td_module_wrap:hover .entry-title a, .td_world .td-subcat-item a:hover, .td_world .td-opacity-read .td-read-more a:hover, .td_world .td-opacity-author .td-post-author-name a:hover, .td_world .td-instagram-user a {
+                            color: #f9c100
+                        }
+
+                        .td_world .td-next-prev-wrap a:hover, .td_world .td-load-more-wrap a:hover {
+                            background-color: #f9c100;
+                            border-color: #f9c100
+                        }
+
+                        .td_world .block-title span, .td_world .td-trending-now-title, .td_world .block-title a, .td_world .td-read-more a {
+                            background-color: #f9c100
+                        }
+
+                        .td_world .block-title {
+                            border-color: #f9c100
+                        }
+                    </style>
+                    <div class=td-block-title-wrap>
+                        <a title="World"
+                           href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_id']]) ?>">
+                            <h4 class=block-title>
+                                <span><i
+                                        class="fa <?php echo $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_icon'] ?>"></i> WORLD</span>
+                            </h4>
+                        </a>
+                    </div>
+                    <div class=td_block_inner>
+                        <div class=td-block-row>
+                            <div class=td-block-span6>
+                                <div class="td_module_4 td_module_wrap td-animation-stack">
+                                    <div class=td-module-image>
+                                        <div class=td-module-thumb>
+                                            <a rel="nofollow"
+                                               href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_id']]) ?>"
+                                               rel=bookmark
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_title'] ?>">
+                                                <img width=324 height=235 class=entry-thumb
+                                                     src="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_main_image'] ?>"
+                                                     alt="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_title'] ?>"
+                                                     title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_title'] ?>"/>
+                                            </a>
+                                        </div>
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_id']]) ?>"
+                                           class=td-post-category>
+                                            <?php echo $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_name'] ?>
+                                        </a>
+                                    </div>
+                                    <h3 class="entry-title td-module-title">
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_id']]) ?>"
+                                           rel=bookmark
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_title'] ?>">
+                                            <?php echo $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_title'] ?>
+                                        </a>
+                                    </h3>
+                                    <div class=td-module-meta-info>
+                                            <span class=td-post-date>
+                                                <time class="entry-date updated td-module-date"
+                                                      datetime="2015-03-22T05:47:34+00:00">
+                                                    <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_WORLD][1]['created_date']); ?>
+                                                </time>
+                                            </span>
+                                    </div>
+                                    <div class=td-excerpt>
+                                        <?php echo (strlen($this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_description']) < 150) ? $this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_description'] : mb_substr($this->arrContent[\My\General::CATEGORY_WORLD][1]['cont_description'], 0, 150, 'UTF-8') . '...'; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=td-block-span6>
+                                <?php for ($i = 2; $i <= 5; $i++) { ?>
+                                    <div class="td_module_6 td_module_wrap td-animation-stack">
+                                        <div class=td-module-thumb>
+                                            <a rel="nofollow"
+                                               href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_id']]) ?>"
+                                               rel="bookmark"
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_title'] ?>">
+                                                <img width=100 height=70 class=entry-thumb
+                                                     src="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_resize_image'] ?>"
+                                                     alt="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_title'] ?>"
+                                                     title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_title'] ?>"/>
+                                            </a>
+                                        </div>
+                                        <div class=item-details>
+                                            <h3 class="entry-title td-module-title">
+                                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_id']]) ?>"
+                                                   rel="bookmark"
+                                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_title'] ?>">
+                                                    <?php echo $this->arrContent[\My\General::CATEGORY_WORLD][$i]['cont_title'] ?>
+                                                </a>
+                                            </h3>
+                                            <div class=td-module-meta-info>
+                                                <span class=td-post-date>
+                                                    <time class="entry-date updated td-module-date"
+                                                          datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_WORLD][$i]['created_date']); ?>">
+                                                        <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_WORLD][$i]['created_date']); ?>
+                                                    </time>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="td_block_wrap td_block_2 td_showbiz td-pb-border-top">
+                    <style scoped>
+                        .td_showbiz .td_module_wrap:hover .entry-title a, .td_showbiz .td-subcat-item a:hover, .td_showbiz .td-opacity-read .td-read-more a:hover, .td_showbiz .td-opacity-author .td-post-author-name a:hover, .td_showbiz .td-instagram-user a {
+                            color: #4caf50
+                        }
+
+                        .td_showbiz .td-next-prev-wrap a:hover, .td_showbiz .td-load-more-wrap a:hover {
+                            background-color: #4caf50;
+                            border-color: #4caf50
+                        }
+
+                        .td_showbiz .block-title span, .td_showbiz .block-title a, .td_showbiz .td-read-more a {
+                            background-color: #4caf50
+                        }
+
+                        .td_showbiz .block-title {
+                            border-color: #4caf50
+                        }</style>
+                    <div class=td-block-title-wrap>
+                        <a title="Showbiz"
+                           href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_id']]) ?>">
+                            <h4 class=block-title>
+                                <span>
+                                    <i class="fa <?php echo $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_icon'] ?>"></i> SHOWBIZ</span>
+                            </h4>
+                        </a>
+                    </div>
+                    <div class=td_block_inner>
+                        <div class=td-block-row>
+                            <?php for ($i = 0; $i <= 1; $i++) { ?>
+                                <div class=td-block-span6>
+                                    <div class="td_module_2 td_module_wrap td-animation-stack">
+                                        <div class=td-module-image>
+                                            <div class=td-module-thumb>
+                                                <a rel="nofollow"
+                                                   href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_id']]) ?>"
+                                                   rel=bookmark
+                                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>">
+                                                    <img width=324 height=160 class=entry-thumb
+                                                         src="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_main_image'] ?>"
+                                                         alt="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>"
+                                                         title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>"/>
+                                                </a>
+                                            </div>
+                                            <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_id']]) ?>"
+                                               class=td-post-category>
+                                                <?php echo $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_name'] ?>
+                                            </a>
+                                        </div>
+                                        <h3 class="entry-title td-module-title">
+                                            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_id']]) ?>"
+                                               rel=bookmark
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>">
+                                                <?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>
+                                            </a>
+                                        </h3>
+                                        <div class=td-module-meta-info>
+                                            <span class=td-post-date>
+                                                <time class="entry-date updated td-module-date"
+                                                      datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['created_date']); ?>">
+                                                    <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['created_date']); ?>
+                                                </time>
+                                            </span>
+                                        </div>
+                                        <div class=td-excerpt>
+                                            <?php echo (strlen($this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_description']) < 150) ? $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_description'] : mb_substr($this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_description'], 0, 150, 'UTF-8') . '...'; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <div class=td-block-row>
+                            <?php for ($i = 2; $i <= 3; $i++) { ?>
+                                <div class=td-block-span6>
+                                    <div class="td_module_6 td_module_wrap td-animation-stack">
+                                        <div class=td-module-thumb>
+                                            <a rel="nofollow"
+                                               href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_id']]) ?>"
+                                               rel=bookmark
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>">
+                                                <img width=100 height=70 class=entry-thumb
+                                                     src="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_resize_image'] ?>"
+                                                     alt="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>"
+                                                     title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>"/>
+                                            </a>
+                                        </div>
+                                        <div class=item-details>
+                                            <h3 class="entry-title td-module-title">
+                                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_id']]) ?>"
+                                                   rel=bookmark
+                                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>">
+                                                    <?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>
+                                                </a>
+                                            </h3>
+                                            <div class=td-module-meta-info>
+                                                <span class=td-post-date>
+                                                    <time class="entry-date updated td-module-date"
+                                                          datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['created_date']); ?>">
+                                                        <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['created_date']); ?>
+                                                    </time>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <div class=td-block-row>
+                            <?php for ($i = 4; $i <= 5; $i++) { ?>
+                                <div class=td-block-span6>
+                                    <div class="td_module_6 td_module_wrap td-animation-stack">
+                                        <div class=td-module-thumb>
+                                            <a rel="nofollow"
+                                               href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_id']]) ?>"
+                                               rel=bookmark
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>">
+                                                <img width=100 height=70 class=entry-thumb
+                                                     src="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_resize_image'] ?>"
+                                                     alt="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>"
+                                                     title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>"/>
+                                            </a>
+                                        </div>
+                                        <div class=item-details>
+                                            <h3 class="entry-title td-module-title">
+                                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_id']]) ?>"
+                                                   rel=bookmark
+                                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>">
+                                                    <?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['cont_title'] ?>
+                                                </a>
+                                            </h3>
+                                            <div class=td-module-meta-info>
+                                                <span class=td-post-date>
+                                                    <time class="entry-date updated td-module-date"
+                                                          datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['created_date']); ?>">
+                                                        <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_SHOWBIZ][$i]['created_date']); ?>
+                                                    </time>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="td_block_wrap td_block_15 td_science td-pb-border-top">
+                    <style>
+                        .td_science .td_module_wrap:hover .entry-title a, .td_science .td-subcat-item a:hover, .td_science .td-opacity-read .td-read-more a:hover, .td_science .td-opacity-author .td-post-author-name a:hover, .td_science .td-instagram-user a {
+                            color: #607d8b
+                        }
+
+                        .td_science .td-next-prev-wrap a:hover, .td_science .td-load-more-wrap a:hover {
+                            background-color: #607d8b;
+                            border-color: #607d8b
+                        }
+
+                        .td_science .block-title span, .td_science .block-title a, .td_science .td-read-more a {
+                            background-color: #607d8b
+                        }
+
+                        .td_science .block-title {
+                            border-color: #607d8b
+                        }
+                    </style>
+                    <div class=td-block-title-wrap>
+                        <a title="Du lịch"
+                           href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_TECH]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_TECH]['cate_id']]) ?>">
+                            <h4 class=block-title>
+                                <span><i
+                                        class="fa <?php echo $this->arrCategory[\My\General::CATEGORY_TECH]['cate_icon'] ?>"></i> SCIENCE</span>
+                            </h4>
+                        </a>
+                    </div>
+                    <div class="td_block_inner td-column-2">
+                        <div class=td-block-row>
+                            <?php for ($i = 0; $i <= 2; $i++) { ?>
+                                <div class=td-block-span4>
+                                    <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                        <div class=td-module-image>
+                                            <div class=td-module-thumb>
+                                                <a rel="nofollow"
+                                                   href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_id']]) ?>"
+                                                   rel="bookmark"
+                                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>">
+                                                    <img width=218 height=150 class=entry-thumb
+                                                         src="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_resize_image'] ?>"
+                                                         alt="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>"
+                                                         title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <h3 class="entry-title td-module-title">
+                                            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_id']]) ?>"
+                                               rel="bookmark"
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>">
+                                                <?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                        <div class=td-block-row>
+                            <?php for ($i = 3; $i <= 5; $i++) { ?>
+                                <div class=td-block-span4>
+                                    <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                        <div class=td-module-image>
+                                            <div class=td-module-thumb>
+                                                <a rel="nofollow"
+                                                   href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_id']]) ?>"
+                                                   rel="bookmark"
+                                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>">
+                                                    <img width=218 height=150 class=entry-thumb
+                                                         src="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_resize_image'] ?>"
+                                                         alt="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>"
+                                                         title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <h3 class="entry-title td-module-title">
+                                            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_id']]) ?>"
+                                               rel="bookmark"
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>">
+                                                <?php echo $this->arrContent[\My\General::CATEGORY_TECH][$i]['cont_title'] ?>
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="td_block_wrap td_block_1 td_suc_khoe td-pb-border-top">
+                    <style>
+                        .td_suc_khoe .td_module_wrap:hover .entry-title a, .td_suc_khoe .td-subcat-item a:hover, .td_suc_khoe .td-opacity-read .td-read-more a:hover, .td_suc_khoe .td-opacity-author .td-post-author-name a:hover, .td_suc_khoe .td-instagram-user a {
+                            color: #f44336
+                        }
+
+                        .td_suc_khoe .td-next-prev-wrap a:hover, .td_suc_khoe .td-load-more-wrap a:hover {
+                            background-color: #f44336;
+                            border-color: #f44336
+                        }
+
+                        .td_suc_khoe .block-title span, .td_suc_khoe .block-title a, .td_suc_khoe .td-read-more a {
+                            background-color: #f44336
+                        }
+
+                        .td_suc_khoe .block-title {
+                            border-color: #f44336
+                        }
+                    </style>
+                    <div class=td-block-title-wrap>
+                        <a title="Sức khỏe"
+                           href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_id']]) ?>">
+                            <h4 class=block-title>
+                                <span><i
+                                        class="fa <?php echo $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_icon'] ?>"></i> SỨC KHỎE</span>
+                            </h4>
+                        </a>
+                    </div>
+                    <div class=td_block_inner>
+                        <div class=td-block-row>
+                            <div class=td-block-span6>
+                                <div class="td_module_4 td_module_wrap td-animation-stack">
+                                    <div class=td-module-image>
+                                        <div class=td-module-thumb>
+                                            <a rel="nofollow"
+                                               href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_id']]) ?>"
+                                               rel=bookmark
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>">
+                                                <img width=324 height=235 class=entry-thumb
+                                                     src="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_main_image'] ?>"
+                                                     alt="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>"
+                                                     title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>"/>
+                                            </a>
+                                        </div>
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_id']]) ?>"
+                                           class=td-post-category>
+                                            <?php echo $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_name'] ?>
+                                        </a>
+                                    </div>
+                                    <h3 class="entry-title td-module-title">
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_id']]) ?>"
+                                           rel=bookmark
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>">
+                                            <?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>
+                                        </a>
+                                    </h3>
+                                    <div class=td-module-meta-info>
+                                            <span class=td-post-date><time
+                                                    class="entry-date updated td-module-date"
+                                                    datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][0]['created_date']); ?>">
+                                                    <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][0]['created_date']); ?>
+                                                </time>
+                                            </span>
+                                    </div>
+                                    <div class=td-excerpt>
+                                        <?php echo (strlen($this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_description']) < 150) ? $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_description'] : mb_substr($this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_description'], 0, 150, 'UTF-8') . '...'; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=td-block-span6>
+                                <?php for ($i = 2; $i <= 5; $i++) { ?>
+                                    <div class="td_module_6 td_module_wrap td-animation-stack">
+                                        <div class=td-module-thumb>
+                                            <a rel="nofollow"
+                                               href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_id']]) ?>"
+                                               rel="bookmark"
+                                               title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>">
+                                                <img width=100 height=70 class=entry-thumb
+                                                     src="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_resize_image'] ?>"
+                                                     alt="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>"
+                                                     title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>"/>
+                                            </a>
+                                        </div>
+                                        <div class=item-details>
+                                            <h3 class="entry-title td-module-title">
+                                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_id']]) ?>"
+                                                   rel="bookmark"
+                                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>">
+                                                    <?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>
+                                                </a>
+                                            </h3>
+                                            <div class=td-module-meta-info>
+                                                <span class=td-post-date>
+                                                    <time class="entry-date updated td-module-date"
+                                                          datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['created_date']); ?>">
+                                                        <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['created_date']); ?>
+                                                    </time>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wpb_column vc_column_container td-pb-span4">
+        <div class="vc_column-inner ">
+            <div class=wpb_wrapper>
+                <div class="td-a-rec td-a-rec-id-sidebar">
+                    <div class="td-visible-desktop">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x250.jpg' ?>">
+                    </div>
+                    <div class="td-visible-tablet-landscape">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x250.jpg' ?>">
+                    </div>
+                    <div class="td-visible-tablet-portrait">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x250.jpg' ?>">
+                    </div>
+                    <div class="td-visible-phone">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x250.jpg' ?>">
+                    </div>
+                </div>
+
+                <div class="td_block_wrap td_block_21 td-pb-border-top">
+                    <div class=td-block-title-wrap>
+                        <h4 class=block-title>
+                            <span><i class="fa fa-eye" aria-hidden="true"></i> TOP VIEW</span>
+                        </h4>
+                    </div>
+                    <div class="td_block_inner">
+                        <?php foreach (unserialize(ARR_CONTENT_HOT_LIST) as $content): ?>
+                            <div class="td_module_16 td_module_wrap td-animation-stack">
+                                <div class="td-module-thumb">
+                                    <a rel="nofollow"
+                                       href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
+                                       rel="bookmark" title="<?php echo $content['concont_titletent_title'] ?>">
+                                        <img width="150" height="100" class="entry-thumb td-animation-stack-type0-2"
+                                             src="<?php echo $content['cont_resize_image'] ?>" alt=""
+                                             title="<?php echo $content['cont_title'] ?>">
+                                    </a>
+                                </div>
+                                <div class="item-details">
+                                    <h4 class="entry-title td-module-title">
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
+                                           rel="bookmark" title="<?php echo $content['cont_title'] ?>">
+                                            <?php echo $content['cont_title'] ?>
+                                        </a>
+                                    </h4>
+                                    <div class="td-module-meta-info">
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category[$content['cate_id']]['cate_slug'], 'cateId' => $arr_category[$content['cate_id']]['cate_id']]) ?>"
+                                           class="td-post-category">
+                                            <?php echo $arr_category[$content['cate_id']]['cate_name'] ?>
+                                        </a>
+                                        <span class="td-post-date">
+                                            <time class="entry-date updated td-module-date"
+                                                  datetime="<?php echo date("d-m-Y", $content['created_date']); ?>">
+                                                <?php echo date("d-m-Y", $content['created_date']); ?>
+                                            </time>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+
+
+                <div class="td_block_wrap td_block_15 td-pb-border-top">
+                    <div class=td-block-title-wrap>
+                        <h4 class=block-title>
+                            <span><i class="fa fa-newspaper-o" aria-hidden="true"></i> LASTEST</span>
+                        </h4>
+                    </div>
+                    <div class="td_block_inner td-column-1">
+                        <div class=td-block-span12>
+                            <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                <div class=td-module-image>
+                                    <div class=td-module-thumb>
+                                        <a rel="nofollow"
+                                           href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_id']]) ?>"
+                                           rel="bookmark"
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_title'] ?>">
+                                            <img width=218 height=150 class=entry-thumb
+                                                 src="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_main_image'] ?>"
+                                                 alt="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_title'] ?>"
+                                                 title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_title'] ?>"/>
+                                        </a>
+                                    </div>
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_id']]) ?>"
+                                       class=td-post-category>
+                                        <?php echo $this->arrCategory[\My\General::CATEGORY_WORLD]['cate_name'] ?>
+                                    </a>
+                                </div>
+                                <h3 class="entry-title td-module-title">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_id']]) ?>"
+                                       rel="bookmark"
+                                       title="<?php echo $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_title'] ?>">
+                                        <?php echo $this->arrContent[\My\General::CATEGORY_WORLD][0]['cont_title'] ?>
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class=td-block-span12>
+                            <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                <div class=td-module-image>
+                                    <div class=td-module-thumb>
+                                        <a rel="nofollow"
+                                           href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_id']]) ?>"
+                                           rel="bookmark"
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_title'] ?>">
+                                            <img width=218 height=150 class=entry-thumb
+                                                 src="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_main_image'] ?>"
+                                                 alt="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_title'] ?>"
+                                                 title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_title'] ?>"/>
+                                        </a>
+                                    </div>
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_TECH]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_TECH]['cate_id']]) ?>"
+                                       class=td-post-category>
+                                        <?php echo $this->arrCategory[\My\General::CATEGORY_TECH]['cate_name'] ?>
+                                    </a>
+                                </div>
+                                <h3 class="entry-title td-module-title">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_id']]) ?>"
+                                       rel="bookmark"
+                                       title="<?php echo $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_title'] ?>">
+                                        <?php echo $this->arrContent[\My\General::CATEGORY_TECH][0]['cont_title'] ?>
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class=td-block-span12>
+                            <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                <div class=td-module-image>
+                                    <div class=td-module-thumb>
+                                        <a rel="nofollow"
+                                           href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_id']]) ?>"
+                                           rel="bookmark"
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_title'] ?>">
+                                            <img width=218 height=150 class=entry-thumb
+                                                 src="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_main_image'] ?>"
+                                                 alt="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_title'] ?>"
+                                                 title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_title'] ?>"/>
+                                        </a>
+                                    </div>
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_id']]) ?>"
+                                       class=td-post-category>
+                                        <?php echo $this->arrCategory[\My\General::CATEGORY_SHOWBIZ]['cate_name'] ?>
+                                    </a>
+                                </div>
+                                <h3 class="entry-title td-module-title">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_id']]) ?>"
+                                       rel="bookmark"
+                                       title="<?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_title'] ?>">
+                                        <?php echo $this->arrContent[\My\General::CATEGORY_SHOWBIZ][0]['cont_title'] ?>
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class=td-block-span12>
+                            <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                <div class=td-module-image>
+                                    <div class=td-module-thumb>
+                                        <a rel="nofollow"
+                                           href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_id']]) ?>"
+                                           rel="bookmark"
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>">
+                                            <img width=218 height=150 class=entry-thumb
+                                                 src="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_main_image'] ?>"
+                                                 alt="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>"
+                                                 title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>"/>
+                                        </a>
+                                    </div>
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_id']]) ?>"
+                                       class=td-post-category>
+                                        <?php echo $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_name'] ?>
+                                    </a>
+                                </div>
+                                <h3 class="entry-title td-module-title">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_id']]) ?>"
+                                       rel="bookmark"
+                                       title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>">
+                                        <?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class=td-block-span12>
+                            <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                <div class=td-module-image>
+                                    <div class=td-module-thumb>
+                                        <a rel="nofollow"
+                                           href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_id']]) ?>"
+                                           rel="bookmark"
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>">
+                                            <img width=218 height=150 class=entry-thumb
+                                                 src="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_main_image'] ?>"
+                                                 alt="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>"
+                                                 title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>"/>
+                                        </a>
+                                    </div>
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_id']]) ?>"
+                                       class=td-post-category>
+                                        <?php echo $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_name'] ?>
+                                    </a>
+                                </div>
+                                <h3 class="entry-title td-module-title">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_id']]) ?>"
+                                       rel="bookmark"
+                                       title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>">
+                                        <?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][0]['cont_title'] ?>
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                        <div class=td-block-span12>
+                            <div class="td_module_mx4 td_module_wrap td-animation-stack">
+                                <div class=td-module-image>
+                                    <div class=td-module-thumb>
+                                        <a rel="nofollow"
+                                           href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_id']]) ?>"
+                                           rel="bookmark"
+                                           title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>">
+                                            <img width=218 height=150 class=entry-thumb
+                                                 src="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_main_image'] ?>"
+                                                 alt="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>"
+                                                 title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>"/>
+                                        </a>
+                                    </div>
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_id']]) ?>"
+                                       class=td-post-category>
+                                        <?php echo $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_name'] ?>
+                                    </a>
+                                </div>
+                                <h3 class="entry-title td-module-title">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_id']]) ?>"
+                                       rel="bookmark"
+                                       title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>">
+                                        <?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>
+                                    </a>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

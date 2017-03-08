@@ -1,0 +1,126 @@
+<div class="vc_row wpb_row td-pb-row">
+    <div class="wpb_column vc_column_container td-pb-span8">
+        <style>
+            .td_health .td_module_wrap:hover .entry-title a, .td_health .td-subcat-item a:hover, .td_health .td-opacity-read .td-read-more a:hover, .td_health .td-opacity-author .td-post-author-name a:hover, .td_health .td-instagram-user a {
+                color: #f44336
+            }
+
+            .td_health .td-next-prev-wrap a:hover, .td_health .td-load-more-wrap a:hover {
+                background-color: #f44336;
+                border-color: #f44336
+            }
+
+            .td_health .block-title span, .td_health .block-title a, .td_health .td-read-more a {
+                background-color: #f44336
+            }
+
+            .td_health .block-title {
+                border-color: #f44336
+            }
+        </style>
+        <div class=td-block-title-wrap>
+            <a title="Sức khỏe"
+               href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_id']]) ?>">
+                <h4 class=block-title>
+                    <span><i class="fa <?php echo $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_icon'] ?>"></i> HEALTH</span>
+                </h4>
+            </a>
+        </div>
+        <div class=td_block_inner>
+            <div class=td-block-row>
+                <div class=td-block-span6>
+                    <div class="td_module_4 td_module_wrap td-animation-stack">
+                        <div class=td-module-image>
+                            <div class=td-module-thumb>
+                                <a rel="nofollow"
+                                   href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_id']]) ?>"
+                                   rel=bookmark
+                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>">
+                                    <img width=324 height=235 class=entry-thumb
+                                         src="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_main_image'] ?>"
+                                         alt="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>"
+                                         title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>"/>
+                                </a>
+                            </div>
+                            <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_id']]) ?>"
+                               class=td-post-category>
+                                <?php echo $this->arrCategory[\My\General::CATEGORY_HEALTH]['cate_name'] ?>
+                            </a>
+                        </div>
+                        <h3 class="entry-title td-module-title">
+                            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_id']]) ?>"
+                               rel=bookmark
+                               title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>">
+                                <?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_title'] ?>
+                            </a>
+                        </h3>
+                        <div class=td-module-meta-info>
+                                            <span class=td-post-date><time
+                                                    class="entry-date updated td-module-date"
+                                                    datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][0]['created_date']); ?>">
+                                                    <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][0]['created_date']); ?>
+                                                </time>
+                                            </span>
+                        </div>
+                        <div class=td-excerpt>
+                            <?php echo (strlen($this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_description']) < 150) ? $this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_description'] : mb_substr($this->arrContent[\My\General::CATEGORY_HEALTH][0]['cont_description'], 0, 150, 'UTF-8') . '...'; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class=td-block-span6>
+                    <?php for ($i = 2; $i <= 5; $i++) { ?>
+                        <div class="td_module_6 td_module_wrap td-animation-stack">
+                            <div class=td-module-thumb>
+                                <a rel="nofollow"
+                                   href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_id']]) ?>"
+                                   rel="bookmark"
+                                   title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>">
+                                    <img width=100 height=70 class=entry-thumb
+                                         src="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_resize_image'] ?>"
+                                         alt="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>"
+                                         title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>"/>
+                                </a>
+                            </div>
+                            <div class=item-details>
+                                <h3 class="entry-title td-module-title">
+                                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_id']]) ?>"
+                                       rel="bookmark"
+                                       title="<?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>">
+                                        <?php echo $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['cont_title'] ?>
+                                    </a>
+                                </h3>
+                                <div class=td-module-meta-info>
+                                                <span class=td-post-date>
+                                                    <time class="entry-date updated td-module-date"
+                                                          datetime="<?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['created_date']); ?>">
+                                                        <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_HEALTH][$i]['created_date']); ?>
+                                                    </time>
+                                                </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wpb_column vc_column_container td-pb-span4">
+        <div class="vc_column-inner ">
+            <aside class="widget widget_categories">
+                <div class="block-title">
+                    <span>CATEGORIES</span>
+                </div>
+                <ul>
+                    <?php foreach ($this->arrCategory as $category) { ?>
+                    <li class="cat-item">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $category['cate_slug'], 'cateId' => $category['cate_id']]) ?>">
+                            <i class="fa <?php echo $category['cate_icon'] ?>"></i>  <?php echo $category['cate_name'] ?>
+                        </a>
+                        <span class="td-cat-no"><?php echo $category['total_content'] ?></span>
+                    </li>
+                <?php } ?>
+                </ul>
+            </aside>
+        </div>
+    </div>
+</div>

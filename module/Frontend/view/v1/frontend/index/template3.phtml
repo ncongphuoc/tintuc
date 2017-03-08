@@ -1,0 +1,75 @@
+<div class="vc_row wpb_row td-pb-row">
+    <div class="wpb_column vc_column_container td-pb-span8">
+        <div class="vc_column-inner ">
+            <div class=wpb_wrapper>
+                <div class="td_block_wrap td_block_11 td-pb-border-top">
+                    <div class=td-block-title-wrap>
+                        <a title="Làm đẹp" href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_slug'], 'cateId' => $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_id']]) ?>">
+                            <h4 class=block-title>
+                                <span><i class="fa <?php echo $this->arrCategory[\My\General::CATEGORY_NATURALLY_SAVVY]['cate_icon'] ?>"></i> NATURALLY SAVVY</span>
+                            </h4>
+                        </a>
+                    </div>
+                    <div class=td_block_inner>
+                    <?php for($i=1 ; $i<=5 ; $i++) { ?>
+                        <div class=td-block-span12>
+                            <div class="td_module_10 td_module_wrap td-animation-stack">
+                                <div class=td-module-thumb>
+                                    <a rel="nofollow" href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_id']]) ?>"
+                                        rel="bookmark"
+                                        title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_title'] ?>">
+                                        <img width=218 height=150 class=entry-thumb
+                                            src="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_resize_image'] ?>"
+                                             alt="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_title'] ?>"
+                                            title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_title'] ?>"/>
+                                    </a>
+                                </div>
+                                <div class=item-details>
+                                    <h3 class="entry-title td-module-title">
+                                        <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_slug'], 'contentId' => $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_id']]) ?>"
+                                            rel=bookmark
+                                            title="<?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_title'] ?>">
+                                            <?php echo $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_title'] ?>
+                                        </a>
+                                    </h3>
+                                    <div class=td-module-meta-info>
+                                            <span class=td-post-date>
+                                                <time class="entry-date updated td-module-date"
+                                                    datetime="2015-04-22T05:23:55+00:00">
+                                                    <?php echo date('d-m-Y', $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['created_date']); ?>
+                                                </time>
+                                            </span>
+                                    </div>
+                                    <div class=td-excerpt>
+                                        <?php echo (strlen($this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_description']) < 150) ? $this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_description'] : mb_substr($this->arrContent[\My\General::CATEGORY_NATURALLY_SAVVY][$i]['cont_description'], 0, 150, 'UTF-8') . '...'; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wpb_column vc_column_container td-pb-span4">
+        <div class="vc_column-inner ">
+            <div class=wpb_wrapper>
+                <div class="td-a-rec td-a-rec-id-sidebar">
+                    <div class="td-visible-desktop">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x600.jpg' ?>">
+                    </div>
+                    <div class="td-visible-tablet-landscape">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x600.jpg' ?>">
+                    </div>
+                    <div class="td-visible-tablet-portrait">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x600.jpg' ?>">
+                    </div>
+                    <div class="td-visible-phone">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/300x600.jpg' ?>">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

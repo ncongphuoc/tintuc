@@ -1,0 +1,95 @@
+<?php
+$paramsRouter = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch()->getParams();
+$routeName = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
+$controller = $paramsRouter['__CONTROLLER__'];
+$action = $paramsRouter['action'];
+$arr_category = unserialize(ARR_CATEGORY);
+?>
+<div class=td-ss-main-sidebar>
+    <div class="td-a-rec td-a-rec-id-sidebar">
+        <div class="td-visible-desktop">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-tablet-landscape">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-tablet-portrait">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-phone">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+    </div>
+
+    <div class="td_block_wrap td_block_21 td-pb-border-top">
+        <div class=td-block-title-wrap>
+            <h4 class=block-title>
+                <span><i class="fa fa-eye" aria-hidden="true"></i> ĐỌC NHIỀU NHẤT</span>
+            </h4>
+        </div>
+        <div class="td_block_inner">
+            <?php foreach (unserialize(ARR_CONTENT_HOT_LIST) as $content): ?>
+                <div class="td_module_16 td_module_wrap td-animation-stack">
+                    <div class="td-module-thumb">
+                        <a rel="nofollow" href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
+                           rel="bookmark" title="<?php echo $content['concont_titletent_title'] ?>">
+                            <img width="150" height="100" class="entry-thumb td-animation-stack-type0-2"
+                                 src="<?php echo $content['cont_resize_image'] ?>" alt=""
+                                 title="<?php echo $content['cont_title'] ?>">
+                        </a>
+                    </div>
+                    <div class="item-details">
+                        <h4 class="entry-title td-module-title">
+                            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
+                               rel="bookmark" title="<?php echo $content['cont_title'] ?>">
+                                <?php echo $content['cont_title'] ?>
+                            </a>
+                        </h4>
+                        <div class="td-module-meta-info">
+                            <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category[$content['cate_id']]['cate_slug'], 'cateId' => $arr_category[$content['cate_id']]['cate_id']]) ?>"
+                               class="td-post-category">
+                                <?php echo $arr_category[$content['cate_id']]['cate_name'] ?>
+                            </a>
+                                        <span class="td-post-date">
+                                            <time class="entry-date updated td-module-date"
+                                                  datetime="<?php echo date("d-m-Y", $content['created_date']); ?>">
+                                                <?php echo date("d-m-Y", $content['created_date']); ?>
+                                            </time>
+                                        </span>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <div class="td-a-rec td-a-rec-id-sidebar">
+        <div class="td-visible-desktop">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-tablet-landscape">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-tablet-portrait">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-phone">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+    </div>
+
+    <div class="td-a-rec td-a-rec-id-sidebar" style="margin-top: 20px">
+        <div class="td-visible-desktop">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-tablet-landscape">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-tablet-portrait">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+        <div class="td-visible-phone">
+            <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
+        </div>
+    </div>
+</div>

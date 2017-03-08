@@ -1,0 +1,59 @@
+<div class="sidebar">
+    <div id="adrighttop" class="adbox">
+        <div id="adsense_right">
+            <!-- KH-300x250 -->
+            <!--            <ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-9275417305531302" data-ad-slot="3791346881"></ins>-->
+            <!--            <script>-->
+            <!--                (adsbygoogle = window.adsbygoogle || []).push({});-->
+            <!--            </script>-->
+        </div>
+    </div>
+
+    <div class="listbox highlight">
+        <div class="list-title">Tiêu điểm</div>
+        <ul>
+            <?php foreach (unserialize(ARR_CONTENT_HOT_LIST) as $arr_content): ?>
+                <li class="list-item">
+                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $arr_content['cont_slug'], 'contentId' => $arr_content['cont_id']]) ?>">
+                        <img src="<?php echo $arr_content['cont_main_image'] ?>"
+                             alt="<?php echo $arr_content['cont_title'] ?>"/>
+                        <?php echo $arr_content['cont_title'] ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+
+    <div id="adrightsecond" class="adbox">
+
+    </div>
+    <style>
+        @media (max-width: 639px) {
+            #sticky.adbox {
+                display: none;
+            }
+        }
+    </style>
+    <div id="sticky" class="adbox">
+        <!-- KhoaHoc 300x600 -->
+        <!--        <ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-9275417305531302" data-ad-slot="9672107684"></ins>-->
+        <!--        <script>-->
+        <!--            (adsbygoogle = window.adsbygoogle || []).push({});-->
+        <!--        </script>-->
+    </div>
+
+    <div class="listitems">
+        <div class="title">Xu hướng Từ khoá</div>
+        <ul><?php
+            foreach (unserialize(ARR_KEYWORD_ALL_PAGE) as $arr_key):
+            ?>
+            <li>
+                <a href="<?php echo $this->serverUrl() . $this->Url('keyword', array('keySlug' => $arr_key['key_slug'], 'keyId' => $arr_key['key_id'])) ?>">
+                    <?php echo $arr_key['key_name']; ?>
+                </a>
+            </li>
+            <?php endforeach;
+            ?>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+<!-- MENU MOBILE -->
+<div id=td-mobile-nav>
+    <div class=td-mobile-container>
+        <div class=td-menu-socials-wrap>
+            <div class=td-menu-socials>
+				<span class=td-social-icon-wrap>
+				<a target=_blank href="#" title=Facebook>
+				<i class="td-icon-font td-icon-facebook"></i>
+				</a>
+				</span>
+				<span class=td-social-icon-wrap>
+				<a target=_blank href="#" title=Twitter>
+				<i class="td-icon-font td-icon-twitter"></i>
+				</a>
+				</span>
+				<span class=td-social-icon-wrap>
+				<a target=_blank href="#" title=Vimeo>
+				<i class="td-icon-font td-icon-vimeo"></i>
+				</a>
+				</span>
+				<span class=td-social-icon-wrap>
+				<a target=_blank href="#" title=VKontakte>
+				<i class="td-icon-font td-icon-vk"></i>
+				</a>
+				</span>
+				<span class=td-social-icon-wrap>
+				<a target=_blank href="#" title=Youtube>
+				<i class="td-icon-font td-icon-youtube"></i>
+				</a>
+				</span>
+            </div>
+            <div class=td-mobile-close>
+                <a href="#"><i class=td-icon-close-mobile></i></a>
+            </div>
+        </div>
+<!--        <div class=td-menu-login-section>-->
+<!--            <div class=td-guest-wrap>-->
+<!--                <div class=td-menu-avatar>-->
+<!--                    <div class=td-avatar-container>-->
+<!--                        <img src="https://1.gravatar.com/avatar/?s=80&amp;d=mm&amp;r=g"-->
+<!--                             width=80 height=80 alt=""-->
+<!--                             class="avatar avatar-80 wp-user-avatar wp-user-avatar-80 photo avatar-default"/>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class=td-menu-login><a id=login-link-mobb>Sign in</a></div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class=td-mobile-content>
+            <div class=menu-main-menu-container>
+                <ul id=menu-main-menu class=td-mobile-main-menu>
+                    <li id=menu-item-15
+                        class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item current_page_item menu-item-first">
+                        <a href="<?php echo $this->serverUrl() . $this->Url('home') ?>"><i class="fa fa-home"></i>Home</a>
+                    </li>
+                    <?php foreach (unserialize(ARR_CATEGORY) as $arr_category): ?>
+                        <li class="tax-<?php echo $arr_category['cate_slug']; ?> menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item current_page_item menu-item-first">
+                            <a href='<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category['cate_slug'], 'cateId' => $arr_category['cate_id']]) ?>'>
+                                <i class="fa <?php echo $arr_category['cate_icon'] ?>"></i>
+                                <?php echo $arr_category['cate_name'] ?>
+                            </a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id=login-form-mobile class=td-register-section>
+        <div id=td-login-mob class="td-login-animation td-login-hide-mob">
+            <div class=td-login-close>
+                <a href="#" class=td-back-button><i class=td-icon-read-down></i></a>
+                <div class=td-login-title>Sign in</div>
+                <div class=td-mobile-close>
+                    <a href="#"><i class=td-icon-close-mobile></i></a>
+                </div>
+            </div>
+            <div class=td-login-form-wrap>
+                <div class=td-login-panel-title><span>Welcome!</span>Log into your account</div>
+                <div class=td_display_err></div>
+                <div class=td-login-inputs><input class=td-login-input type=text name=login_email id=login_email-mob
+                                                  value="" required><label>your username</label></div>
+                <div class=td-login-inputs><input class=td-login-input type=password name=login_pass id=login_pass-mob
+                                                  value="" required><label>your password</label></div>
+                <input type=button name=login_button id=login_button-mob class=td-login-button value="LOG IN">
+                <div class=td-login-info-text><a href="#" id=forgot-pass-link-mob>Forgot your password?</a></div>
+            </div>
+        </div>
+        <div id=td-forgot-pass-mob class="td-login-animation td-login-hide-mob">
+            <div class=td-forgot-pass-close>
+                <a href="#" class=td-back-button><i class=td-icon-read-down></i></a>
+                <div class=td-login-title>Password recovery</div>
+            </div>
+            <div class=td-login-form-wrap>
+                <div class=td-login-panel-title>Recover your password</div>
+                <div class=td_display_err></div>
+                <div class=td-login-inputs><input class=td-login-input type=text name=forgot_email id=forgot_email-mob
+                                                  value="" required><label>your email</label></div>
+                <input type=button name=forgot_button id=forgot_button-mob class=td-login-button value="Send My Pass">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END MENU MOBILE -->
