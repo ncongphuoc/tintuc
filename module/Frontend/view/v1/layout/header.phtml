@@ -5,212 +5,103 @@ $controller = $paramsRouter['__CONTROLLER__'];
 $action = $paramsRouter['action'];
 ?>
 
-<div class="td-header-wrap td-header-style-1">
-    <!-- LINE HEADER -->
-    <div class=td-header-top-menu-full>
-        <div class="td-container td-header-row td-header-top-menu">
-            <div class=top-bar-style-1>
-                <div class=td-header-sp-top-menu>
-                    <div class=td-weather-top-widget id=td_top_weather_uid>
 
-                        <div class=td-weather-header>
-                            <div class=td-weather-city>Welcome to Hellonews</div>
-                        </div>
-                    </div>
-                    <div class=td_data_time>
-                        <div>
-                            <?php echo date('l') . ', ' . date('F') . ' ' . date('d'); ?>
-                        </div>
-                    </div>
-                    <ul class="top-header-menu td_ul_login">
-                        <li class=menu-item>
-                            <a class="td-login-modal-js menu-item" href="javascript:;" data-effect=mpf-td-login-effect>Sign
-                                in / Join</a>
-                            <span class="td-sp-ico-login td_sp_login_ico_style"></span></li>
-                    </ul>
-                    <div class=menu-top-container>
-                        <ul id=menu-top-menu class=top-header-menu>
-                            <li id=menu-item-9
-                                class="menu-item menu-item-type-post_type menu-item-object-page td-menu-item td-normal-menu menu-item-9">
-                                <a href="<?php echo $this->serverUrl() . $this->Url('contact') ?>">Contact us</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class=td-header-sp-top-widget>
-                    <span class=td-social-icon-wrap>
-                    <a target=_blank href="https://www.facebook.com/tintuc360.me/" title=Facebook>
-                    <i class="td-icon-font td-icon-facebook"></i>
-                    </a>
-                    </span>
-                    <span class=td-social-icon-wrap>
-                    <a target=_blank href="javascript:;" title=Twitter>
-                    <i class="td-icon-font td-icon-twitter"></i>
-                    </a>
-                    </span>
-                    <span class=td-social-icon-wrap>
-                    <a target=_blank href="javascript:;" title=Vimeo>
-                    <i class="td-icon-font td-icon-vimeo"></i>
-                    </a>
-                    </span>
-                    <span class=td-social-icon-wrap>
-                    <a target=_blank href="javascript:;" title=VKontakte>
-                    <i class="td-icon-font td-icon-vk"></i>
-                    </a>
-                    </span>
-                    <span class=td-social-icon-wrap>
-                    <a target=_blank href="javascript:;" title=Youtube>
-                    <i class="td-icon-font td-icon-youtube"></i>
-                    </a>
-                    </span>
-                </div>
-            </div>
-            <div id=login-form class="white-popup-block mfp-hide mfp-with-anim">
-                <div class=td-login-wrap>
-                    <a href="#" class=td-back-button><i class=td-icon-modal-back></i></a>
-                    <div id=td-login-div class="td-login-form-div td-display-block">
-                        <div class=td-login-panel-title>Sign in</div>
-                        <div class=td-login-panel-descr>Welcome! Log into your account</div>
-                        <div class=td_display_err></div>
-                        <div class=td-login-inputs><input class=td-login-input type=text name=login_email
-                                                          id=login_email value="" required><label>your
-                                username</label></div>
-                        <div class=td-login-inputs><input class=td-login-input type=password name=login_pass
-                                                          id=login_pass value="" required><label>your
-                                password</label></div>
-                        <input type=button name=login_button id=login_button class="wpb_button btn td-login-button"
-                               value=Login>
-                        <div class=td-login-info-text><a href="#" id=forgot-pass-link>Forgot your password? Get
-                                help</a></div>
-                    </div>
-                    <div id=td-forgot-pass-div class="td-login-form-div td-display-none">
-                        <div class=td-login-panel-title>Password recovery</div>
-                        <div class=td-login-panel-descr>Recover your password</div>
-                        <div class=td_display_err></div>
-                        <div class=td-login-inputs><input class=td-login-input type=text name=forgot_email
-                                                          id=forgot_email value="" required><label>your
-                                email</label></div>
-                        <input type=button name=forgot_button id=forgot_button
-                               class="wpb_button btn td-login-button" value="Send My Password">
-                        <div class=td-login-info-text>A password will be e-mailed to you.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+<!-- HEADER -->
+<div id="header">
+    <div class="toplinks">
+        <a href='https://www.facebook.com/quantrimang.com.vn' class="icon facebook" target="_blank" rel="nofollow">Facebook</a>
+        <a href='https://www.youtube.com/c/quantrimang' class="icon youtube" target="_blank" rel="nofollow">Youtube</a>
+        <a href="https://plus.google.com/+quantrimang" class="icon googleplus" target="_blank" rel="nofollow">Google
+            Plus</a>
+
     </div>
+    <div class="headerleft"><a href="index.html" id="logo" title="Quantrimang.com"></a></div>
+    <div id="searchBox">
+        <form action="<?php echo $this->serverUrl() . $this->Url('search') ?>" id="cse-search-box">
+            <div>
 
-    <!-- END LINE HEADER -->
+                <input type="text" name="q" size="55" id="q" placeholder=" Tìm kiếm"/>
+                <input type="submit" name="sa" value="Tìm" id="btnHeaderFind"/>
 
-    <!-- LOGO -->
-    <div class="td-banner-wrap-full td-logo-wrap-full">
-        <div class="td-container td-header-row td-header-header">
-            <div class=td-header-sp-logo>
-                <h1 class=td-logo>
-                    <a class=td-main-logo href="<?php echo $this->serverUrl() . $this->Url('home') ?>">
-                        <img class=td-retina-data
-                             data-retina="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/logo-hello-white.png'; ?>"
-                             src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/logo-hello-white.png'; ?>"
-                             alt="Tintuc360"/>
-                        <span class=td-visual-hidden>Tintuc360</span>
-                    </a>
-                </h1>
             </div>
-            <div class=td-header-sp-recs>
-                <div class=td-header-rec-wrap>
-                    <div class="td-a-rec td-a-rec-id-header">
-                        <div class="td-visible-desktop">
-                            <div class="adsoptimal-slot" style="width: 728px; height: 90px;"></div>
-                        </div>
-                        <div class="td-visible-tablet-landscape">
-                            <div class="adsoptimal-slot" style="width: 728px; height: 90px;"></div>
-                        </div>
-                        <div class="td-visible-tablet-portrait">
-                            <div class="adsoptimal-slot" style="width: 728px; height: 90px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </form>
     </div>
-
-    <!-- END LOGO -->
-
-    <!-- MENU -->
-    <div class=td-header-menu-wrap-full>
-        <div class="td-header-menu-wrap td-header-gradient">
-            <div class="td-container td-header-row td-header-main-menu">
-                <div id=td-header-menu role=navigation>
-                    <div id=td-top-mobile-toggle>
-                        <a href="#"><i class="td-icon-font td-icon-mobile"></i></a>
-                    </div>
-                    <div class="td-main-menu-logo td-logo-in-header">
-                        <a class="td-mobile-logo td-sticky-header"
-                           href="<?php echo $this->serverUrl() . $this->Url('home') ?>">
-                            <img class=td-retina-data
-                                 data-retina="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/logo-02.png'; ?>"
-                                 src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/logo-02.png'; ?>"
-                                 alt="Tintuc360"/>
-                        </a>
-                        <a class="td-header-logo td-sticky-header"
-                           href="<?php echo $this->serverUrl() . $this->Url('home') ?>">
-                            <img class="td-retina-data"
-                                 data-retina="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/logo-01.png'; ?>"
-                                 src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/logo-01.png'; ?>"
-                                 alt="Tintuc360"/>
-                        </a>
-                    </div>
-                    <div class="menu-main-menu-container">
-                        <ul id="menu-main-menu-1" class=sf-menu>
-                            <!--  current-menu-item -->
-                            <li class="menu-item menu-item-type-post_type menu-item-object-page page_item current_page_item menu-item-first td-menu-item td-normal-menu">
-                                <a href="<?php echo $this->serverUrl() . $this->Url('home') ?>"><i
-                                        class="fa fa-home"></i>Home</a>
-                            </li>
-                            <?php foreach (unserialize(ARR_CATEGORY) as $arr_category): ?>
-                                <li class="tax-<?php echo $arr_category['cate_slug']; ?> menu-item menu-item-type-post_type menu-item-object-page page_item current_page_item menu-item-first td-menu-item td-normal-menu">
-                                    <a href='<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category['cate_slug'], 'cateId' => $arr_category['cate_id']]) ?>'>
-                                        <!--            i class="fa -->
-                                        <?php //echo $arr_category['cate_icon'] ?><!--"></i>-->
-                                        <?php echo $arr_category['cate_name'] ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                </div>
-                <div class=td-search-wrapper>
-                    <div id=td-top-search>
-                        <div class="header-search-wrap">
-                            <div class="dropdown header-search">
-                                <a id="td-header-search-button" href="#" role=button class="dropdown-toggle"
-                                   data-toggle="dropdown"><i class="td-icon-search"></i></a>
-                                <a id="td-header-search-button-mob" href="#" role=button class="dropdown-toggle"
-                                   data-toggle="dropdown"><i class="td-icon-search"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- SEARCH -->
-                <div class="header-search-wrap">
-                    <div class="dropdown header-search">
-                        <div class="td-drop-down-search aria-labelledby=td-header-search-button">
-                            <form method="get" class="td-search-form"
-                                  action="<?php echo $this->serverUrl() . $this->Url('search') ?>">
-                                <div role="search" class="td-head-form-search-wrap">
-                                    <input id="td-header-search" type=text value="" name="keyword"/>
-                                    <input class="wpb_button wpb_btn-inverse btn" type="submit"
-                                           id="td-header-search-top" value="Search"/>
-                                </div>
-                            </form>
-                            <div id="td-aj-search"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- END SEARCH -->
-            </div>
-        </div>
-    </div>
-    <!-- END MENU -->
-
+    <a class="toggle menu"></a>
+    <a class="toggle search"></a>
 </div>
+<!-- END HEADER -->
+
+<!-- MENU -->
+<div id="mainmenu">
+    <ul id="topnav" class="navigation clearfix">
+        <li class="item all">
+            <a href="index.html"><img src="../img.quantrimang.com/photos/image/icon/home.png" /> Trang chủ</a>
+        </li>
+
+        <li class="item  tax-cong-nghe">
+            <a href='cong-nghe.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/technology.png" />
+                C&#244;ng nghệ
+            </a>
+        </li>
+        <li class="item  tax-khoa-hoc">
+            <a href='khoa-hoc.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/Physics-64.png" />
+                Khoa học
+            </a>
+        </li>
+        <li class="item  tax-dien-may">
+            <a href='dien-may.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/Fridge.png" />
+                Điện m&#225;y
+            </a>
+        </li>
+        <li class="item  tax-cuoc-song">
+            <a href='cuoc-song.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/LifeCycle.png" />
+                Cuộc sống
+            </a>
+        </li>
+        <li class="item  tax-video">
+            <a href='video.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/Video.png" />
+                Video
+            </a>
+        </li>
+        <li class="item  tax-ung-dung">
+            <a href='ung-dung.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/app1.png" />
+                Ứng dụng
+            </a>
+        </li>
+        <li class="item  tax-ios">
+            <a href='ios.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/apple.png" />
+                iPhone / iPad
+            </a>
+        </li>
+        <li class="item  tax-android">
+            <a href='android.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/android.png" />
+                Android
+            </a>
+        </li>
+        <li class="item  tax-windows-10-os">
+            <a href='windows-10-os.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/windows.png" />
+                Windows 10
+            </a>
+        </li>
+        <li class="item  tax-ky-nang">
+            <a href='ky-nang.html'>
+                <img src="../img.quantrimang.com/photos/image/icon/Training.png" />
+                Kỹ năng
+            </a>
+        </li>
+    </ul>
+</div>
+<!-- END MENU -->
+
+
  

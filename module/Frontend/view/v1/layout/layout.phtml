@@ -1,309 +1,64 @@
-<!doctype html >
-<!--[if IE 8]>
-<html class="ie8" lang="en"> <![endif]-->
-<!--[if IE 9]>
-<html class="ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html lang="en"> <!--<![endif]-->
-<meta http-equiv="content-type" content="text/html;charset=UTF-8"/><!-- /Added by HTTrack -->
+<!DOCTYPE html>
+<html>
 <head>
-    <?php echo $this->MyHeadTitle(); ?>
-    <meta charset=UTF-8/>
-    <meta name=viewport content="width=device-width, initial-scale=1.0">
-    <?php
-    echo $this->headMeta();
-    ?>
-    <link rel=icon type="image/png" href="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/logo-ico.png'; ?>">
+    <meta charset="utf-8">
+    <title>Kiến thức công nghệ khoa học và cuộc sống - Tintuc.com</title>
 
-    <style type="text/css">
-        img.wp-smiley, img.emoji {
-            display: inline !important;
-            border: none !important;
-            box-shadow: none !important;
-            height: 1em !important;
-            width: 1em !important;
-            margin: 0 .07em !important;
-            vertical-align: -.1em !important;
-            background: none !important;
-            padding: 0 !important
-        }
-    </style>
-    <!--    <link rel=stylesheet id=contact-form-7-css-->
-    <!--          href='wp-content/plugins/contact-form-7/includes/css/A.styles.css%2cqver%3d4.5.1.pagespeed.cf.ZPvL_THC9x.css'-->
-    <!--          type='text/css' media=all/>-->
-    <link rel=stylesheet id=google_font_open_sans-css
-          href='https://fonts.googleapis.com/css?family=Open+Sans%3A300italic%2C400italic%2C600italic%2C400%2C600%2C700&amp;ver=4.5.3'
-          type='text/css' media=all/>
-    <link rel=stylesheet id=google_font_roboto-css
-          href='https://fonts.googleapis.com/css?family=Roboto%3A500%2C400italic%2C700%2C900%2C500italic%2C400%2C300&amp;ver=4.5.3'
-          type='text/css' media=all/>
-    <link rel=stylesheet id=js_composer_front-css
-          href='<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/css/js_composer.min2720.css'; ?>' type='text/css'
-          media=all/>
-    <link rel=stylesheet id=td-theme-css
-          href='<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/css/A.style.css,qver=7.3_d99.pagespeed.cf.c8A9VtP5SH.css'; ?>'
-          type='text/css' media="screen"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta property="fb:app_id" content="265611626917890"/>
 
-    <script type='text/javascript'
-            src='<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/js/library/jqueryb8ff.js' ?>'></script>
-    <!--    <script type='text/javascript'-->
-    <!--            src='--><?php //echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/js/library/jquery-migrate.min330a.js' ?><!--'></script>-->
-    <meta name=generator content="Tin tức tổng hợp"/>
-    <meta name="google-site-verification" content="S3ttHLsNgQWfeFQ3z3l4P_AZXlYKNFFkbvXu9wH1MFA" />
-    <!--[if lte IE 9]>
-    <link rel="stylesheet" type="text/css"
-          href="http://demo.tagdiv.com/newspaper/wp-content/plugins/js_composer/assets/css/vc_lte_ie9.min.css"
-          media="screen"><![endif]--><!--[if IE  8]>
-    <link rel="stylesheet" type="text/css"
-          href="http://demo.tagdiv.com/newspaper/wp-content/plugins/js_composer/assets/css/vc-ie8.min.css"
-          media="screen"><![endif]-->
 
-    <?php
-    echo $this->headLink();
-    ?>
+    <link rel="search" type="application/opensearchdescription+xml" title="Tìm thủ thuật - Quantrimang.com"
+          href="opensearch.xml">
 
-    <!--    <script type='text/javascript'-->
-    <!--            src='--><?php //echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/js/library/tagdiv_theme.min3688.js' ?><!--'></script>-->
+    <link rel=stylesheet href='<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/css/style.css'; ?>'
+          type='text/css'/>
 
+    <meta name="apple-mobile-web-app-title" content="Tintuc.com"/>
+    <meta name="application-name" content="Tintuc.com"/>
+    <link rel="apple-touch-icon" href="favicon.192.png"/>
+    <link rel="icon" sizes="192x192" href="favicon.192.png"/>
+
+    <!--    <script async src="../pagead2.googlesyndication.com/pagead/js/f.txt"></script>-->
     <script>
-        var td_is_safari = false;
-        var td_is_ios = false;
-        var td_is_windows_phone = false;
-        var ua = navigator.userAgent.toLowerCase();
-        var td_is_android = ua.indexOf('android') > -1;
-        if (ua.indexOf('safari') != -1) {
-            if (ua.indexOf('chrome') > -1) {
-            } else {
-                td_is_safari = true;
-            }
+        if (screen && screen.width < 480 && /Android|iPhone|Windows Phone/i.test(window.navigator.userAgent)) {
+            (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-9275417305531302",
+                enable_page_level_ads: true
+            });
         }
-        if (navigator.userAgent.match(/(iPhone|iPod|iPad)/i)) {
-            td_is_ios = true;
-        }
-        if (navigator.userAgent.match(/Windows Phone/i)) {
-            td_is_windows_phone = true;
-        }
-        if (td_is_ios || td_is_safari || td_is_windows_phone || td_is_android) {
-            if (top.location != location) {
-                top.location.replace('index.html');
-            }
-        }
-        var tdBlocksArray = [];
-        function tdBlock() {
-            this.id = '';
-            this.block_type = 1;
-            this.atts = '';
-            this.td_column_number = '';
-            this.td_current_page = 1;
-            this.post_count = 0;
-            this.found_posts = 0;
-            this.max_num_pages = 0;
-            this.td_filter_value = '';
-            this.is_ajax_running = false;
-            this.td_user_action = '';
-            this.header_color = '';
-            this.ajax_pagination_infinite_stop = '';
-        }
-        (function () {
-            var htmlTag = document.getElementsByTagName("html")[0];
-            if (navigator.userAgent.indexOf("MSIE 10.0") > -1) {
-                htmlTag.className += ' ie10';
-            }
-            if (!!navigator.userAgent.match(/Trident.*rv\:11\./)) {
-                htmlTag.className += ' ie11';
-            }
-            if (/(iPad|iPhone|iPod)/g.test(navigator.userAgent)) {
-                htmlTag.className += ' td-md-is-ios';
-            }
-            var user_agent = navigator.userAgent.toLowerCase();
-            if (user_agent.indexOf("android") > -1) {
-                htmlTag.className += ' td-md-is-android';
-            }
-            if (-1 !== navigator.userAgent.indexOf('Mac OS X')) {
-                htmlTag.className += ' td-md-is-os-x';
-            }
-            if (/chrom(e|ium)/.test(navigator.userAgent.toLowerCase())) {
-                htmlTag.className += ' td-md-is-chrome';
-            }
-            if (-1 !== navigator.userAgent.indexOf('Firefox')) {
-                htmlTag.className += ' td-md-is-firefox';
-            }
-            if (-1 !== navigator.userAgent.indexOf('Safari') && -1 === navigator.userAgent.indexOf('Chrome')) {
-                htmlTag.className += ' td-md-is-safari';
-            }
-        })();
-        var tdLocalCache = {};
-        (function () {
-            "use strict";
-            tdLocalCache = {
-                data: {}, remove: function (resource_id) {
-                    delete tdLocalCache.data[resource_id];
-                }, exist: function (resource_id) {
-                    return tdLocalCache.data.hasOwnProperty(resource_id) && tdLocalCache.data[resource_id] !== null;
-                }, get: function (resource_id) {
-                    return tdLocalCache.data[resource_id];
-                }, set: function (resource_id, cachedData) {
-                    tdLocalCache.remove(resource_id);
-                    tdLocalCache.data[resource_id] = cachedData;
-                }
-            };
-        })();
-        var tds_login_sing_in_widget = "show";
-        var td_viewport_interval_list = [{"limitBottom": 767, "sidebarWidth": 228}, {
-            "limitBottom": 1018,
-            "sidebarWidth": 300
-        }, {"limitBottom": 1140, "sidebarWidth": 324}];
-        var td_animation_stack_effect = "type0";
-        var tds_animation_stack = true;
-        var td_animation_stack_specific_selectors = ".entry-thumb, img";
-        var td_animation_stack_general_selectors = ".td-animation-stack img, .post img";
-        var td_ajax_url = "";
-        var td_get_template_directory_uri = "";
-        var tds_snap_menu = "smart_snap_always";
-        var tds_logo_on_sticky = "show_header_logo";
-        var tds_header_style = "";
-        var td_please_wait = "Please wait...";
-        var td_email_user_pass_incorrect = "User or password incorrect!";
-        var td_email_user_incorrect = "Email or username incorrect!";
-        var td_email_incorrect = "Email incorrect!";
-        var tds_more_articles_on_post_enable = "";
-        var tds_more_articles_on_post_time_to_wait = "";
-        var tds_more_articles_on_post_pages_distance_from_top = 0;
-        var tds_theme_color_site_wide = "#4db2ec";
-        var tds_smart_sidebar = "enabled";
-        var tdThemeName = "Newspaper";
-        var td_magnific_popup_translation_tPrev = "Previous (Left arrow key)";
-        var td_magnific_popup_translation_tNext = "Next (Right arrow key)";
-        var td_magnific_popup_translation_tCounter = "%curr% of %total%";
-        var td_magnific_popup_translation_ajax_tError = "The content from %url% could not be loaded.";
-        var td_magnific_popup_translation_image_tError = "The image #%curr% could not be loaded.";
-        var td_ad_background_click_link = "";
-        var td_ad_background_click_target = "";
     </script>
-    <style>
-        .block-title > span, .block-title > a, .block-title > label, .widgettitle, .widgettitle:after, .td-trending-now-title, .td-trending-now-wrapper:hover .td-trending-now-title, .wpb_tabs li.ui-tabs-active a, .wpb_tabs li:hover a, .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab.vc_active > a, .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container .vc_tta-tab:hover > a, .td-related-title .td-cur-simple-item, .woocommerce .product .products h2, .td-subcat-filter .td-subcat-dropdown:hover .td-subcat-more, .td-weather-information:before, .td-weather-week:before, .td_block_exchange .td-exchange-header:before {
-            background-color: #222
-        }
-
-        .woocommerce div.product .woocommerce-tabs ul.tabs li.active {
-            background-color: #222 !important
-        }
-
-        .block-title, .td-related-title, .wpb_tabs .wpb_tabs_nav, .vc_tta-container .vc_tta-color-grey.vc_tta-tabs-position-top.vc_tta-style-classic .vc_tta-tabs-container, .woocommerce div.product .woocommerce-tabs ul.tabs:before {
-            border-color: #222
-        }
-
-        .td-menu-background:before, .td-search-background:before {
-            background: rgba(0, 0, 0, .5);
-            background: -moz-linear-gradient(top, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .6) 100%);
-            background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(0, 0, 0, .5)), color-stop(100%, rgba(0, 0, 0, .6)));
-            background: -webkit-linear-gradient(top, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .6) 100%);
-            background: -o-linear-gradient(top, rgba(0, 0, 0, 0.5) 0%, @mobileu_gradient_two_mob 100%);
-            background: -ms-linear-gradient(top, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .6) 100%);
-            background: linear-gradient(to bottom, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .6) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(0,0,0,0.5)', endColorstr='rgba(0,0,0,0.6)', GradientType=0)
-        }
-
-        .td-menu-background, .td-search-background {
-            background-image: url(<?php echo STATIC_URL ?> . '/f/v1/images/bg-mobile.jpg')
-        }
-    </style>
-    <noscript>
-        <style type="text/css">.wpb_animate_when_almost_visible {
-                opacity: 1
-            }</style>
-    </noscript>
-
-    <script type='text/javascript'>
-        (function(w) {
-            if(navigator.userAgent.match(/iPhone|iPod|iPad|Android/i)==null)return;
-            var d=document,h=d.getElementsByTagName('head')[0],s=d.createElement('style'),j=d.createElement('script'),k=d.createElement('script');
-            s.setAttribute('rel','mw-page-block');s.innerHTML='body > * {display:none !important}';
-            j.setAttribute('src','//cdn.adsoptimal.com/advertisement/settings/49386.js');
-            k.setAttribute('src','//cdn.adsoptimal.com/advertisement/dispatcher.js');
-            j.onerror=k.onerror=function(){h.removeChild(s);h.removeChild(j);h.removeChild(k);};
-            h.appendChild(s);h.appendChild(j);h.appendChild(k);
-        })(window);
-    </script>
-
-    <!-- google analytics -->
-
-    <!-- google adsense -->
 </head>
-<body
-    class="home page page-id-13 page-template page-template-page-pagebuilder-latest page-template-page-pagebuilder-latest-php homepage wpb-js-composer js-comp-ver-4.11.2 vc_responsive td-animation-stack-type0 td-full-layout"
-    itemscope=itemscope itemtype="http://schema.org/WebPage">
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=1214610921930231";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script>
-
-<!-- BUTTON SCROLL FOOTER -->
-<div class=td-scroll-up><i class=td-icon-menu-up></i></div>
-<!-- END BUTTON SCROLL FOOTER -->
-<div class=td-menu-background></div>
-
-
-<?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/menu-mobile')); ?>
-
-<div class=td-search-background></div>
-
-<!-- SEARCH -->
-<div class=td-search-wrap-mob>
-    <div class=td-drop-down-search aria-labelledby=td-header-search-button>
-        <form method=get class=td-search-form action="<?php echo $this->serverUrl() . $this->Url('search') ?>">
-            <div class=td-search-close>
-                <a href="#"><i class=td-icon-close-mobile></i></a>
-            </div>
-            <div role=search class=td-search-input>
-                <span>Search</span>
-                <input id=td-header-search-mob type=text value="" name="keyword"/>
-            </div>
-        </form>
-        <div id=td-aj-search-mob></div>
-    </div>
-</div>
-
-<!-- END SEARCH -->
 <?php
 $paramsRouter = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch()->getParams();
 $routeName = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
 $controller = $paramsRouter['__CONTROLLER__'];
 $action = $paramsRouter['action'];
 ?>
-<!-- CONTENT -->
-<div id=td-outer-wrap>
+
+<body class="showheader">
+<div id="main">
     <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/header')); ?>
 
-    <div class="td-main-content-wrap <?php echo ($controller == 'index') ? 'td-main-page-wrap' : '' ?>">
-        <div class="td-container">
-            <?php
-            if($controller == 'index' && $action == 'index'){
-                echo \My\Minifier\HtmlMin::minify($this->layout()->content);
-            } else {
-                ?>
-                <div class="td-pb-row">
-                    <!-- MAIN -->
-                    <div class="td-pb-span8 td-main-content" role="main">
-                        <?php echo \My\Minifier\HtmlMin::minify($this->layout()->content); ?>
-                    </div>
-                    <!-- END MAIN -->
-                    <!-- LEFT -->
-                    <div class="td-pb-span4 td-main-sidebar" role="complementary" style="margin-top: 40px">
-                        <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/nav-left')); ?>
-                    </div>
-                    <!-- END LEFT -->
-                </div>
-            <?php } ?>
+    <div class="clear"></div>
+
+    <!-- CONTENT -->
+    <div id="contentMain" class="clearfix">
+        <div class="content">
+            <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/content')); ?>
+        </div>
+        <div class="sidebar">
+            <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/sidebar')); ?>
+        </div>
+        <div class="leftbar">
+            <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/leftbar')); ?>
         </div>
     </div>
 
-    <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/footer')); ?>
+    <div class="clear"></div>
+
+    <?php //echo \My\Minifier\HtmlMin::minify($this->render('frontend/footer')); ?>
 </div>
 <?php echo $this->headScript(); ?>
 </body>

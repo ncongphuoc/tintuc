@@ -97,6 +97,7 @@ class Keyword extends SearchAbstract {
             'top_search' => ['type' => 'string', 'index' => 'not_analyzed'],
         ]);
         $mapping->send();
+        
         //delete index
         if (in_array($strIndexName, $arrIndex)) {
             $searchIndex->delete();
