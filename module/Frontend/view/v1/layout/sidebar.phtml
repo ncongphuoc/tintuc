@@ -1,76 +1,24 @@
+<?php
+$arr_content_hot = unserialize(ARR_CONTENT_HOT_LIST);
+?>
+
 <div id="adrighttop" class="adbox">
-    <!-- 300x250-QTM -->
-
-
+    <!-- 300x250-->
+    <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/300x250.jpg'; ?>">
 </div>
 
 <div class="top-news">
     <div class="title-top-news">Được xem nhiều</div>
     <ul>
+        <?php foreach ($arr_content_hot as $content): ?>
         <li class="item-top">
-            <a href="cach-phat-truc-tiep-lien-minh-huyen-thoai-hay-dota2-tren-facebook-122508.html">
-                <img
-                    src="../img.quantrimang.com/photos/image/2016/04/25/Live-Stream-Facebook-logo200-size-80x80-znd.png"/>
-                Đ&#226;y l&#224; c&#225;ch Live Stream Video Facebook tr&#234;n PC, Fanpage
+            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $arr_content['cont_slug'], 'contentId' => $arr_content['cont_id']]) ?>">
+                <img src="<?php echo $arr_content['cont_main_image'] ?>"
+                     alt="<?php echo $arr_content['cont_title'] ?>"/>
+                <?php echo $arr_content['cont_title'] ?>
             </a>
         </li>
-        <li class="item-top">
-            <a href="5-cach-download-video-tren-youtube-nhanh-nhat-71858.html">
-                <img src="../img.quantrimang.com/photos/image/2015/08/15/5-youtube-200-size-80x80-znd.jpg"/>
-                7 c&#225;ch download video tr&#234;n Youtube nhanh ch&#243;ng, đơn giản
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="neu-sep-cua-ban-co-17-dac-diem-nay-thi-hay-cong-hien-het-minh-vi-do-la-mot-ong-chu-rat-tuyet-voi-day-124048.html">
-                <img src="../img.quantrimang.com/photos/image/2016/06/29/lanh-dao-200-size-80x80-znd.jpg"/>
-                Nếu sếp của bạn c&#243; 17 đặc điểm n&#224;y th&#236; h&#227;y cống hiến hết m&#236;nh v&#236; đ&#243; l&#224;
-                một &#244;ng chủ rất tuyệt vời đấy
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="cach-xoa-tai-khoan-facebook-vinh-vien-101884.html">
-                <img
-                    src="../img.quantrimang.com/photos/image/2015/11/12/Facebook-khoa-vinh-vien-200-size-80x80-znd.jpg"/>
-                C&#225;ch x&#243;a t&#224;i khoản Facebook vĩnh viễn tr&#234;n m&#225;y t&#237;nh
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="cach-kiem-tra-cau-hinh-may-tinh-windows-117075.html">
-                <img src="../img.quantrimang.com/photos/image/2015/09/07/computer-200-size-80x80-znd.jpg"/>
-                4 c&#225;ch đơn giản để kiểm tra cấu h&#236;nh, th&#244;ng tin phần cứng m&#225;y t&#237;nh, laptop
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="khac-phuc-su-co-mat-am-thanh-trong-windows-82020.html">
-                <img src="../img.quantrimang.com/photos/image/2015/08/19/windows-mute-200-size-80x80-znd.jpg"/>
-                4 bước khắc phục sự cố mất &#226;m thanh trong Windows
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="huong-dan-thiet-lap-tinh-nang-live-stream-video-tren-facebook-120124.html">
-                <img src="../img.quantrimang.com/photos/image/2016/03/04/live-stream-video-200-size-80x80-znd.png"/>
-                Hướng dẫn thiết lập t&#237;nh năng Live Stream Video Facebook tr&#234;n di động, m&#225;y t&#237;nh bảng
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="cach-doi-ten-facebook-khi-chua-du-60-ngay-hoac-qua-5-lan-116855.html">
-                <img src="../img.quantrimang.com/photos/image/2015/11/14/Facebook-doi-ten-200-size-80x80-znd.jpg"/>
-                2 c&#225;ch để đổi t&#234;n Facebook khi chưa đủ 60 ng&#224;y hoặc qu&#225; 5 lần
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="khoi-phuc-tin-nhan-da-bi-xoa-tren-facebook-nhu-the-nao-117104.html">
-                <img
-                    src="../img.quantrimang.com/photos/image/2016/05/26/khoi-phuc-tin-nhan-facebook-200-size-80x80-znd.jpg"/>
-                C&#225;ch kh&#244;i phục tin nhắn đ&#227; bị xo&#225; tr&#234;n Facebook
-            </a>
-        </li>
-        <li class="item-top">
-            <a href="huong-dan-tao-usb-boot-nhanh-94484.html">
-                <img src="../img.quantrimang.com/photos/image/2016/01/25/USB-hiren-boot-200-size-80x80-znd.jpg"/>
-                Hướng dẫn tạo USB Hiren&#39;s boot nhanh ch&#243;ng
-            </a>
-        </li>
+        <?php endforeach; ?>
     </ul>
 </div>
 

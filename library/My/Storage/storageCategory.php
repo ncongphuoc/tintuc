@@ -110,10 +110,6 @@ class storageCategory extends AbstractTableGateway {
             }
             return $result;
         } catch (\Exception $exc) {
-            echo '<pre>';
-            print_r($exc->getMessage());
-            echo '</pre>';
-            die();
             if (APPLICATION_ENV !== 'production') {
                 die($exc->getMessage());
             }
@@ -202,8 +198,6 @@ class storageCategory extends AbstractTableGateway {
         if (isset($arrCondition['parent_id'])) {
             $strWhere .= " AND parent_id =" . $arrCondition['parent_id'];
         }
-
-
 
         return $strWhere;
     }

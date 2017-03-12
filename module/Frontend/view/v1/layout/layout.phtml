@@ -46,7 +46,7 @@ $action = $paramsRouter['action'];
     <!-- CONTENT -->
     <div id="contentMain" class="clearfix">
         <div class="content">
-            <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/content')); ?>
+            <?php echo \My\Minifier\HtmlMin::minify($this->layout()->content); ?>
         </div>
         <div class="sidebar">
             <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/sidebar')); ?>
@@ -58,7 +58,7 @@ $action = $paramsRouter['action'];
 
     <div class="clear"></div>
 
-    <?php //echo \My\Minifier\HtmlMin::minify($this->render('frontend/footer')); ?>
+    <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/footer')); ?>
 </div>
 <?php echo $this->headScript(); ?>
 </body>

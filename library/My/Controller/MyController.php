@@ -169,25 +169,55 @@ class MyController extends AbstractActionController {
 
         if ($arrData['module'] === 'frontend') {
             $serviceCategory = $this->serviceLocator->get('My\Models\Category');
-            $arrCategoryList = $serviceCategory->getListCategory(['cate_status' => 1]);
+            $serviceContent = $this->serviceLocator->get('My\Models\Content');
+            //
 
-            $arr_category = array();
-            foreach ($arrCategoryList as $category) {
-                $arr_category[$category['cate_id']] = $category;
+            $arrCategory = $serviceCategory->getListCategory(
+                array(
+                    'cate_status' => 1
+                )
+            );
+
+            $arrCategoryInfo = array();
+            foreach ($arrCategory as $cate) {
+                $arrCategoryInfo[$cate['cate_id']] = $cate;
             }
-            define('ARR_CATEGORY', serialize($arr_category));
+            define('ARR_CATEGORY_INFO', serialize($arrCategoryInfo));
+
+            $tree_cate = array();
+            $arrCategoryParent = $serviceCategory->getListCategory(
+                array(
+                    'cate_status' => 1,
+                    'parent_id' => 0
+                )
+            );
+            define('ARR_CATEGORY_PARENT', serialize($arrCategoryParent));
+            // get cate child
+            $arr_category_child = array();
+            foreach ($arrCategoryParent as $category) {
+                $arrCategoryChild = $serviceCategory->getListCategory(
+                    array(
+                        'cate_status' => 1,
+                        'parent_id' => $category['cate_id']
+                    )
+                );
+                $arr_category_child[$category['cate_id']] = $arrCategoryChild;
+                //
+                $tree_cate[$category['cate_id']] = array();
+                foreach ($arrCategoryChild as $cate_child) {
+                    $tree_cate[$category['cate_id']][] = $cate_child['cate_id'];
+                }
+            }
+
+            define('ARR_CATEGORY_CHILD', serialize($arr_category_child));
+            define('ARR_TREE_CATEGORY', serialize($tree_cate));
 
             //get list content hot
-            $serviceContent = $this->serviceLocator->get('My\Models\Content');
+
             $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_resize_image, created_date, cont_description';
-            $arr_content_hot = $serviceContent->getListHostContent(['cont_status' => 1], 1, 5, 'cont_views DESC', $arrFields);
+            $arr_content_hot = $serviceContent->getListHostContent(['cont_status' => 1], 1, 10, 'cont_views DESC', $arrFields);
 
             define('ARR_CONTENT_HOT_LIST', serialize($arr_content_hot));
-
-            unset($arrKeywordList);
-            unset($arr_content_hot);
-            unset($instanceSearchCategory);
-            unset($arrCategory);
         }
     }
 

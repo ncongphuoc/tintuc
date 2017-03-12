@@ -22,9 +22,13 @@ class CategoryController extends MyController {
         if (empty($params['cateId'])) {
             return $this->redirect()->toRoute('404', array());
         }
-        $instanceSearchCategory = new \My\Search\Category();
-        $categoryDetail = $instanceSearchCategory->getDetail(array('cate_id'=>$params['cateId']));
-
+        $serviceCategory = $this->serviceLocator->get('My\Models\Category');
+        $categoryDetail = $serviceCategory->getDetail(
+            array(
+                'cate_status' => 1,
+                'cate_id' => $params['cateId']
+            )
+        );
         if (empty($categoryDetail)) {
             return $this->redirect()->toRoute('404', array());
         }
