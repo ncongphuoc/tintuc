@@ -1,195 +1,116 @@
 <?php
 $content_detail = $this->arrContent;
 $category_detail = $this->arrCategoryDetail;
+$category_parent = $this->arrCategoryParent;
 $arrKeywordList = $this->arrKeywordList;
-$list_category = unserialize(ARR_CATEGORY);
-$show_main_img = array(\My\General::CATEGORY_SHOWBIZ, \My\General::CATEGORY_WORLD, \My\General::CATEGORY_MON_AND_BABY, \My\General::CATEGORY_TECH);
-?>
-<div class="td-crumb-container">
-    <div class="entry-crumbs">
-        <span>
-            <a title="Home" class="entry-crumb" itemprop="url"
-               href="<?php echo $this->serverUrl() . $this->Url('home') ?>">
-                <span itemprop="title"><i class="fa fa-home"></i> Home</span>
-            </a>
-        </span>
-        <i class="td-icon-right td-bread-sep"></i>
-        <span>
-            <a title="<?php echo $category_detail['cate_name'] ?>" class="entry-crumb" itemprop="url"
-               href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $category_detail['cate_slug'], 'cateId' => $category_detail['cate_id']]) ?>">
-                <span itemprop="title"><?php echo $category_detail['cate_name'] ?></span>
-            </a>
-        </span>
-        <i class="td-icon-right td-bread-sep"></i>
-        <span class=td-bred-no-url-last>
-            <meta itemprop=title content="<?php echo $content_detail['cont_title']; ?>">
-            <meta itemprop=url
-                  content="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content_detail['cont_slug'], 'contentId' => $content_detail['cont_id']]) ?>">
-            <?php echo $content_detail['cont_title']; ?>
-        </span>
-    </div>
-</div>
-<div class="td-ss-main-content">
-    <article id=post-95
-             class="post-95 post type-post status-publish format-standard has-post-thumbnail hentry category-tagdiv-gadgets"
-             itemscope itemtype="http://schema.org/Article">
+//
+$arrContentCate = $this->arrContentCate;
+$arrContentNew = $this->arrContentNew;
 
-        <div class=td-post-header>
-            <header class=td-post-title>
-                <h1 class=entry-title><?php echo $content_detail['cont_title'] ?></h1>
-                <div class=td-module-meta-info>
-                <span class=td-post-date>
-                    <time class="entry-date updated td-module-date"
-                          datetime="<?php echo date("d-m-Y", $content_detail['created_date']); ?>"><?php echo date("d-m-Y", $content_detail['created_date']); ?></time></span>
-                    <div class=td-post-views>
-                        <i class=td-icon-views></i>
-                        <span class=td-nr-views-95><?php echo $content_detail['cont_views'] ?></span>
+?>
+<div class="content post-detail" data-url="http://dev.tintuc.com/content/22-pham-chat-de-tro-thanh-mot-nha-lanh-dao-tuyet-voi-phan-2-1.html"
+     data-title="22 phẩm chất để trở thành một nhà lãnh đạo tuyệt vời (Phần 2)" data-id="1" data-load="true">
+    <h1>
+        <?php echo $content_detail['cont_title'] ?>
+    </h1>
+    <div class="rate-view top">
+        <ul>
+            <li class="raty" itemscope="" itemtype="http://data-vocabulary.org/Review-aggregate">
+                <meta itemprop="itemreviewed" content="22 phẩm chất để trở thành một nhà lãnh đạo tuyệt vời (Phần 2)">
+                <meta itemprop="rating" content="3">
+                <meta itemprop="votes" content="1">
+                <span class=" rating" data-rating="3" data-id="131786" id="raty-3" style="width: 100px; cursor: pointer;">
+                    <img id="raty-3-1" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-on.png' ?>" alt="1" title="bad" class="raty-3">&nbsp;
+                    <img id="raty-3-2" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-on.png' ?>" alt="2" title="poor" class="raty-3">&nbsp;
+                    <img id="raty-3-3" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-on.png' ?>" alt="3" title="regular" class="raty-3">&nbsp;
+                    <img id="raty-3-4" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-off.png' ?>" alt="4" title="good" class="raty-3">&nbsp;
+                    <img id="raty-3-5" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-off.png' ?>" alt="5" title="gorgeous" class="raty-3">
+                    <input id="raty-3-score" type="hidden" name="score" value="3">
+                </span>
+            </li>
+            <li class="view"><?php echo $content_detail['cont_view'] ?></li>
+            <li class="share">
+                <div class="sharebox">
+                    <div class="sharetoolbox">
                     </div>
                 </div>
-            </header>
-        </div>
-
-        <?php if(in_array($category_detail['cate_id'], $show_main_img)) { ?>
-        <div class="td-post-featured-image">
-            <a href="" data-caption="" class="td-modal-image">
-            <img width="696" height="505" class="entry-thumb" src="<?php echo $content_detail['cont_main_image'] ?>" alt="" title="<?php echo $content_detail['cont_title'] ?>">
-            </a>
-        </div>
+            </li>
+        </ul>
+    </div>
+    <div class="breadcrumbs info-detail">
+        <span class="first breadcrumb">
+            <a href="/"></a>
+        </span>
+        <?php if($category_parent){ ?>
+        <span typeof="v:Breadcrumb" class="breadcrumb">
+            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $category_parent['cont_slug'], 'contentId' => $category_parent['cont_id']]) ?>">
+                <?php echo $category_parent['cate_name'] ?></a>
+        </span>
         <?php } ?>
 
-        <div class=td-post-content>
-            <?php if($category_detail['cate_id'] != \My\General::CATEGORY_NATURALLY_SAVVY && $category_detail['cate_id'] != \My\General::CATEGORY_HEALTH) { ?>
-                <h3 class="entry-title"><?php echo $content_detail['cont_description'] ?></h3>
+        <?php if($category_detail){ ?>
+            <span typeof="v:Breadcrumb" class="breadcrumb">
+            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $category_detail['cont_slug'], 'contentId' => $category_detail['cont_id']]) ?>">
+                <?php echo $category_detail['cate_name'] ?></a>
+        </span>
+        <?php } ?>
+    </div>
+
+    <?php echo $content_detail['cont_detail'] ?>
+
+    <div class="author-info clearfix">
+        <span class="date">Cập nhật: <?php echo date('d-m-Y',$content_detail['created_date']); ?></span>
+    </div>
+
+    <div class="tag">
+        <ul class="td-tags clearfix">
+            <li><span>Xem thêm: </span></li>
+            <?php foreach ($arrKeywordList as $keyword) { ?>
+                <li>
+                    <a href="<?php echo $this->serverUrl() . $this->Url('keyword', ['keyId' => $keyword['key_id'],'keySlug' => $keyword['key_slug']]) ?>"><?php echo $keyword['key_name'] ?></a>
+                </li>
             <?php } ?>
+        </ul>
+    </div>
+    <div class="adbox">
+        <!-- Links - Dapung2 -->
+    </div>
+    <div id="adsviewbottom" class="adbox">
+        <!-- Artilce-Footer-Reponsive -->
+    </div>
 
-            <?php echo $content_detail['cont_detail'] ?>
-        </div>
-        <footer>
-            <?php if (!empty($arrKeywordList)) { ?>
-                <div class="td-post-source-tags">
-                    <ul class="td-tags td-post-small-box clearfix">
-                        <li><span>KEYWORD</span></li>
-                        <?php foreach ($arrKeywordList as $keyword) { ?>
-                            <li>
-                                <a href="<?php echo $this->serverUrl() . $this->Url('keyword', ['keyId' => $keyword['key_id'],'keySlug' => $keyword['key_slug']]) ?>"><?php echo $keyword['key_name'] ?></a>
-                            </li>
-                        <?php } ?>
-                    </ul>
-                </div>
-            <?php } ?>
-            <div class="td-post-sharing td-post-sharing-bottom td-with-like">
-<!--                <span class=td-post-share-title>SHARE</span>-->
-                <div class="fb-share-button"
-                     data-href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent['cont_slug'], 'contentId' => $this->arrContent['cont_id']]) ?>"
-                     data-layout="button_count"
-                     data-size="large">
-                </div>
-            </div>
+    <div class="similaritems listitems">
+        <div class="title">Tham khảo thêm</div>
+        <ul>
+            <?php foreach ($arrContentCate as $content): ?>
+            <li>
+                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>">
+                    <?php echo $content['cont_title']; ?>
+                </a>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+    
+    <div class="comments">
+    </div>
 
-            <div class="fb-comments"
-                 data-href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $this->arrContent['cont_slug'], 'contentId' => $this->arrContent['cont_id']]) ?>"
-                 data-numposts="5">
-            </div>
-            <div class="td-a-rec td-a-rec-id-sidebar">
-                <div class="td-visible-desktop">
-                    <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
-                </div>
-                <div class="td-visible-tablet-landscape">
-                    <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
-                </div>
-                <div class="td-visible-tablet-portrait">
-                    <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
-                </div>
-                <div class="td-visible-phone">
-                    <div class="adsoptimal-slot" style="width: 300px; height: 250px;"></div>
-                </div>
-            </div>
-        </footer>
+    <div id="adsinfeed" class="adbox" style="margin-bottom:20px">
+    </div>
 
-    </article>
-    <div class="td_block_wrap td_block_related_posts  td-pb-border-top">
-        <h4 class="td-related-content-title">
-            <a href="javascript:;" class="more_content td-related-left td-cur-simple-item" data-type="#content_related">BÀI LIÊN QUAN</a>
-            <a href="javascript:;" class="more_content td-related-right" data-type="#content_category">CÙNG DANH MỤC</a>
-        </h4>
-        <div id="content_related" class="show_content td_block_inner td_animated_xlong td_fadeInDown" style="height: auto;">
-            <div class="td-related-row">
-                <?php foreach ($this->arrContentLikeList as $content) { ?>
-                <div class="td-related-span4">
-                    <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
-                        <div class="td-module-image">
-                            <div class="td-module-thumb">
-                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
-                                    rel="bookmark"
-                                    title="<?php echo $content['cont_title'] ?>">
-                                    <img width="218" height="150" class="entry-thumb td-animation-stack-type0-2"
-                                        src="<?php echo $content['cont_resize_image'] ?>"
-                                        alt="<?php echo $content['cont_title'] ?>"
-                                        title="<?php echo $content['cont_title'] ?>">
-                                </a>
-                            </div>
-                            <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $list_category[$content['cate_id']]['cate_slug'], 'cateId' => $list_category[$content['cate_id']]['cate_id']]) ?>"
-                               class="td-post-category">
-                                <?php echo $list_category[$content['cate_id']]['cate_name'] ?>
-                            </a>
-                        </div>
-                        <div class="item-details">
-                            <h3 class="entry-title td-module-title">
-                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
-                                    rel="bookmark"
-                                    title="<?php echo $content['cont_title'] ?>">
-                                    <?php echo (strlen($content['cont_title']) < 60) ? $content['cont_title'] : mb_substr($content['cont_title'], 0, 60, 'UTF-8') . '...'; ?>
-                                </a>
-                            </h3>
-                        </div>
-                    </div>
-
-                </div>
-                <?php } ?>
-            </div>
-        </div>
-        <div id="content_category" class="show_content td_block_inner td_animated_xlong td_fadeInDown" style="height: auto; display: none">
-            <div class="td-related-row">
-                <?php foreach ($this->arrContentCateList as $content) { ?>
-                <div class="td-related-span4">
-                    <div class="td_module_related_posts td-animation-stack td_mod_related_posts">
-                        <div class="td-module-image">
-                            <div class="td-module-thumb">
-                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
-                                    rel="bookmark" title="<?php echo $content['cont_title'] ?>">
-                                    <img width="218" height="150" class="entry-thumb td-animation-stack-type0-2"
-                                        src="<?php echo $content['cont_resize_image'] ?>"
-                                        alt="<?php echo $content['cont_title'] ?>"
-                                         title="<?php echo $content['cont_title'] ?>">
-                                </a>
-                            </div>
-                            <a href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $list_category[$content['cate_id']]['cate_slug'], 'cateId' => $list_category[$content['cate_id']]['cate_id']]) ?>" class="td-post-category">
-                                <?php echo $list_category[$content['cate_id']]['cate_name'] ?>
-                            </a>
-                        </div>
-                        <div class="item-details">
-                            <h3 class="entry-title td-module-title">
-                                <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>"
-                                    rel="bookmark" title="<?php echo $content['cont_title'] ?>">
-                                    <?php echo (strlen($content['cont_title']) < 60) ? $content['cont_title'] : mb_substr($content['cont_title'], 0, 60, 'UTF-8') . '...'; ?>
-
-                                </a>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-                <?php } ?>
-            </div>
-        </div>
+    <div class="more-news clearfix">
+        <div class="hd">Bài viết mới nhất</div>
+        <ul>
+            <?php foreach ($arrContentCate as $content): ?>
+                <li>
+                    <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>">
+                        <span class="thumb">
+                            <img src="<?php echo $content['cont_main_image']; ?>">
+                        </span>
+                        <span><?php echo $content['cont_title']; ?></span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
     </div>
 </div>
-<script type="text/javascript">
-    jQuery('.more_content').click(function(){
-        var id = jQuery(this).data('type');
-        jQuery('.show_content').hide();
-        jQuery(id).show();
-        jQuery('.more_content').removeClass('td-cur-simple-item');
-        jQuery(this).addClass('td-cur-simple-item');
-        return true;
-    });
-</script>

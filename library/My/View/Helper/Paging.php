@@ -111,59 +111,30 @@ class Paging extends AbstractHelper
                 $intPage = ($intCurrentPage > 2) ? ($intCurrentPage == $intTotalPage && $intTotalPage > 4) ? $intCurrentPage - 4 : $intCurrentPage - 2 : 1;
                 $intLimitPage = ($intTotalPage < 6) ? $intTotalPage : $intCurrentPage + 2;
                 $arrCondition['page'] = 1;
-                $result .= '<a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><i class="td-icon-menu-left"></i><i class="td-icon-menu-left"></i></a>';
+                $result .= '<li><a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><span> << </span></a></li>';
                 $arrCondition['page'] = $intCurrentPage - 1;
-                $result .= '<a class="page" rel="prev" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><i class="td-icon-menu-left"></i></a>';
+                $result .= '<li><a class="page" rel="prev" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><span> < </span></a></li>';
 
             }
             for ($intPage; $intPage <= $intTotalPage && $intPage <= $intLimitPage; $intPage++) {
                 $arrCondition['page'] = $intPage;
                 if ($intPage == $intCurrentPage) {
-                    $result .= '<span class="current">' . $intPage . '</span>';
+                    $result .= '<li class="active"><a><span class="current">' . $intPage . '</span></a></li>';
                 } else {
-                    $result .= '<a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '">' . $intPage . '</a>';
+                    $result .= '<li><a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '">' . $intPage . '</a></li>';
                 }
             }
             if ($intCurrentPage == $intTotalPage) {
                 $result .= '';
             } else {
                 $arrCondition['page'] = $intCurrentPage + 1;
-                $result .= '<a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><i class="td-icon-menu-right"></i></a>';
+                $result .= '<li><a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><span> > </span></a></li>';
                 $arrCondition['page'] = $intTotalPage;
-                $result .= '<a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><i class="td-icon-menu-right"></i><i class="td-icon-menu-right"></i></a>';
+                $result .= '<li><a class="page" href="' . $serverUrl . $urlHelper($strRoute, $arrCondition) . '"><span> >> </span></a></a></li>';
             }
 
             //$result .= '</ul></div>';
 
-        } elseif ($strModule === 'blog') {
-            if ($intCurrentPage == 1) {
-                $intPage = 1;
-                $intLimitPage = 10;
-            } else {
-                $intPage = ($intCurrentPage > 5) ? ($intCurrentPage == $intTotalPage && $intTotalPage > 10) ? $intCurrentPage - 10 : $intCurrentPage - 5 : 1;
-                $intLimitPage = ($intTotalPage < 11) ? $intTotalPage : $intCurrentPage + 5;
-                $arrCondition['page'] = 1;
-                $result .= '<a class="nextpostslink" href="' . $urlHelper($strRoute, $arrCondition) . '">Đầu</a>';
-                $arrCondition['page'] = $intCurrentPage - 1;
-                $result .= '<a class="last" href="' . $urlHelper($strRoute, $arrCondition) . '">Trước</a>';
-            }
-
-            for ($intPage; $intPage <= $intTotalPage && $intPage <= $intLimitPage; $intPage++) {
-                $arrCondition['page'] = $intPage;
-                if ($intPage == $intCurrentPage) {
-                    $result .= '<span class="current">' . $intPage . '</span>';
-                } else {
-                    $result .= '<a class="page larger" href="' . $urlHelper($strRoute, $arrCondition) . '">' . $intPage . '</a>';
-                }
-            }
-            if ($intCurrentPage == $intTotalPage) {
-                $result .= '';
-            } else {
-                $arrCondition['page'] = $intCurrentPage + 1;
-                $result .= '<a class="nextpostslink" href="' . $urlHelper($strRoute, $arrCondition) . '">Sau</a>';
-                $arrCondition['page'] = $intTotalPage;
-                $result .= '<a class="last" href="' . $urlHelper($strRoute, $arrCondition) . '">Cuối</a>';
-            }
         }
         return $result;
     }
