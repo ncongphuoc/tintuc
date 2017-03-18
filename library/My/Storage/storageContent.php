@@ -2,6 +2,7 @@
 
 namespace My\Storage;
 
+use My\General;
 use Zend\Db\TableGateway\AbstractTableGateway,
     Zend\Db\Sql\Sql,
     Zend\Db\Adapter\Adapter,
@@ -21,30 +22,33 @@ class storageContent extends AbstractTableGateway {
         $this->adapter->getDriver()->getConnection()->disconnect();
     }
 
-    public function getList($arrCondition = array(), $arrFields = '*') {
+    public function getList($arrCondition = array(), $strOrder = 'cont_id DESC', $arrFields = '*') {
         try {
             $strWhere = $this->_buildWhere($arrCondition);
             $adapter = $this->adapter;
-//            $sql = new Sql($adapter);
-//            $select = $sql->Select($this->table)
-//                    ->where('1=1' . $strWhere)
-//                    ->order(array('cont_id DESC'));
-//
-//            $query = $sql->getSqlStringForSqlObject($select);
-
             $query = 'select ' . $arrFields
                 . ' from ' . $this->table
-                . ' where 1=1 ' . $strWhere;
+                . ' where 1=1 ' . $strWhere
+                . ' order by ' . $strOrder;
             return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
         } catch (\Zend\Http\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                die($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return array();
         }
     }
 
-    public function getListLimit($arrCondition = [], $intPage = 1, $intLimit = 15, $strOrder, $arrFields = '*') {
+    public function getListLimit($arrCondition = [], $intPage = 1, $intLimit = 15, $strOrder = 'cont_id DESC', $arrFields = '*') {
         try {
             $strWhere = $this->_buildWhere($arrCondition);
             $adapter = $this->adapter;
@@ -57,10 +61,19 @@ class storageContent extends AbstractTableGateway {
                 . ' offset ' . ($intLimit * ($intPage - 1));
             return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
         } catch (\Zend\Http\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                die($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return array();
         }
     }
 
@@ -75,10 +88,19 @@ class storageContent extends AbstractTableGateway {
 
             return current($adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray());
         } catch (\Zend\Http\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                die($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return array();
         }
     }
 
@@ -93,10 +115,19 @@ class storageContent extends AbstractTableGateway {
             $query = $sql->getSqlStringForSqlObject($select);
             return (int) current($adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray())['total'];
         } catch (\Zend\Http\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                die($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return false;
         }
     }
 
@@ -120,10 +151,19 @@ class storageContent extends AbstractTableGateway {
             }
             return $cont_id;
         } catch (\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                die($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return false;
         }
     }
 
@@ -144,10 +184,19 @@ class storageContent extends AbstractTableGateway {
             }
             return $result;
         } catch (\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                die($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return false;
         }
     }
 
@@ -159,8 +208,19 @@ class storageContent extends AbstractTableGateway {
             $result = $this->update($p_arrParams, 'cont_id=' . $intProductID);
             return $result;
         } catch (\Exception $exc) {
-            $exc->getMessage();
-            return false;
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
+            if (APPLICATION_ENV !== 'production') {
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
+            }
         }
     }
 
@@ -182,10 +242,19 @@ class storageContent extends AbstractTableGateway {
             }
             return $result;
         } catch (\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                throw new \Exception($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return false;
         }
     }
 
@@ -214,6 +283,10 @@ class storageContent extends AbstractTableGateway {
 
         if (!empty($arrCondition['cate_id'])) {
             $strWhere .= " AND cate_id= " . $arrCondition['cate_id'];
+        }
+
+        if (!empty($arrCondition['in_cate_id'])) {
+            $strWhere .= " AND cate_id IN (" . $arrCondition['in_cate_id'] . ")";
         }
 
         if (!empty($arrCondition['not_cont_id'])) {

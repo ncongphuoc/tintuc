@@ -5,6 +5,7 @@ namespace My;
 class General {
 
     const SITE_DOMAIN_FULL = 'http://hellonews.info';
+    const SITE_DOMAIN_STATIC = (APPLICATION_ENV == 'production') ? '' : 'http://dev.st.tintuc.com';
     const TITLE_META = " - Hellonews.info";
     const SITE_AUTH = "Hellonews.info";
     const SITE_DOMAIN = 'Hellonews.info';
@@ -40,12 +41,11 @@ class General {
     const SOCIAL_FACEBOOK_URL = 'https://www.facebook.com/tintuc360.me';
 
     //category
-    const CATEGORY_WORLD = 1;
-    const CATEGORY_SHOWBIZ = 2;
-    const CATEGORY_TECH = 3;
-    const CATEGORY_HEALTH = 4;
-    const CATEGORY_NATURALLY_SAVVY= 5;
-    const CATEGORY_MON_AND_BABY = 6;
+    const CATEGORY_CONG_NGHE = 1;
+    const CATEGORY_KHOA_HOC = 6;
+    const CATEGORY_CUOC_SONG = 10;
+
+    const FILE_ERROR_SQL = 'SQL_Error';
 
     static $configFB = array(
         'access_token' => 'EAARQrqSKvfcBAF8FNlecuAu73Hsdl96XNCZCz5mW7HZCf14WbuXuc76kJxxfrZBBA0H9Rh2ZAaZBdZCnXT8ZC81ufko0WfDq3yBIrNBt0RP3ya9xfDKB262YQosZByMDjZANrGcv1vdMTv9NYtLHNZBTLDcrX7n2fZBYQ6ToWyeevbqTZAEsUuAyxHX1',
@@ -692,14 +692,12 @@ class General {
         // if the file does not exist, attempt to create it
         $fp = fopen($path . '_' . $today, 'a') or exit("Can't open $path!");
 
+        // define current time
         $arrParam['Time'] = date('H:i:s');
 
-        // define script name
-        $script_name = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
-        // define current time
-        $time = date('H:i:s');
         // write current time, script name and message to the log file
         $message = json_encode($arrParam);
+
         fwrite($fp, "$message" . $nl);
 
         fclose($fp);

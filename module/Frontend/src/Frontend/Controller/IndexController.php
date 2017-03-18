@@ -17,38 +17,32 @@ class IndexController extends MyController
     public function indexAction()
     {
         $params = $this->params()->fromRoute();
+        $serviceContent = $this->serviceLocator->get('My\Models\Content');
         $page = 1;
-        $limit = 6;
+        $limit = 5;
 
-        $listCategory = unserialize(ARR_CATEGORY);
+        $arr_category_info = unserialize(ARR_CATEGORY_INFO);
+        $tree_category = unserialize(ARR_TREE_CATEGORY);
 
-        $instanceSearchContent = new \My\Search\Content();
-        $instanceTotalContent = new \My\Search\Content();
+        $list_cate_id = array(
+            General::CATEGORY_CONG_NGHE,
+            General::CATEGORY_CUOC_SONG,
+            General::CATEGORY_KHOA_HOC
+        );
 
-        $arrFields = array('cont_id', 'cont_title', 'cont_slug', 'cate_id','cont_main_image','created_date','cont_description','cont_resize_image');
+
+        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
         $arr_category = array();
         $arr_content_cate = array();
-        foreach ($listCategory as $category) {
-
-            $arr_category[$category['cate_id']] = $category;
-            $totalContent = $instanceTotalContent->getTotal(array('cont_status' => 1, 'cate_id' => $category['cate_id']));
-            $arr_category[$category['cate_id']]['total_content'] = $totalContent;
-
+        foreach ($list_cate_id as $category) {
             $arrCondition = array(
                 'cont_status' => 1,
-                'cate_id' => $category['cate_id']
+                'in_cate_id' => implode(',',$tree_category[$category])
             );
-            $arr_content_new = $instanceSearchContent->getListLimit(
-                $arrCondition,
-                $page,
-                $limit,
-                ['cont_id' => ['order' => 'desc']],
-                $arrFields
-            );
-
-            $arr_content_cate[$category['cate_id']] = $arr_content_new;
+            $arr_content_new = $serviceContent->getListHomePage($arrCondition, $page, $limit, 'cont_id DESC', $arrFields);
+            $arr_content_cate[$category] = $arr_content_new;
         }
-
+        
         $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
         $helper_title->setTitle(General::SITE_AUTH);
 
@@ -57,7 +51,7 @@ class IndexController extends MyController
         
         return [
             'param' => $params,
-            'arrCategory' => $arr_category,
+            'arrCategory' => $arr_category_info,
             'arrContent' => $arr_content_cate
         ];
     }

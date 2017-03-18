@@ -7,7 +7,8 @@ use Zend\Db\TableGateway\AbstractTableGateway,
     Zend\Db\Adapter\Adapter,
     Zend\Db\Sql\Where,
     Zend\Db\Sql\Select,
-    My\Validator\Validate;
+    My\Validator\Validate,
+    My\General;
 
 class storageKeyword extends AbstractTableGateway {
 
@@ -34,6 +35,7 @@ class storageKeyword extends AbstractTableGateway {
                 'key_weight' => 1,
                 'content_id' => 1,
                 'content_crawler' => 1,
+                'key_status' => 1,
             ), $p_arrParams);
 
             $adapter = $this->adapter;
@@ -44,19 +46,23 @@ class storageKeyword extends AbstractTableGateway {
             $keyword_id = $adapter->getDriver()->getLastGeneratedValue();
             //
             if ($keyword_id) {
-                $instanceSearch = new \My\Search\Keyword();
-
-                $p_arrParams['key_id'] = $keyword_id;
-                $arrDocument = new \Elastica\Document($keyword_id, $p_arrParams);
-                $intResult = $instanceSearch->add($arrDocument);
+                return $keyword_id;
             }
             //
-            return $keyword_id;
         } catch (\Exception $exc) {
-            echo '<pre>';
-            print_r($exc->getMessage());
-            echo '</pre>';
-            die();
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
+            if (APPLICATION_ENV !== 'production') {
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
+            }
         }
     }
 
@@ -67,28 +73,28 @@ class storageKeyword extends AbstractTableGateway {
             }
             $result = $this->update($p_arrParams, 'key_id=' . $id);
             if ($result) {
-                $updateData = new \Elastica\Document();
-                $updateData->setData($p_arrParams);
-                $document = new \Elastica\Document($id, $p_arrParams);
-                $document->setUpsert($updateData);
-
-                $instanceSearch = new \My\Search\Keyword();
-                $result = $instanceSearch->edit($document);
+                return true;
             }
             return $result;
+            
         } catch (\Exception $exc) {
-            echo '<pre>';
-            print_r($exc->getMessage());
-            echo '</pre>';
-            die();
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
             if (APPLICATION_ENV !== 'production') {
-                die($exc->getMessage());
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
             }
-            return false;
         }
     }
 
-    public function getListLimit($arrCondition, $intPage, $intLimit, $strOrder) {
+    public function getListLimit($arrCondition, $intPage, $intLimit, $strOrder = 'key_id ASC') {
         try {
             $strWhere = $this->_buildWhere($arrCondition);
             $adapter = $this->adapter;
@@ -100,16 +106,30 @@ class storageKeyword extends AbstractTableGateway {
                     ->offset($intLimit * ($intPage - 1));
             $query = $sql->getSqlStringForSqlObject($select);
             return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
+
         } catch (\Exception $exc) {
-            echo '<pre>';
-            print_r($exc->getMessage());
-            echo '</pre>';
-            die();
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
+            if (APPLICATION_ENV !== 'production') {
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
+            }
         }
     }
 
     private function _buildWhere($arrCondition) {
         $strWhere = '';
+
+        if(isset($arrCondition['key_status'])) {
+            $strWhere .= ' AND key_status = ' . $arrCondition['key_status'];
+        }
         return $strWhere;
     }
 

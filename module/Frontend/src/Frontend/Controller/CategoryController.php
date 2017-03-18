@@ -18,15 +18,19 @@ class CategoryController extends MyController {
 
     public function indexAction() {
         $params = $this->params()->fromRoute();
+        $cate_id = $params['cateId'];
+
 
         if (empty($params['cateId'])) {
             return $this->redirect()->toRoute('404', array());
         }
         $serviceCategory = $this->serviceLocator->get('My\Models\Category');
+        $serviceContent = $this->serviceLocator->get('My\Models\Content');
+        //
         $categoryDetail = $serviceCategory->getDetail(
             array(
                 'cate_status' => 1,
-                'cate_id' => $params['cateId']
+                'cate_id' => $cate_id
             )
         );
         if (empty($categoryDetail)) {
@@ -36,30 +40,36 @@ class CategoryController extends MyController {
         $intPage = (int) $params['page'] > 0 ? (int) $params['page'] : 1;
         $intLimit = 10;
 
+        //get child cate
+        $tree_category = unserialize(ARR_TREE_CATEGORY);
+
         $arrCondition = array(
             'cont_status' => 1,
-            'cate_id' => $categoryDetail['cate_id']
+            'in_cate_id' => (isset($tree_category[$cate_id])) ? implode(',',$tree_category[$cate_id]) : $cate_id
         );
 
-        $arrFields = array('cont_id', 'cont_title', 'cont_slug', 'cate_id','cont_main_image','created_date','cont_description');
-        $instanceSearchContent = new \My\Search\Content();
-        $arrContentList = $instanceSearchContent->getListLimit($arrCondition, $intPage, $intLimit, ['created_date' => ['order' => 'desc']],$arrFields);
+        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
+        $arrContentList = $serviceContent->getListLimit($arrCondition, $intPage, $intLimit, 'cont_id DESC', $arrFields);
+        $intTotal = $serviceContent->getTotal($arrCondition);
 
-        $intTotal = $instanceSearchContent->getTotal($arrCondition);
         $helper = $this->serviceLocator->get('viewhelpermanager')->get('Paging');
         $paging = $helper($params['module'], $params['__CONTROLLER__'], $params['action'], $intTotal, $intPage, $intLimit, 'category', $params);
+
         //50 KEYWORD :)
         $instanceSearchKeyword = new \My\Search\Keyword();
         $arrKeywordList = $instanceSearchKeyword->getListLimit(['full_text_keyname' => 'trẻ em'], 1, 50, ['_score' => ['order' => 'desc']]);
 
+        //
         $metaTitle = $categoryDetail['cate_meta_title'] ? $categoryDetail['cate_meta_title'] : $categoryDetail['cate_name'];
         $metaKeyword = $categoryDetail['cate_meta_keyword'] ? $categoryDetail['cate_meta_keyword'] : NULL;
         $metaDescription = $categoryDetail['cate_meta_description'] ? $categoryDetail['cate_meta_description'] : NULL;
         $metaSocial = $categoryDetail['cate_meta_social'] ? $categoryDetail['cate_meta_social'] : NULL;
 
+        //
         $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
         $helper_title->setTitle(html_entity_decode($metaTitle) . General::TITLE_META);
 
+        //
         $this->renderer = $this->serviceLocator->get('Zend\View\Renderer\PhpRenderer');
 
         $this->renderer->headMeta()->appendName('dc.description', html_entity_decode($metaDescription) . General::TITLE_META);

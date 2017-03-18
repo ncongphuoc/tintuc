@@ -307,8 +307,6 @@ class ConsoleController extends MyController
             $arr_data = [
                 'key_name' => $key_word,
                 'key_slug' => $word_slug,
-                'created_date' => time(),
-                'cate_id' => (!empty($keyword_detail) && $keyword_detail['cate_id'] == -2) ? -1 : $keyword_detail['cate_id'],
             ];
 
             $int_result = $serviceKeyword->add($arr_data);
@@ -526,11 +524,6 @@ class ConsoleController extends MyController
         }
     }
 
-    public function crawlerAction()
-    {
-        $this->__quantrimang();
-        return true;
-    }
 
     public function crawlerContentAction()
     {
@@ -855,15 +848,41 @@ class ConsoleController extends MyController
         return true;
     }
 
+    public function crawlerAction()
+    {
+        $arr_url = array(
+            2 => 'ung-dung',
+            3 => 'he-thong',
+            4 => 'ios', 'android',
+            5 => 'phan-cung',
+            //
+            7 => 'bi-an-chuyen-la',
+            8 => 'suc-khoe',
+            9 => 'kham-pha-thien-nhien',
+            14 => 'kham-pha-khoa-hoc',
+            //
+            11 => 'ki-nang',
+            12 => 'lam-dep',
+            13 => 'meo-vat'
+        );
+        foreach ($arr_url as $cate => $url) {
+            $this->__quantrimang($url, $cate);
+            sleep(5);
+        }
 
-    public function __quantrimang()
+        return true;
+    }
+
+    public function __quantrimang($tail_url, $cate)
     {
         $serviceContent = $this->serviceLocator->get('My\Models\Content');
         $upload_dir = General::mkdirUpload();
+
         $page = 1;
-        $url_default = 'https://quantrimang.com/cuoc-song';
+        $url_default = 'https://quantrimang.com/';
+        $url_crawler = $url_default . $tail_url;
         //
-        $url = $url_default . '?p=' . $page;
+        $url = $url_crawler . '?p=' . $page;
         $content = General::crawler($url);
         $dom = HtmlDomParser::str_get_html($content);
 
@@ -908,6 +927,9 @@ class ConsoleController extends MyController
 
         //
         foreach ($arr_link_content as $index => $item) {
+            if ($index == 2) {
+                break;
+            }
             $content = General::crawler(General::SITE_CRAWLER . $item);
             //$content = General::crawler('http://news.sky.com/story/european-parliament-demands-brexit-talks-role-as-it-picks-president-10732038');
 
@@ -963,7 +985,7 @@ class ConsoleController extends MyController
                         $src = $img->src;
                         $extension = end(explode('.', end(explode('/', $src))));
                         $name_img = $arr_data['cont_slug'] . '_' . ($key + 1) . '.' . $extension;
-                        $image_content = General::crawler('http:' . $src);
+                        $image_content = General::crawler($src);
                         //
                         if ($image_content) {
                             file_put_contents($upload_dir['path'] . '/' . $name_img, $image_content);
@@ -978,7 +1000,7 @@ class ConsoleController extends MyController
                     $src = $arr_link_image[$index];
                     $extension = end(explode('.', end(explode('/', $src))));
                     $name_img = $arr_data['cont_slug'] . '.' . $extension;
-                    $image_content = General::crawler('http:' . $src);
+                    $image_content = General::crawler($src);
                     if ($image_content) {
                         file_put_contents($upload_dir['path'] . '/' . $name_img, $image_content);
                         $arr_data['cont_main_image'] = $upload_dir['url'] . '/' . $name_img;
@@ -994,12 +1016,11 @@ class ConsoleController extends MyController
                 $arr_data['cont_detail'] = html_entity_decode($cont_detail);
                 $arr_data['cont_description'] = $cont_description;
                 $arr_data['created_date'] = time();
-                $arr_data['cate_id'] = 1;
+                $arr_data['cate_id'] = $cate;
                 $arr_data['cont_views'] = 0;
                 $arr_data['cont_status'] = 1;
 
                 //insert Data
-                $serviceContent = $this->serviceLocator->get('My\Models\Content');
                 $id = $serviceContent->add($arr_data);
 
                 if ($id) {
@@ -1011,5 +1032,19 @@ class ConsoleController extends MyController
             sleep(3);
         }
         return true;
+    }
+
+    function testAction()
+    {
+        $intPage = 1;
+        $intLimit = 20;
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        $arr_keyword = $serviceKeyword->getListLimit(array('key_status' => 1), $intPage, $intLimit);
+
+        foreach ($arr_keyword as $keyword) {
+            $key_slug = General::getSlug($keyword['key_name']);
+            $serviceKeyword->edit(array('key_slug' => $key_slug), $keyword['key_id']);
+        }
+        die("done");
     }
 }
