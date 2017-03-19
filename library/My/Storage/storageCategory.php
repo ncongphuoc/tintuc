@@ -102,12 +102,6 @@ class storageCategory extends AbstractTableGateway {
                 return false;
             }
             $result = $this->insert($p_arrParams);
-            if ($result) {
-                $result = $this->lastInsertValue;
-                $p_arrParams['cate_id'] = $result;
-                $instanceJob = new \My\Job\JobCategory();
-                $instanceJob->addJob(SEARCH_PREFIX . 'writeCategory', $p_arrParams);
-            }
             return $result;
         } catch (\Exception $exc) {
             if (APPLICATION_ENV !== 'production') {
@@ -123,11 +117,6 @@ class storageCategory extends AbstractTableGateway {
                 return false;
             }
             $result = $this->update($p_arrParams, 'cate_id=' . $intCateID);
-            if ($result) {
-                $p_arrParams['cate_id'] = $intCateID;
-                $instanceJob = new \My\Job\JobCategory();
-                $instanceJob->addJob(SEARCH_PREFIX . 'editCategory', $p_arrParams);
-            }
             return $result;
         } catch (\Zend\Http\Exception $exc) {
             if (APPLICATION_ENV !== 'production') {

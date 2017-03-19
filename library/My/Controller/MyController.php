@@ -214,9 +214,8 @@ class MyController extends AbstractActionController {
 
             //get list content hot
 
-            $arrFields = 'cont_id, cont_title, cont_slug, cate_id, created_date, cont_description';
+            $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_description, cont_main_image';
             $arr_content_hot = $serviceContent->getListHostContent(['cont_status' => 1], 1, 10, 'cont_views DESC', $arrFields);
-
             define('ARR_CONTENT_HOT_LIST', serialize($arr_content_hot));
         }
     }

@@ -19,6 +19,7 @@ class ErrorController extends MyController {
     
     
     public function e404Action() {
+        return;
     }
 
 }

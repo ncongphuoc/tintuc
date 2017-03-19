@@ -72,9 +72,6 @@ class storageKeyword extends AbstractTableGateway {
                 return false;
             }
             $result = $this->update($p_arrParams, 'key_id=' . $id);
-            if ($result) {
-                return true;
-            }
             return $result;
             
         } catch (\Exception $exc) {

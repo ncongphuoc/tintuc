@@ -3,9 +3,8 @@ $paramsRouter = $this->getHelperPluginManager()->getServiceLocator()->get('Appli
 $routeName = $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch();
 $controller = $paramsRouter['__CONTROLLER__'];
 $action = $paramsRouter['action'];
+$arr_category = unserialize(ARR_CATEGORY_INFO);
 ?>
-
-
 
 <!-- HEADER -->
 <div id="header">
@@ -16,7 +15,9 @@ $action = $paramsRouter['action'];
             Plus</a>
 
     </div>
-    <div class="headerleft"><a href="index.html" id="logo" title="Quantrimang.com"></a></div>
+    <div class="headerleft">
+        <a href="<?php echo $this->serverUrl() . $this->Url('home') ?>" id="logo" title=""></a>
+    </div>
     <div id="searchBox">
         <form action="<?php echo $this->serverUrl() . $this->Url('search') ?>" id="cse-search-box">
             <div>
@@ -36,67 +37,39 @@ $action = $paramsRouter['action'];
 <div id="mainmenu">
     <ul id="topnav" class="navigation clearfix">
         <li class="item all">
-            <a href="index.html"><img src="../img.quantrimang.com/photos/image/icon/home.png" /> Trang chủ</a>
-        </li>
-
-        <li class="item  tax-cong-nghe">
-            <a href='cong-nghe.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/technology.png" />
-                C&#244;ng nghệ
+            <a href="<?php echo $this->serverUrl() . $this->Url('home') ?>">
+                <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/icon/home.png'; ?>" /> Trang chủ
             </a>
         </li>
-        <li class="item  tax-khoa-hoc">
-            <a href='khoa-hoc.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/Physics-64.png" />
+
+        <li class="item tax-cong-nghe">
+            <a href='<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category[1]['cate_slug'], 'cateId' => $arr_category[1]['cate_id']]) ?>'>
+                <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/icon/technology.png'; ?>" />
+                Công nghệ
+            </a>
+        </li>
+        <li class="item tax-khoa-hoc">
+            <a href='<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category[2]['cate_slug'], 'cateId' => $arr_category[2]['cate_id']]) ?>'>
+                <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/icon/Physics-64.png'; ?>" />
                 Khoa học
             </a>
         </li>
-        <li class="item  tax-dien-may">
-            <a href='dien-may.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/Fridge.png" />
-                Điện m&#225;y
-            </a>
-        </li>
-        <li class="item  tax-cuoc-song">
-            <a href='cuoc-song.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/LifeCycle.png" />
+        <li class="item tax-cuoc-song">
+            <a href='<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category[10]['cate_slug'], 'cateId' => $arr_category[10]['cate_id']]) ?>'>
+                <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/icon/LifeCycle.png'; ?>" />
                 Cuộc sống
             </a>
         </li>
-        <li class="item  tax-video">
-            <a href='video.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/Video.png" />
-                Video
+        <li class="item tax-smartphone">
+            <a href='<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $arr_category[4]['cate_slug'], 'cateId' => $arr_category[4]['cate_id']]) ?>'>
+                <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/icon/apple.png'; ?>" />
+                Smartphone
             </a>
         </li>
-        <li class="item  tax-ung-dung">
-            <a href='ung-dung.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/app1.png" />
-                Ứng dụng
-            </a>
-        </li>
-        <li class="item  tax-ios">
-            <a href='ios.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/apple.png" />
-                iPhone / iPad
-            </a>
-        </li>
-        <li class="item  tax-android">
-            <a href='android.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/android.png" />
-                Android
-            </a>
-        </li>
-        <li class="item  tax-windows-10-os">
-            <a href='windows-10-os.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/windows.png" />
-                Windows 10
-            </a>
-        </li>
-        <li class="item  tax-ky-nang">
-            <a href='ky-nang.html'>
-                <img src="../img.quantrimang.com/photos/image/icon/Training.png" />
-                Kỹ năng
+        <li class="item tax-keyword">
+            <a href='keyword.html'>
+                <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/icon/Greentech.png'; ?>" />
+                Keyword
             </a>
         </li>
     </ul>

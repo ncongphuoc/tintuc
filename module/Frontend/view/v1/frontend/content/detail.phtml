@@ -23,12 +23,12 @@ $arrContentNew = $this->arrContentNew;
                     <img id="raty-3-1" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-on.png' ?>" alt="1" title="bad" class="raty-3">&nbsp;
                     <img id="raty-3-2" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-on.png' ?>" alt="2" title="poor" class="raty-3">&nbsp;
                     <img id="raty-3-3" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-on.png' ?>" alt="3" title="regular" class="raty-3">&nbsp;
-                    <img id="raty-3-4" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-off.png' ?>" alt="4" title="good" class="raty-3">&nbsp;
+                    <img id="raty-3-4" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-on.png' ?>" alt="4" title="good" class="raty-3">&nbsp;
                     <img id="raty-3-5" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/star-off.png' ?>" alt="5" title="gorgeous" class="raty-3">
                     <input id="raty-3-score" type="hidden" name="score" value="3">
                 </span>
             </li>
-            <li class="view"><?php echo $content_detail['cont_view'] ?></li>
+            <li class="view"><?php echo $content_detail['cont_views'] ?></li>
             <li class="share">
                 <div class="sharebox">
                     <div class="sharetoolbox">
@@ -43,14 +43,14 @@ $arrContentNew = $this->arrContentNew;
         </span>
         <?php if($category_parent){ ?>
         <span typeof="v:Breadcrumb" class="breadcrumb">
-            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $category_parent['cont_slug'], 'contentId' => $category_parent['cont_id']]) ?>">
+            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $category_parent['cate_slug'], 'cateId' => $category_parent['cate_id']]) ?>">
                 <?php echo $category_parent['cate_name'] ?></a>
         </span>
         <?php } ?>
 
         <?php if($category_detail){ ?>
             <span typeof="v:Breadcrumb" class="breadcrumb">
-            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $category_detail['cont_slug'], 'contentId' => $category_detail['cont_id']]) ?>">
+            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $category_detail['cate_slug'], 'cateId' => $category_detail['cate_id']]) ?>">
                 <?php echo $category_detail['cate_name'] ?></a>
         </span>
         <?php } ?>

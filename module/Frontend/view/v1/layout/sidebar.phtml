@@ -12,10 +12,10 @@ $arr_content_hot = unserialize(ARR_CONTENT_HOT_LIST);
     <ul>
         <?php foreach ($arr_content_hot as $content): ?>
         <li class="item-top">
-            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $arr_content['cont_slug'], 'contentId' => $arr_content['cont_id']]) ?>">
-                <img src="<?php echo $arr_content['cont_main_image'] ?>"
-                     alt="<?php echo $arr_content['cont_title'] ?>"/>
-                <?php echo $arr_content['cont_title'] ?>
+            <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>">
+                <img src="<?php echo $content['cont_main_image'] ?>"
+                     alt="<?php echo $content['cont_title'] ?>"/>
+                <?php echo $content['cont_title'] ?>
             </a>
         </li>
         <?php endforeach; ?>

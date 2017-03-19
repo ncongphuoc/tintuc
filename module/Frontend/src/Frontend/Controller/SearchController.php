@@ -25,7 +25,10 @@ class SearchController extends MyController
             }
 
             $key_name = General::clean($params['keyword']);
-
+echo "<pre>";
+print_r($key_name);
+echo "</pre>";
+die;
             $intPage = (int)$params['page'] > 0 ? (int)$params['page'] : 1;
             $intLimit = 10;
 
@@ -44,11 +47,7 @@ class SearchController extends MyController
             $paging = $helper($params['module'], $params['__CONTROLLER__'], $params['action'], $intTotal, $intPage, $intLimit, 'search', $params);
 
             $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
-            echo "<pre>";
-            print_r($helper_title);
-            echo "</pre>";
-            die;
-            $helper_title()->setTitle('sssss');
+            $helper_title()->setTitle($params['keyword'] . General::TITLE_META);
 
             //get keyword
             $listContent = array();

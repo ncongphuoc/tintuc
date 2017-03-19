@@ -91,7 +91,7 @@ return array(
             'keyword' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/keyword[[/:keySlug]-[:keyId].html[?page=:page]]',
+                    'route' => '/tu-khoa[[/:keySlug]-[:keyId].html[?page=:page]]',
                     'constraints' => array(
                         'controller' => 'search',
                         'action' => 'keyword',
@@ -152,7 +152,7 @@ return array(
             'view-content' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/content[[/:contentSlug]-[:contentId].html]',
+                    'route' => '/bai-viet[[/:contentSlug]-[:contentId].html]',
                     'constraints' => array(
                         'module' => 'frontend',
                         'controller' => 'content',
@@ -226,7 +226,7 @@ return array(
             'category' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/category/[[:cateSlug]-[:cateId]][/page[/:page]][.html]',
+                    'route' => '/danh-muc/[[:cateSlug]-[:cateId]][/page[/:page]][.html]',
                     'constraints' => array(
                         'controller' => 'category',
                         'action' => 'index',

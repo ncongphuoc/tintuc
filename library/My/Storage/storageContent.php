@@ -143,12 +143,6 @@ class storageContent extends AbstractTableGateway {
             $adapter->createStatement($query)->execute();
             $cont_id = $adapter->getDriver()->getLastGeneratedValue();
             //
-            if ($cont_id) {
-                $p_arrParams['cont_id'] = $cont_id;
-                $instanceSearch = new \My\Search\Content();
-                $arrDocument = new \Elastica\Document($cont_id, $p_arrParams);
-                $instanceSearch->add($arrDocument);
-            }
             return $cont_id;
         } catch (\Exception $exc) {
             $actor = array(
@@ -173,15 +167,6 @@ class storageContent extends AbstractTableGateway {
                 return false;
             }
             $result = $this->update($p_arrParams, 'cont_id=' . $intContentID);
-            if ($result) {
-                $updateData = new \Elastica\Document();
-                $updateData->setData($p_arrParams);
-                $document = new \Elastica\Document($intContentID, $p_arrParams);
-                $document->setUpsert($updateData);
-
-                $instanceSearch = new \My\Search\Content();
-                $instanceSearch->edit($document);
-            }
             return $result;
         } catch (\Exception $exc) {
             $actor = array(
@@ -231,15 +216,6 @@ class storageContent extends AbstractTableGateway {
             }
             $strWhere = $this->_buildWhere($arrCondition);
             $result = $this->update($p_arrParams, '1=1 ' . $strWhere);
-            
-            if ($result) {
-                $arrData = [
-                    'data' => $p_arrParams,
-                    'condition' => $arrCondition
-                ];
-                $instanceJob = new \My\Job\JobContent();
-                $instanceJob->addJob(SEARCH_PREFIX . 'multiEditContent', $arrData);
-            }
             return $result;
         } catch (\Exception $exc) {
             $actor = array(
