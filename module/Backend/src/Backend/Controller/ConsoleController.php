@@ -1034,6 +1034,41 @@ class ConsoleController extends MyController
         return true;
     }
 
+    public function searchFullText($object, $str_search)
+    {
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        $serviceContent = $this->serviceLocator->get('My\Models\Content');
+        //
+        $intPage = 1;
+        $intLimit = 10;
+        switch ($object) {
+            case 'keyword':
+                $arr_condition = array(
+                    'fulltext_key_name' => $str_search
+                );
+                $arr_keyword = $serviceKeyword->getListLimit($arr_condition, $intPage, $intLimit);
+                $str_id = '';
+                foreach ($arr_keyword as $keyword) {
+                    $str_id .=  $keyword . ',';
+                }
+                $result = rtrim($str_id, ',');
+                break;
+            case 'content':
+                $arr_condition = array(
+                    'fulltext_cont_title' => $str_search
+                );
+                $arr_content = $serviceContent->getListLimit($arr_condition, $intPage, $intLimit,'cont_id DESC', 'cont_id');
+                $str_id = '';
+                foreach ($arr_content as $content) {
+                    $str_id .=  $content . ',';
+                }
+                $result = rtrim($str_id, ',');
+                break;
+        }
+
+        return $result;
+    }
+
     function testAction()
     {
         $intPage = 1;

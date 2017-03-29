@@ -273,6 +273,10 @@ class storageContent extends AbstractTableGateway {
             $strWhere .= " AND cont_id IN (" . $arrCondition['in_cont_id'] . ")";
         }
 
+        if (!empty($arrCondition['fulltext_cont_title'])) {
+            $strWhere .= " AND MATCH (cont_title) AGAINST (" . $arrCondition['fulltext_cont_title'] . ")";
+        }
+
         return $strWhere;
     }
 
