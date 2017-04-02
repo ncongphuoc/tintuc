@@ -258,7 +258,11 @@ class storageContent extends AbstractTableGateway {
         }
 
         if (!empty($arrCondition['cate_id'])) {
-            $strWhere .= " AND cate_id= " . $arrCondition['cate_id'];
+            $strWhere .= " AND cate_id = " . $arrCondition['cate_id'];
+        }
+
+        if (!empty($arrCondition['cont_keyword'])) {
+            $strWhere .= " AND cont_keyword = " . $arrCondition['cont_keyword'];
         }
 
         if (!empty($arrCondition['in_cate_id'])) {

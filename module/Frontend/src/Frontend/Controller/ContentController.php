@@ -123,7 +123,7 @@ class ContentController extends MyController
         $this->renderer->headLink(array('rel' => 'amphtml', 'href' => BASE_URL . $this->url()->fromRoute('view-content', ['contentSlug' => $arrContent['cont_slug'], 'contentId' => $cont_id])));
         $this->renderer->headLink(array('rel' => 'canonical', 'href' => BASE_URL . $this->url()->fromRoute('view-content', ['contentSlug' => $arrContent['cont_slug'], 'contentId' => $cont_id])));
 
-        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_resize_image, created_date, cont_description';
+        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
         $arrContentCate = $serviceContent->getListLimit(
             ['cate_id' => $arrContent['cate_id'], 'not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
             1,
@@ -133,7 +133,7 @@ class ContentController extends MyController
         );
 
 //      //content like title
-        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_resize_image, created_date, cont_description';
+        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
         $arrContentNew = $serviceContent->getListLimit(
             ['not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
             1,

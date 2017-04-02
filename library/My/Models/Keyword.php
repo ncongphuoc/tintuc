@@ -21,6 +21,15 @@ class Keyword extends ModelAbstract {
         $arrResult = $this->getParentTable()->getListLimit($arrCondition, $intPage, $intLimit, $strOrder);
         return $arrResult;
     }
+
+    public function getDetail($arrCondition) {
+        $arrResult = $this->getParentTable()->getDetail($arrCondition);
+        return $arrResult;
+    }
+
+    public function getTotal($arrCondition) {
+        return $this->getParentTable()->getTotal($arrCondition);
+    }
     
     public function edit($p_arrParams, $intContentID) {
         $intResult = $this->getParentTable()->edit($p_arrParams, $intContentID);

@@ -211,13 +211,14 @@ class ConsoleController extends MyController
 
     public function getKeyword()
     {
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        //
         $match = [
             '', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
         ];
-        $instanceSearchKeyWord = new \My\Search\Keyword();
-        $arr_keyword = current($instanceSearchKeyWord->getListLimit(['is_crawler' => 0], 1, 1, ['key_weight' => ['order' => 'desc'], 'key_id' => ['order' => 'asc']]));
 
-        unset($instanceSearchKeyWord);
+        $arr_keyword = current($serviceKeyword->getListLimit(['is_crawler' => 0], 1, 1, 'key_id ASC, key_weight DESC'));
+
         if (empty($arr_keyword)) {
             return;
         }
@@ -225,7 +226,6 @@ class ConsoleController extends MyController
         $keyword = $arr_keyword['key_name'];
         $count = str_word_count($keyword);
         if ($count > 6) {
-            $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
             $int_result = $serviceKeyword->edit(array('is_crawler' => 1, 'key_weight' => 1), $arr_keyword['key_id']);
             unset($serviceKeyword);
 
@@ -255,14 +255,13 @@ class ConsoleController extends MyController
                     }
                     $url = 'http://www.google.com/complete/search?output=search&client=chrome&q=' . rawurlencode($key_match) . '&hl=vi&gl=vn';
                     $return = General::crawler($url);
-                    $this->add_keyword(json_decode($return)[1], $arr_keyword);
+                    $this->add_keyword(json_decode($return)[1]);
                     continue;
                 }
             }
             sleep(3);
         };
 
-        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         $int_result = $serviceKeyword->edit(array('is_crawler' => 1, 'key_weight' => 1), $arr_keyword['key_id']);
         unset($serviceKeyword);
 
@@ -274,7 +273,7 @@ class ConsoleController extends MyController
         $this->getKeyword();
     }
 
-    public function add_keyword($arr_key, $keyword_detail = null)
+    public function add_keyword($arr_key)
     {
         if (empty($arr_key)) {
             return false;
@@ -282,13 +281,12 @@ class ConsoleController extends MyController
 
         $arr_block_string = General::blockString();
 
-        $instanceSearchKeyWord = new \My\Search\Keyword();
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         foreach ($arr_key as $key_word) {
 
             $word_slug = trim(General::getSlug($key_word));
-            $is_exsit = $instanceSearchKeyWord->getDetail(['key_slug' => $word_slug]);
-//print_r($is_exsit);die;
+            $is_exsit = $serviceKeyword->getDetail(['key_slug' => $word_slug]);
+
             if ($is_exsit) {
                 echo \My\General::getColoredString("Exsit keyword: " . $word_slug, 'red');
                 continue;
@@ -315,7 +313,6 @@ class ConsoleController extends MyController
             }
             $this->flush();
         }
-        unset($instanceSearchKeyWord);
         return true;
     }
 
@@ -463,11 +460,11 @@ class ConsoleController extends MyController
 
     public function siteMapSearch()
     {
-        $instanceSearchKeyword = new \My\Search\Keyword();
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         $intLimit = 4000;
         for ($intPage = 1; $intPage < 10000; $intPage++) {
             $file = PUBLIC_PATH . '/xml/keyword-' . $intPage . '.xml';
-            $arrKeyList = $instanceSearchKeyword->getListLimit(['not_content_crawler' => 1], $intPage, $intLimit, ['key_id' => ['order' => 'asc']]);
+            $arrKeyList = $serviceKeyword->getListLimit(['not_content_crawler' => 1], $intPage, $intLimit, 'key_id ASC');
 
             if (empty($arrKeyList)) {
                 break;
@@ -722,11 +719,10 @@ class ConsoleController extends MyController
             shell_exec('kill -9 ' . $PID);
         }
 
-        $instanceSearchKeyword = new \My\Search\Keyword();
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         //
         $limit = 100;
-        $arr_keyword = $instanceSearchKeyword->getListLimit(['content_crawler' => 1, 'key_id_greater' => 333377], 1, $limit, ['key_id' => ['order' => 'asc']]);
+        $arr_keyword = $serviceKeyword->getListLimit(['content_crawler' => 1], 1, $limit, 'key_id ASC');
 
         foreach ($arr_keyword as $keyword) {
             //$url = 'http://coccoc.com/composer?q=' . rawurlencode($keyword['key_name']) . '&p=0&reqid=UqRAi2nK&_=1480603345568';
@@ -1019,6 +1015,7 @@ class ConsoleController extends MyController
                 $arr_data['cate_id'] = $cate;
                 $arr_data['cont_views'] = 0;
                 $arr_data['cont_status'] = 1;
+                $arr_data['cont_keyword'] = 1;
 
                 //insert Data
                 $id = $serviceContent->add($arr_data);
@@ -1049,7 +1046,7 @@ class ConsoleController extends MyController
                 $arr_keyword = $serviceKeyword->getListLimit($arr_condition, $intPage, $intLimit);
                 $str_id = '';
                 foreach ($arr_keyword as $keyword) {
-                    $str_id .=  $keyword . ',';
+                    $str_id .= $keyword . ',';
                 }
                 $result = rtrim($str_id, ',');
                 break;
@@ -1057,10 +1054,10 @@ class ConsoleController extends MyController
                 $arr_condition = array(
                     'fulltext_cont_title' => $str_search
                 );
-                $arr_content = $serviceContent->getListLimit($arr_condition, $intPage, $intLimit,'cont_id DESC', 'cont_id');
+                $arr_content = $serviceContent->getListLimit($arr_condition, $intPage, $intLimit, 'cont_id DESC', 'cont_id');
                 $str_id = '';
                 foreach ($arr_content as $content) {
-                    $str_id .=  $content . ',';
+                    $str_id .= $content . ',';
                 }
                 $result = rtrim($str_id, ',');
                 break;
@@ -1069,17 +1066,37 @@ class ConsoleController extends MyController
         return $result;
     }
 
-    function testAction()
+    function getKeywordContentAction()
     {
         $intPage = 1;
         $intLimit = 20;
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
-        $arr_keyword = $serviceKeyword->getListLimit(array('key_status' => 1), $intPage, $intLimit);
+        $serviceContent = $this->serviceLocator->get('My\Models\Content');
 
-        foreach ($arr_keyword as $keyword) {
-            $key_slug = General::getSlug($keyword['key_name']);
-            $serviceKeyword->edit(array('key_slug' => $key_slug), $keyword['key_id']);
+        $arr_content = $serviceContent->getListLimit(array('cont_keyword' => '1'), $intPage, $intLimit, 'cont_id ASC', 'cont_id, cont_title');
+
+        foreach ($arr_content as $content) {
+            $arr_keyword = $serviceKeyword->getListLimit(['fulltext_key_name' => $content['cont_title']], 1, 10);
+            //
+            $list_keyword = '';
+            if (empty($arr_keyword)) {
+                $total = $serviceKeyword->getTotal();
+                $arr_id = array();
+                for ($i = 1; $i <= 15; $i++) {
+                    $arr_id[] = rand(1, $total);
+                }
+                $arr_keyword = $serviceKeyword->getListLimit(['in_key_id' => implode(',', $arr_id)], 1, 10);
+            }
+
+            if(!empty($arr_keyword)) {
+                $arr_temp = array();
+                foreach ($arr_keyword as $keyword) {
+                    $arr_temp[] = $keyword['key_id'];
+                }
+                $list_keyword = implode(',', $arr_temp);
+            }
+            //edit content
+            $serviceContent->edit(array('cont_keyword' => $list_keyword), $content['cont_id']);
         }
-        die("done");
     }
 }
