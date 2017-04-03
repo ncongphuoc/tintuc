@@ -17,7 +17,7 @@
     <meta name="apple-mobile-web-app-title" content="Tuoitre.mobi"/>
     <meta name="application-name" content="Tuoitre.mobi"/>
     <link rel="apple-touch-icon" href="favicon.192.png"/>
-    <link rel="icon" sizes="192x192" href="<?php echo STATIC_URL . '/f/favicon.ico'; ?>"/>
+    <link rel="icon" sizes="192x192" href="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/favicon.png'; ?>"/>
 
     <!--    <script async src="../pagead2.googlesyndication.com/pagead/js/f.txt"></script>-->
 <!--    <script>-->
@@ -58,6 +58,7 @@ $action = $paramsRouter['action'];
 
     <?php echo \My\Minifier\HtmlMin::minify($this->render('frontend/footer')); ?>
 </div>
-<?php echo $this->headScript(); ?>
+
+<script type="text/javascript" src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/js/library/main.js'; ?>"></script>
 </body>
 </html>
