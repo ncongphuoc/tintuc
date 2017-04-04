@@ -31,7 +31,7 @@ class ContentController extends MyController
         //
         $serviceContent = $this->serviceLocator->get('My\Models\Content');
         $serviceCategory = $this->serviceLocator->get('My\Models\Category');
-        $instanceSearchContent = new \My\Search\Content();
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         //
         $cont_id = (int)$params['contentId'];
         $cont_slug = $params['contentSlug'];
@@ -80,6 +80,26 @@ class ContentController extends MyController
             $categoryParent = $serviceCategory->getDetail(array('cate_id'=>$categoryDetail['parent_id']));
         }
 
+        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
+        $arrContentCate = $serviceContent->getListLimit(
+            ['cate_id' => $arrContent['cate_id'], 'not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
+            1,
+            6,
+            'cont_id DESC',
+            $arrFields
+        );
+
+//      //content like title
+        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
+        $arrContentNew = $serviceContent->getListLimit(
+            ['not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
+            1,
+            7,
+            'cont_id DESC',
+            $arrFields
+        );
+
+        $arrKeywordList = $serviceKeyword->getListLimit(array('in_key_id' => $arrContent['cont_keyword']), 1, 10);
 
         $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
         $helper_title->setTitle(html_entity_decode($metaTitle) . General::TITLE_META);
@@ -123,28 +143,8 @@ class ContentController extends MyController
         $this->renderer->headLink(array('rel' => 'amphtml', 'href' => BASE_URL . $this->url()->fromRoute('view-content', ['contentSlug' => $arrContent['cont_slug'], 'contentId' => $cont_id])));
         $this->renderer->headLink(array('rel' => 'canonical', 'href' => BASE_URL . $this->url()->fromRoute('view-content', ['contentSlug' => $arrContent['cont_slug'], 'contentId' => $cont_id])));
 
-        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
-        $arrContentCate = $serviceContent->getListLimit(
-            ['cate_id' => $arrContent['cate_id'], 'not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
-            1,
-            6,
-            'cont_id DESC',
-            $arrFields
-        );
 
-//      //content like title
-        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
-        $arrContentNew = $serviceContent->getListLimit(
-            ['not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
-            1,
-            7,
-            'cont_id DESC',
-            $arrFields
-        );
-//
-        //lấy 10 keyword
-        $instanceSearchKeyword = new \My\Search\Keyword();
-        $arrKeywordList = $instanceSearchKeyword->getListLimit(['full_text_keyname' => $arrContent['cont_title'],'not_cate_id'=>-2], 1, 10, ['_score' => ['order' => 'desc']]);
+
 
         return array(
             'params' => $params,

@@ -182,12 +182,20 @@ class storageKeyword extends AbstractTableGateway {
             $strWhere .= ' AND key_status = ' . $arrCondition['key_status'];
         }
 
+        if(isset($arrCondition['key_id'])) {
+            $strWhere .= ' AND key_id = ' . $arrCondition['key_id'];
+        }
+
         if(isset($arrCondition['key_slug'])) {
             $strWhere .= ' AND key_slug = "' . $arrCondition['key_slug'] . '"';
         }
 
         if(isset($arrCondition['in_key_id'])) {
             $strWhere .= ' AND key_id IN (' . $arrCondition['in_key_id'] . ')';
+        }
+
+        if(isset($arrCondition['content_id'])) {
+            $strWhere .= ' AND content_id ="' . $arrCondition['content_id'] . '"';
         }
 
         if (!empty($arrCondition['fulltext_key_name'])) {

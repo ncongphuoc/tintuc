@@ -1066,7 +1066,7 @@ class ConsoleController extends MyController
         return $result;
     }
 
-    function getKeywordContentAction()
+    function getKeywordContent()
     {
         $intPage = 1;
         $intLimit = 20;
@@ -1098,5 +1098,53 @@ class ConsoleController extends MyController
             //edit content
             $serviceContent->edit(array('cont_keyword' => $list_keyword), $content['cont_id']);
         }
+    }
+
+    function getContentKeyword()
+    {
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        $serviceContent = $this->serviceLocator->get('My\Models\Content');
+
+        $intLimit = 20;
+
+        for($i = 1; $i < 1000; $i ++) {
+            $arr_keyword = $serviceKeyword->getListLimit(array('content_id' => 1), 1, $intLimit, 'key_id ASC');
+
+            if(empty($arr_keyword)) {
+                break;
+            }
+            //
+            foreach ($arr_keyword as $keyword) {
+                $arr_content = $serviceContent->getListLimit(['fulltext_cont_title' => $keyword['key_name']], 1, 10, 'cont_id ASC', 'cont_id');
+                //
+                if (empty($arr_content)) {
+                    $total = $serviceContent->getTotal();
+                    $arr_id = array();
+                    for ($i = 1; $i <= 15; $i++) {
+                        $arr_id[] = rand(1, $total);
+                    }
+                    $arr_content = $serviceContent->getListLimit(['in_cont_id' => implode(',', $arr_id)], 1, 10, 'cont_id ASC', 'cont_id');
+                }
+
+                if (!empty($arr_content)) {
+                    $arr_temp = array();
+                    $list_content = '';
+                    //
+                    foreach ($arr_content as $content) {
+                        $arr_temp[] = $content['cont_id'];
+                    }
+                    $list_content = implode(',', $arr_temp);
+
+                    //edit content
+                    $serviceKeyword->edit(array('content_id' => $list_content), $keyword['key_id']);
+                }
+                sleep(0.5);
+            }
+        }
+    }
+
+    function testAction() {
+        $this->getContentKeyword();
+        die("done");
     }
 }

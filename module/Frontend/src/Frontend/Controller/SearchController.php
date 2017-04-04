@@ -25,10 +25,7 @@ class SearchController extends MyController
             }
 
             $key_name = General::clean($params['keyword']);
-echo "<pre>";
-print_r($key_name);
-echo "</pre>";
-die;
+
             $intPage = (int)$params['page'] > 0 ? (int)$params['page'] : 1;
             $intLimit = 10;
 
@@ -103,62 +100,40 @@ die;
             $key_id = (int)$params['keyId'];
             $key_slug = $params['keySlug'];
 
+            $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+            $serviceContent = $this->serviceLocator->get('My\Models\Content');
+
             if (empty($key_id)) {
                 return $this->redirect()->toRoute('404', array());
             }
-
-            $instanceSearch = new \My\Search\Keyword();
-            $serviceContent = $this->serviceLocator->get('My\Models\Content');
             //
-            $arrKeyDetail = $instanceSearch->getDetail(['key_id' => $key_id]);
+            $arrKeyDetail = $serviceKeyword->getDetail(['key_id' => $key_id]);
 
             if (empty($arrKeyDetail)) {
                 return $this->redirect()->toRoute('404', array());
             }
-            if(empty($arrKeyDetail['key_content']) || $arrKeyDetail['key_content'] == '0') {
-                $arr_condition_content = array(
-                    'cont_status' => 1,
-                    'full_text_title' => $arrKeyDetail['key_name']
-                );
 
-                if ($arrKeyDetail['cate_id'] != -1 && $arrKeyDetail['cate_id'] != -2) {
-                    $arr_condition_content['in_cate_id'] = array($arrKeyDetail['cate_id']);
-                }
-                $intPage = 1;
-                $intLimit = 15;
+            $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, cont_keyword, cont_description';
+            $arr_condition_content = array(
+                'cont_status' => 1,
+                'in_cont_id' => $arrKeyDetail['content_id']
+            );
+            $arrResult = $serviceContent->getList($arr_condition_content, 'cont_id ASC', $arrFields);
 
-                $arrFields = array('cont_id', 'cont_title', 'cont_slug', 'cate_id','cont_resize_image','created_date','cont_description');
-                $instanceSearchContent = new \My\Search\Content();
-                $arrContentList = $instanceSearchContent->getListLimit($arr_condition_content, $intPage, $intLimit, ['_score' => ['order' => 'desc']],$arrFields);
-
-            } else {
-                $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_resize_image, created_date, cont_description';
-                $arr_condition_content = array(
-                    'cont_status' => 1,
-                    'in_cont_id' => $arrKeyDetail['key_content']
-                );
-                $arrResult = $serviceContent->getList($arr_condition_content, $arrFields);
-                $arrContentList = array();
-                $arr_temp = array();
-                foreach ($arrResult as $content){
-                    $arr_temp[$content['cont_id']] = $content;
-                }
-
-                $arr_cont_id = explode(',', $arrKeyDetail['key_content']);
-                foreach ($arr_cont_id as $cont_id){
-                    $arrContentList[] = $arr_temp[$cont_id];
-                }
+            $arrContentList = array();
+            $arr_temp = array();
+            foreach ($arrResult as $content){
+                $arrContentList[$content['cont_id']] = $content;
             }
+
             //get keyword
             $listContent = array();
-            $instanceSearchKeyword = new \My\Search\Keyword();
             foreach ($arrContentList as $content) {
                 $listContent[$content['cont_id']] = $content;
                 $arrCondition = array(
-                    'full_text_keyname' => $content['cont_title'],
-                    'in_cate_id' => array($content['cate_id'], -1)
+                    'in_key_id' => $content['cont_keyword']
                 );
-                $arrKeywordList = $instanceSearchKeyword->getListLimit($arrCondition, 1, 3, ['_score' => ['order' => 'desc']]);
+                $arrKeywordList = $serviceKeyword->getListLimit($arrCondition, 1, 5);
                 $listContent[$content['cont_id']]['list_keyword'] = $arrKeywordList;
             }
 

@@ -31,8 +31,8 @@ class Keyword extends ModelAbstract {
         return $this->getParentTable()->getTotal($arrCondition);
     }
     
-    public function edit($p_arrParams, $intContentID) {
-        $intResult = $this->getParentTable()->edit($p_arrParams, $intContentID);
+    public function edit($p_arrParams, $intKeywordID) {
+        $intResult = $this->getParentTable()->edit($p_arrParams, $intKeywordID);
         return $intResult;
     }
 
