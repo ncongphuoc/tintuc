@@ -21,6 +21,8 @@ $arr_content = $this->arrContentList;
                                  alt="<?php echo $content['cont_title'] ?>">
                         </a>
                         <div class="desc"><?php echo $content['cont_description'] ?></div>
+                        
+                        <?php if($content['list_keyword']){ ?>
                         <div class="tag">
                             <ul class="td-tags-keyword clearfix">
                                 <li><span>Xem thêm: </span></li>
@@ -31,6 +33,7 @@ $arr_content = $this->arrContentList;
                                 <?php } ?>
                             </ul>
                         </div>
+                        <?php } ?>
 
                     </li>
                 <?php endforeach;

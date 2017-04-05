@@ -99,8 +99,11 @@ class ContentController extends MyController
             $arrFields
         );
 
-        $arrKeywordList = $serviceKeyword->getListLimit(array('in_key_id' => $arrContent['cont_keyword']), 1, 10);
-
+        $arrKeywordList = array();
+        if($arrContent['cont_keyword'] != '1') {
+            $arrKeywordList = $serviceKeyword->getListLimit(array('in_key_id' => $arrContent['cont_keyword']), 1, 10);
+        }
+        
         $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
         $helper_title->setTitle(html_entity_decode($metaTitle) . General::TITLE_META);
 

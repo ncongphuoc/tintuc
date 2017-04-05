@@ -11,9 +11,7 @@ class CategoryController extends MyController {
     /* @var $serviceProperties \My\Models\Properties */
 
     public function __construct() {
-//        $this->externalJS = [
-//            STATIC_URL . '/f/v1/js/library/??jquery.swipemenu.init.js'
-//        ];
+
     }
 
     public function indexAction() {
@@ -54,11 +52,6 @@ class CategoryController extends MyController {
 
         $helper = $this->serviceLocator->get('viewhelpermanager')->get('Paging');
         $paging = $helper($params['module'], $params['__CONTROLLER__'], $params['action'], $intTotal, $intPage, $intLimit, 'category', $params);
-
-        //50 KEYWORD :)
-        $instanceSearchKeyword = new \My\Search\Keyword();
-        $arrKeywordList = $instanceSearchKeyword->getListLimit(['full_text_keyname' => 'trẻ em'], 1, 50, ['_score' => ['order' => 'desc']]);
-
         //
         $metaTitle = $categoryDetail['cate_meta_title'] ? $categoryDetail['cate_meta_title'] : $categoryDetail['cate_name'];
         $metaKeyword = $categoryDetail['cate_meta_keyword'] ? $categoryDetail['cate_meta_keyword'] : NULL;

@@ -62,6 +62,7 @@ $arrContentNew = $this->arrContentNew;
         <span class="date">Cập nhật: <?php echo date('d-m-Y',$content_detail['created_date']); ?></span>
     </div>
 
+    <?php if($arrKeywordList) { ?>
     <div class="tag">
         <ul class="td-tags clearfix">
             <li><span>Xem thêm: </span></li>
@@ -72,6 +73,8 @@ $arrContentNew = $this->arrContentNew;
             <?php } ?>
         </ul>
     </div>
+    <?php } ?>
+    
     <div class="adbox">
         <!-- Links - Dapung2 -->
     </div>
