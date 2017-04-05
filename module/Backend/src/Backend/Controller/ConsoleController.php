@@ -10,7 +10,17 @@ use My\General,
 class ConsoleController extends MyController
 {
     const IMAGE_DEFAULT = STATIC_URL . '/f/v1/images/no-image-available.jpg';
-    const DIV_ADS = '<div id="adsarticletop" class="adbox">SCRIPT ADS</div>';
+    const DIV_ADS = '<div id="adsarticletop" class="adbox">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<!-- tuoitre.mobi -->
+		<ins class="adsbygoogle"
+			 style="display:inline-block;"
+			 data-ad-client="ca-pub-9166980393030854"
+			 data-ad-slot="5007199245"></ins>
+		<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+		</div>';
 
     public function __construct()
     {
@@ -849,7 +859,8 @@ class ConsoleController extends MyController
         $arr_url = array(
             2 => 'ung-dung',
             3 => 'he-thong',
-            4 => 'ios', 'android',
+            4 => 'ios',
+            4 => 'android',
             5 => 'phan-cung',
             //
             7 => 'bi-an-chuyen-la',
@@ -874,159 +885,164 @@ class ConsoleController extends MyController
         $serviceContent = $this->serviceLocator->get('My\Models\Content');
         $upload_dir = General::mkdirUpload();
 
-        $page = 1;
-        $url_default = 'https://quantrimang.com/';
-        $url_crawler = $url_default . $tail_url;
-        //
-        $url = $url_crawler . '?p=' . $page;
-        $content = General::crawler($url);
-        $dom = HtmlDomParser::str_get_html($content);
+        for ($page = 1; $page <=20; $page ++) {
+            $url_default = 'https://quantrimang.com/';
+            $url_crawler = $url_default . $tail_url;
+            //
+            $url = $url_crawler . '?p=' . $page;
+            $content = General::crawler($url);
+            $dom = HtmlDomParser::str_get_html($content);
 
 
-        $dom_link_content = $dom->find('div.listview ul li.listitem a.title');
-        $dom_link_image = $dom->find('div.listview ul li.listitem a.thumb img');
-        $dom_description = $dom->find('div.listview ul li.listitem div.desc');
+            $dom_link_content = $dom->find('div.listview ul li.listitem a.title');
+            $dom_link_image = $dom->find('div.listview ul li.listitem a.thumb img');
+            $dom_description = $dom->find('div.listview ul li.listitem div.desc');
 
-        $arr_link_content = array();
-        $arr_link_image = array();
-        $arr_description = array();
-        // arr content
-        foreach ($dom_link_content as $conent) {
-            $link_content = '';
-            if ($conent->href) {
-                $link_content = $conent->href;
-            }
-            $arr_link_content[] = $link_content;
-        }
-
-        // arr image
-        foreach ($dom_link_image as $img) {
-            $link_img = '';
-            if ($img->src) {
-                $link_img = $img->src;
-            }
-            $arr_link_image[] = $link_img;
-        }
-
-        // arr description
-        foreach ($dom_description as $desc) {
-            $description = '';
-            if ($desc->plaintext) {
-                $description = $desc->plaintext;
-            }
-            $arr_description[] = $description;
-        }
-
-        if (empty($arr_link_content)) {
-            return false;
-        }
-
-        //
-        foreach ($arr_link_content as $index => $item) {
-            if ($index == 2) {
+            if (empty($dom_link_content) || empty($dom_link_image) || empty($dom_description)) {
                 break;
             }
-            $content = General::crawler(General::SITE_CRAWLER . $item);
-            //$content = General::crawler('http://news.sky.com/story/european-parliament-demands-brexit-talks-role-as-it-picks-president-10732038');
-
-            if ($content == false) {
-                continue;
+            $arr_link_content = array();
+            $arr_link_image = array();
+            $arr_description = array();
+            // arr content
+            foreach ($dom_link_content as $conent) {
+                $link_content = '';
+                if ($conent->href) {
+                    $link_content = $conent->href;
+                }
+                $arr_link_content[] = $link_content;
             }
 
-            $html = HtmlDomParser::str_get_html($content);
+            // arr image
+            foreach ($dom_link_image as $img) {
+                $link_img = '';
+                if ($img->src) {
+                    $link_img = $img->src;
+                }
+                $arr_link_image[] = $link_img;
+            }
 
-            $arr_data = array();
-            if ($html->find('div.content-detail', 0)) {
+            // arr description
+            foreach ($dom_description as $desc) {
+                $description = '';
+                if ($desc->plaintext) {
+                    $description = $desc->plaintext;
+                }
+                $arr_description[] = $description;
+            }
 
-                $cont_title = trim(html_entity_decode($html->find("div.post-detail h1", 0)->plaintext));
-                $arr_data['cont_title'] = $cont_title;
-                $arr_data['cont_slug'] = General::getSlug($cont_title);
+            if (empty($arr_link_content)) {
+                return false;
+            }
 
-                //check post exist
-                $arrConditionContent = [
-                    'cont_slug' => $arr_data['cont_slug'],
-                    'not_cont_status' => -1
-                ];
+            //
+            foreach ($arr_link_content as $index => $item) {
+                if ($index == 2) {
+                    break;
+                }
+                $content = General::crawler(General::SITE_CRAWLER . $item);
+                //$content = General::crawler('http://news.sky.com/story/european-parliament-demands-brexit-talks-role-as-it-picks-president-10732038');
 
-                $arrContent = $serviceContent->getDetail($arrConditionContent);
-                if (!empty($arrContent)) {
-                    echo \My\General::getColoredString("Exist this content:" . $arr_data['cont_slug'], 'red');
+                if ($content == false) {
                     continue;
                 }
 
-                //get content detail
-                $cont_description = $arr_description[$index];
-                $cont_description = str_replace(General::NAME_CRAWLER, General::SITE_NAME, $cont_description);
+                $html = HtmlDomParser::str_get_html($content);
 
+                $arr_data = array();
+                if ($html->find('div.content-detail', 0)) {
 
-                $html->find('div.content-detail div#adsarticletop', 0)->innertext = '';
-                $cont_detail = $html->find('div.content-detail', 0)->outertext;
-                $cont_detail = str_replace(General::NAME_CRAWLER, General::SITE_NAME, $cont_detail);
-                $cont_detail = str_replace('<div id="adsarticletop" class="adbox"></div>', self::DIV_ADS, $cont_detail);
-                //
-                $link_content = $html->find("div.content-detail a");
+                    $cont_title = trim(html_entity_decode($html->find("div.post-detail h1", 0)->plaintext));
+                    $arr_data['cont_title'] = $cont_title;
+                    $arr_data['cont_slug'] = General::getSlug($cont_title);
 
-                if (count($link_content) > 0) {
-                    foreach ($link_content as $link) {
-                        $href = $link->href;
-                        $cont_detail = str_replace($href, BASE_URL, $cont_detail);
+                    //check post exist
+                    $arrConditionContent = [
+                        'cont_slug' => $arr_data['cont_slug'],
+                        'not_cont_status' => -1
+                    ];
+
+                    $arrContent = $serviceContent->getDetail($arrConditionContent);
+                    if (!empty($arrContent)) {
+                        echo \My\General::getColoredString("Exist this content:" . $arr_data['cont_slug'], 'red');
+                        continue;
                     }
-                }
+
+                    //get content detail
+                    $cont_description = $arr_description[$index];
+                    $cont_description = str_replace(General::NAME_CRAWLER, General::SITE_NAME, $cont_description);
 
 
-                //get image
-                $arr_image = $html->find("div.content-detail img");
-                if (count($arr_image) > 0) {
-                    foreach ($arr_image as $key => $img) {
-                        $src = $img->src;
-                        $extension = end(explode('.', end(explode('/', $src))));
-                        $name_img = $arr_data['cont_slug'] . '_' . ($key + 1) . '.' . $extension;
-                        $image_content = General::crawler($src);
-                        //
-                        if ($image_content) {
-                            file_put_contents($upload_dir['path'] . '/' . $name_img, $image_content);
-                            $cont_detail = str_replace($src, $upload_dir['url'] . '/' . $name_img, $cont_detail);
-                        } else {
-                            $cont_detail = str_replace($src, self::IMAGE_DEFAULT, $cont_detail);
+                    $html->find('div.content-detail div#adsarticletop', 0)->innertext = '';
+                    $cont_detail = $html->find('div.content-detail', 0)->outertext;
+                    $cont_detail = str_replace(General::NAME_CRAWLER, General::SITE_NAME, $cont_detail);
+                    $cont_detail = str_replace('<div id="adsarticletop" class="adbox"></div>', self::DIV_ADS, $cont_detail);
+                    //
+                    $link_content = $html->find("div.content-detail a");
+
+                    if (count($link_content) > 0) {
+                        foreach ($link_content as $link) {
+                            $href = $link->href;
+                            $cont_detail = str_replace($href, BASE_URL, $cont_detail);
                         }
                     }
-                }
-                // MAIN IMAGE
-                if ($arr_link_image[$index]) {
-                    $src = $arr_link_image[$index];
-                    $extension = end(explode('.', end(explode('/', $src))));
-                    $name_img = $arr_data['cont_slug'] . '.' . $extension;
-                    $image_content = General::crawler($src);
-                    if ($image_content) {
-                        file_put_contents($upload_dir['path'] . '/' . $name_img, $image_content);
-                        $arr_data['cont_main_image'] = $upload_dir['url'] . '/' . $name_img;
+
+
+                    //get image
+                    $arr_image = $html->find("div.content-detail img");
+                    if (count($arr_image) > 0) {
+                        foreach ($arr_image as $key => $img) {
+                            $src = $img->src;
+                            $extension = end(explode('.', end(explode('/', $src))));
+                            $name_img = $arr_data['cont_slug'] . '_' . ($key + 1) . '.' . $extension;
+                            $image_content = General::crawler($src);
+                            //
+                            if ($image_content) {
+                                file_put_contents($upload_dir['path'] . '/' . $name_img, $image_content);
+                                $cont_detail = str_replace($src, $upload_dir['url'] . '/' . $name_img, $cont_detail);
+                            } else {
+                                $cont_detail = str_replace($src, self::IMAGE_DEFAULT, $cont_detail);
+                            }
+                        }
+                    }
+                    // MAIN IMAGE
+                    if ($arr_link_image[$index]) {
+                        $src = $arr_link_image[$index];
+                        $extension = end(explode('.', end(explode('/', $src))));
+                        $name_img = $arr_data['cont_slug'] . '.' . $extension;
+                        $image_content = General::crawler($src);
+                        if ($image_content) {
+                            file_put_contents($upload_dir['path'] . '/' . $name_img, $image_content);
+                            $arr_data['cont_main_image'] = $upload_dir['url'] . '/' . $name_img;
+                        } else {
+                            $arr_data['cont_main_image'] = self::IMAGE_DEFAULT;
+                        }
                     } else {
                         $arr_data['cont_main_image'] = self::IMAGE_DEFAULT;
                     }
-                } else {
-                    $arr_data['cont_main_image'] = self::IMAGE_DEFAULT;
-                }
 
+                    //
+
+                    $arr_data['cont_detail'] = html_entity_decode($cont_detail);
+                    $arr_data['cont_description'] = $cont_description;
+                    $arr_data['created_date'] = time();
+                    $arr_data['cate_id'] = $cate;
+                    $arr_data['cont_views'] = 0;
+                    $arr_data['cont_status'] = 1;
+                    $arr_data['cont_keyword'] = 1;
+
+                    //insert Data
+                    $id = $serviceContent->add($arr_data);
+
+                    if ($id) {
+                        echo \My\General::getColoredString("Crawler success 1 post id = {$id} \n", 'green');
+                    } else {
+                        echo \My\General::getColoredString("Can not insert content db", 'red');
+                    }
+                }
                 //
-
-                $arr_data['cont_detail'] = html_entity_decode($cont_detail);
-                $arr_data['cont_description'] = $cont_description;
-                $arr_data['created_date'] = time();
-                $arr_data['cate_id'] = $cate;
-                $arr_data['cont_views'] = 0;
-                $arr_data['cont_status'] = 1;
-                $arr_data['cont_keyword'] = 1;
-
-                //insert Data
-                $id = $serviceContent->add($arr_data);
-
-                if ($id) {
-                    echo \My\General::getColoredString("Crawler success 1 post id = {$id} \n", 'green');
-                } else {
-                    echo \My\General::getColoredString("Can not insert content db", 'red');
-                }
+                sleep(3);
             }
-            sleep(3);
         }
         return true;
     }
