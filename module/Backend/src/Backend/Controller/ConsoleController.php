@@ -531,31 +531,6 @@ class ConsoleController extends MyController
         }
     }
 
-
-    public function crawlerContentAction()
-    {
-        $this->__skynewsCrawler();
-
-        $this->__naturallyCrawler(1, 'http://naturallysavvy.com/care');
-
-        $this->__kidspotMultiCrawler('http://www.kidspot.com.au/birth/');
-
-        $this->__foxnewsCrawler();
-
-        $this->__naturallyCrawler(1, 'http://naturallysavvy.com/eat');
-
-        $this->__kidspotMultiCrawler('http://www.kidspot.com.au/baby/');
-
-        $this->__foxnewsTechCrawler();
-
-        $this->__newscientistCrawler();
-
-        //$this->__kidspotMultiCrawler('http://www.kidspot.com.au/parenting/');
-
-        $this->__naturallyCrawler(1, 'http://naturallysavvy.com/nest');
-
-    }
-
     public function keywordContentAction()
     {
         $arr_category = [6, 1, 2, 3, 5, 7, 4];
@@ -854,7 +829,7 @@ class ConsoleController extends MyController
         return true;
     }
 
-    public function crawlerAction()
+    public function crawlerContentAction()
     {
         $arr_url = array(
             2 => 'ung-dung',
@@ -878,7 +853,33 @@ class ConsoleController extends MyController
         }
 
         return true;
+
     }
+//    public function crawlerAction()
+//    {
+//        $arr_url = array(
+//            2 => 'ung-dung',
+//            3 => 'he-thong',
+//            4 => 'ios',
+//            4 => 'android',
+//            5 => 'phan-cung',
+//            //
+//            7 => 'bi-an-chuyen-la',
+//            8 => 'suc-khoe',
+//            9 => 'kham-pha-thien-nhien',
+//            14 => 'kham-pha-khoa-hoc',
+//            //
+//            11 => 'ki-nang',
+//            12 => 'lam-dep',
+//            13 => 'meo-vat'
+//        );
+//        foreach ($arr_url as $cate => $url) {
+//            $this->__quantrimang($url, $cate);
+//            sleep(5);
+//        }
+//
+//        return true;
+//    }
 
     public function __quantrimang($tail_url, $cate)
     {
@@ -937,9 +938,6 @@ class ConsoleController extends MyController
 
             //
             foreach ($arr_link_content as $index => $item) {
-                if ($index == 2) {
-                    break;
-                }
                 $content = General::crawler(General::SITE_CRAWLER . $item);
                 //$content = General::crawler('http://news.sky.com/story/european-parliament-demands-brexit-talks-role-as-it-picks-president-10732038');
 
