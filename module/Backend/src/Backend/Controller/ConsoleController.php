@@ -531,49 +531,6 @@ class ConsoleController extends MyController
         }
     }
 
-    public function keywordContentAction()
-    {
-        $arr_category = [6, 1, 2, 3, 5, 7, 4];
-        for ($i = 1; $i < 5; $i++) {
-            foreach ($arr_category as $cate_id) {
-                switch ($cate_id) {
-                    case 1:
-                        if ($i > 0 && $i < 2) {
-                            $this->kenh14CrawlerKeyword($i, $cate_id);
-                        }
-                        break;
-                    case 2:
-                        $this->emdepCrawlerKeyword($i, 'http://emdep.vn/thoi-trang', $cate_id);
-                        break;
-                    case 3:
-                        $this->afamilyCrawlerKeyword($i, 'http://afamily.vn/suc-khoe', $cate_id);
-                        $this->emdepCrawlerKeyword($i, 'http://emdep.vn/song-khoe', $cate_id);
-                        break;
-                    case 4:
-                        $this->afamilyCrawlerKeyword($i, 'http://afamily.vn/dep', $cate_id);
-                        $this->emdepCrawlerKeyword($i, 'http://emdep.vn/lam-dep', $cate_id);
-                        break;
-                    case 5:
-                        if ($i > 0 && $i < 11) {
-                            $this->_24hCrawlerKeyword($i, $cate_id);
-                        }
-                        $this->emdepCrawlerKeyword($i, 'http://emdep.vn/mon-ngon', $cate_id);
-                        break;
-                    case 6:
-                        $this->emdepCrawlerKeyword($i, 'http://emdep.vn/lam-me', $cate_id);
-                        break;
-                    case 7:
-                        $this->ivivuCrawlerKeyword($i, $cate_id);
-                        break;
-                }
-            }
-            echo \My\General::getColoredString("Finish page " . $i, 'white');
-            sleep(2);
-        }
-
-        echo \My\General::getColoredString("DONE time: " . date('H:i:s'), 'light_cyan');
-    }
-
     public function resizeImage($upload_dir, $cont_slug, $extension, $cate_id)
     {
 
@@ -712,16 +669,27 @@ class ConsoleController extends MyController
         foreach ($arr_keyword as $keyword) {
             //$url = 'http://coccoc.com/composer?q=' . rawurlencode($keyword['key_name']) . '&p=0&reqid=UqRAi2nK&_=1480603345568';
 
-            $url = 'https://www.google.com/search?sclient=psy-ab&biw=1366&bih=212&espv=2&q=' . rawurlencode($keyword['key_name']) . '&oq=' . rawurlencode($keyword['key_name']);
+            $url = 'https://www.google.com.vn/search?sclient=psy-ab&biw=1366&bih=212&espv=2&q=' . rawurlencode($keyword['key_name']) . '&oq=' . rawurlencode($keyword['key_name']);
 
             $content = General::crawler($url);
-            $dom = new Query($content);
-            $results = $dom->execute('span.st');
+
+            //$dom = new Query($content);
+            //$results = $dom->execute('div._NId div.g h3.r a');
+            //$results = $dom->execute('span.st');
+            $dom = HtmlDomParser::str_get_html($content);
+            $results = $dom->find('div._NId div.g div.rc');
 
             $arr_content_crawler = array();
             foreach ($results as $item) {
+                $a = $item->children(1);
+                echo "<pre>";
+                print_r($a);
+//                print_r($item->plaintext);
+                echo "</pre>";
+                die;
                 $arr_item = array(
-                    'description' => $item->textContent
+                    'href' => $item->href,
+                    'title' => $item->plaintext,
                 );
 
                 $arr_content_crawler[] = $arr_item;
@@ -1155,6 +1123,18 @@ class ConsoleController extends MyController
                 sleep(0.5);
             }
         }
+    }
+
+    public function initKeywordAction() {
+        $string = 'Instagram,video,lưu,livestream,tính năng,tương tác,thú vị,biến mất,quá trình,người dùng,bản cập nhật,mới nhất,khả năng,comment,like,người xem,thiết bị,tính năng,facebook,tự động,ứng dụng,di động,live video,mặc định,vĩnh viễn,biến mất,cải thiện,quản lý,lựa chọn,phiên bản,Android,IOS,cập nhật,google assistant,tính năng,trợ lý ảo,điện thoại,tiện ích,giọng nói,ứng dụng,cuộc hẹn,remind,khẩu lệnh,quen thuôc,thực hiện,nút Home,đơn giản,gợi ý,ngón tay,cài đặt,chat,kết nối,trò chuyện,Siri,Apple,dữ liệu di động,địa điểm,du lịch,thao tác,hẹn giờ,chơi nhạc,bản đồ,màn hình,liên quan,công cụ,tự động,tìm kiếm,kết quả,đặt lịch,đặt chỗ,phím,danh bạ,biệt danh,nhân vật,yêu thích,xác nhận,,biểu tượng,người yêu,phát ra,âm thanh,khó chịu,yên lặng,góc phải,Bluetooth,ra lệnh,chế độ,máy bay,danh sách,mua hàng,chơi,hài hước,trích dẫn,mới nhất,Android SDK,hệ điều hành,mobile,thế giới,công nghệ,điên đảo,cơ hội,tiếp cận,may mắn,cung cấp,phiên bản,mô phỏng,chạy thử,,lưu,kích hoạt,tập tin,tệp nén,giải nén,thư mục,hướng dẫn,gỡ bỏ,truy cập,trang web,chính thức,trợ giúp,terminal,thông tin,chạy lệnh,đường dẫn,giải thích,phần mềm,smartphone,WiFi,hữu ích,tốc độ,thanh trạng thái,thời gian thực,mất mã,Passcode,đăng nhập,tài khoản,khôi phục,mật khẩu,tính năng,định vị,Click,mở khóa,kích hoạt,mã số,ra mắt,sự kiện,samsung,tổng hợp,kỹ thuật,thế hệ,tổng thể,màu sắc,trang tin,phục vụ,nhu cầu,bộ nhớ,nghiên cứu,toàn cầu,giá dự kiến,bảo hành,chính thức,chương trình,đặt hàng,mâu thuẫn,camera,lấy nét,cải tiến,điều kiện ánh sáng,camera kép,điểm yếu,bộ cảm biến,định dạng,chống nước,ứng dụng VR,quét vân tay,giắc cắm,bộ xử lý,pin,hiệu năng,tốc độ,hiệu suất,thị trường,hãng điện thoại,khe cắm,dung lượng pin,sạc pin,không dây,doanh thu,tăng trưởng,đồ gia dụng,nhà thông minh,phân tích,ngoại vi,bàn phím,máy quét,nhận dạng,đóng băng,nhiệt độ cao,biến hình,hình dáng,hiện tượng,giả tưởng,phù thủy,nhà khoa học,chất liệu,điều nghịch lý,phủ nano,bộ phim,giáng sinh,tết,gia đình,bạn gái,hóa trang,đạo diễn,năng lượng tái tạo,tiêu thụ,năng lượng,điện năng,kỷ lục,ghế nhựa,áp lực khí,không gian,chân không,áp lực,ảnh hưởng,độ bền,nhà sưu tầm,sở hữu,giá trị,bảo vật,rượu vang,đắt nhất thế giới,bán đấu giá,từ thiện,quảng cáo,súng ngắn,tổng thống,tiền cổ,xe hơi,điện ảnh,chạm khắc,xe mô tô,đồng hồ,kim cương,khôn ngoan,âm nhạc,nhạc cụ,cải thiện,chỉ số IQ,thân hình,vòng eo,giáo dục,sữa mẹ,trẻ em,trí nhớ,thuận tay trái,phản biện,sáng tạo,chiều cao,hài hước,tò mò,tư duy,nổi loạn,trí tuệ,dậy sớm,sản sinh,pha pitstop,thợ cơ khí,năng lượng gió,trang trại,tuabin gió,người giàu,hoàng đế,khối tài sản,tỉ phú,đạo Hồi,học giả,nghệ sĩ,đồ lưu niệm,lạm phát,phân hủy,trái đất,quỹ đạo,hành tinh,nhà khoa học,Basilica Therma,khách du lịch,pho tượng,La Mã,bức tượng,khai quật,tham quan,điện giật,chết người,trăng tròn,siêu trăng,ngôi sao,vũ trụ,bầu trời,trọng lực,cặp đôi,gái xinh,tâm lý con gái,ngoại hình,tích cách,tâm lý gia đình,quan hệ,độc thân,bệnh tim mạch,yêu nhầm người,tình yêu,dạy trẻ,đồ chơi Lego,tài năng,kỳ thi,kỹ năng,cuộc sống hiện nay,khắc nghiệt,tự tin,trò chuyện,làm sạch đồ,mẹo vặt,bí kíp,thủ thuật,phương pháp,căn hộ,không gian nhỏ,sắp xếp đồ,không gian làm việc,tiết kiệm';
+        $arr_keyword = explode(',', $string);
+
+        for ($i = 1; $i <= 3; $i ++) {
+            shuffle($arr_keyword);
+        }
+        $this->add_keyword($arr_keyword);
+        //
+        die("done");
     }
 
     function testAction() {

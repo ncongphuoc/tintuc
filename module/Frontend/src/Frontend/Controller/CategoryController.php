@@ -81,7 +81,6 @@ class CategoryController extends MyController {
             'arrCategoryDetail' => $categoryDetail,
             'arrContentList' => $arrContentList,
             'intTotal' => $intTotal,
-            'arrKeywordList'=>$arrKeywordList
         );
     }
 
