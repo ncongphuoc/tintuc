@@ -186,6 +186,10 @@ class storageKeyword extends AbstractTableGateway {
             $strWhere .= ' AND key_id = ' . $arrCondition['key_id'];
         }
 
+        if(isset($arrCondition['is_crawler'])) {
+            $strWhere .= ' AND is_crawler = ' . $arrCondition['is_crawler'];
+        }
+
         if(isset($arrCondition['key_slug'])) {
             $strWhere .= ' AND key_slug = "' . $arrCondition['key_slug'] . '"';
         }
