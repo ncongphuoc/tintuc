@@ -17,7 +17,7 @@ $content_gg = json_decode($keyDetail['content_crawler'], true);
 <!--            (adsbygoogle = window.adsbygoogle || []).push({});-->
 <!--        </script>-->
     </div>
-    
+
     <div class="listview clearfix">
         <ul>
             <?php for($i = 0; $i <= 2; $i ++):
@@ -66,6 +66,7 @@ $content_gg = json_decode($keyDetail['content_crawler'], true);
         <!--        </script>-->
     </div>
 
+    <?php if(!is_array($content_gg) && !empty($content_gg)){ ?>
     <div class="listview clearfix">
         <ul>
             <?php foreach($content_gg as $content):
@@ -99,7 +100,8 @@ $content_gg = json_decode($keyDetail['content_crawler'], true);
         <!--            (adsbygoogle = window.adsbygoogle || []).push({});-->
         <!--        </script>-->
     </div>
-
+    <?php } ?>
+    
     <div class="listview clearfix">
         <ul>
             <?php for($i = 3; $i <= 9; $i ++):
