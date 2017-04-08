@@ -91,12 +91,12 @@ class storageKeyword extends AbstractTableGateway {
         }
     }
 
-    public function getListLimit($arrCondition, $intPage, $intLimit, $strOrder = 'key_id ASC') {
+    public function getListLimit($arrCondition, $intPage, $intLimit, $strOrder = 'key_id ASC',$arrFields = '*') {
         try {
             $strWhere = $this->_buildWhere($arrCondition);
             $adapter = $this->adapter;
             $sql = new Sql($adapter);
-            $query = 'select *'
+            $query = 'select ' . $arrFields
                 . ' from ' . $this->table
                 . ' where 1=1 ' . $strWhere
                 . ' order by ' . $strOrder
@@ -200,6 +200,10 @@ class storageKeyword extends AbstractTableGateway {
 
         if(isset($arrCondition['content_id'])) {
             $strWhere .= ' AND content_id ="' . $arrCondition['content_id'] . '"';
+        }
+
+        if(isset($arrCondition['content_crawler'])) {
+            $strWhere .= ' AND content_crawler ="' . $arrCondition['content_crawler'] . '"';
         }
 
         if (!empty($arrCondition['fulltext_key_name'])) {

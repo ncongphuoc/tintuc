@@ -13,6 +13,7 @@
             </a>
         </span>
     </div>
+
     <div class="listitems">
         <ul>
             <?php if (!empty($this->arrKeywordList)):
@@ -28,5 +29,10 @@
             ?>
         </ul>
     </div>
-    <?php echo $this->paging ?>
+
+    <div class="pagination-container">
+        <ul class="pagination">
+            <?php echo $this->paging; ?>
+        </ul>
+    </div>
 </div>

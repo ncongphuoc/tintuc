@@ -94,7 +94,7 @@ class ContentController extends MyController
         $arrContentNew = $serviceContent->getListLimit(
             ['not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
             1,
-            7,
+            6,
             'cont_id DESC',
             $arrFields
         );
@@ -145,8 +145,6 @@ class ContentController extends MyController
 
         $this->renderer->headLink(array('rel' => 'amphtml', 'href' => BASE_URL . $this->url()->fromRoute('view-content', ['contentSlug' => $arrContent['cont_slug'], 'contentId' => $cont_id])));
         $this->renderer->headLink(array('rel' => 'canonical', 'href' => BASE_URL . $this->url()->fromRoute('view-content', ['contentSlug' => $arrContent['cont_slug'], 'contentId' => $cont_id])));
-
-
 
 
         return array(

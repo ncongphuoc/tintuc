@@ -673,23 +673,29 @@ class ConsoleController extends MyController
 
             $content = General::crawler($url);
 
-            //$dom = new Query($content);
-            //$results = $dom->execute('div._NId div.g h3.r a');
-            //$results = $dom->execute('span.st');
             $dom = HtmlDomParser::str_get_html($content);
-            $results = $dom->find('div._NId div.g div.rc');
+            $dom_a = $dom->find('div._NId div.g div.rc h3.r a');
+            $dom_description = $dom->find('div._NId div.g div.rc div.s span.st');
+
+            $arr_link = array();
+            foreach ($dom_a as $a) {
+                $arr_link[] = array(
+                    'link' => $a->href,
+                    'title' => $a->plaintext
+                );
+            }
+
+            $arr_description = array();
+            foreach ($dom_description as $desc) {
+                $arr_description[] = $desc->plaintext;
+            }
 
             $arr_content_crawler = array();
-            foreach ($results as $item) {
-                $a = $item->children(1);
-                echo "<pre>";
-                print_r($a);
-//                print_r($item->plaintext);
-                echo "</pre>";
-                die;
+            foreach ($arr_link as $key => $item) {
                 $arr_item = array(
-                    'href' => $item->href,
-                    'title' => $item->plaintext,
+                    'href' => $item['link'],
+                    'title' => $item['title'],
+                    'description' => isset($arr_description[$key]) ? $arr_description[$key] : ''
                 );
 
                 $arr_content_crawler[] = $arr_item;
@@ -701,6 +707,7 @@ class ConsoleController extends MyController
             $serviceKeyword->edit($arr_update, $keyword['key_id']);
             sleep(rand(6, 10));
         }
+        //
         $this->flush();
         unset($arr_keyword);
         exec("ps -ef | grep -v grep | grep getcontent | awk '{ print $2 }'", $PID);
@@ -1048,7 +1055,7 @@ class ConsoleController extends MyController
         return $result;
     }
 
-    function getKeywordContent()
+    function getKeywordContentAction()
     {
         $intPage = 1;
         $intLimit = 20;
@@ -1082,7 +1089,7 @@ class ConsoleController extends MyController
         }
     }
 
-    function getContentKeyword()
+    function getContentKeywordAction()
     {
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         $serviceContent = $this->serviceLocator->get('My\Models\Content');

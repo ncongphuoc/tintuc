@@ -17,8 +17,8 @@ class Keyword extends ModelAbstract {
         return $intResult;
     }
 
-    public function getListLimit($arrCondition = [], $intPage = 1, $intLimit = 15, $strOrder = 'key_id ASC') {
-        $arrResult = $this->getParentTable()->getListLimit($arrCondition, $intPage, $intLimit, $strOrder);
+    public function getListLimit($arrCondition = [], $intPage = 1, $intLimit = 15, $strOrder = 'key_id ASC',$arrFields = '*') {
+        $arrResult = $this->getParentTable()->getListLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
         return $arrResult;
     }
 

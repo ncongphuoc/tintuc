@@ -211,6 +211,26 @@ return array(
                             'action' => 'init-keyword'
                         ),
                     ),
+                ),
+                'content-keyword' => array(
+                    'options' => array(
+                        'route' => 'content-keyword',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Backend\Controller',
+                            'controller' => 'console',
+                            'action' => 'get-content-keyword'
+                        ),
+                    ),
+                ),
+                'keyword-content' => array(
+                    'options' => array(
+                        'route' => 'keyword-content',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Backend\Controller',
+                            'controller' => 'console',
+                            'action' => 'get-keyword-content'
+                        ),
+                    ),
                 )
             )
         )

@@ -125,10 +125,12 @@ class SearchController extends MyController
                 $arrCondition = array(
                     'in_key_id' => $content['cont_keyword']
                 );
-                $arrKeywordList = $serviceKeyword->getListLimit($arrCondition, 1, 5);
+                $arrKeywordList = $serviceKeyword->getListLimit($arrCondition, 1, 5, 'key_id ASC', 'key_id, key_name, key_slug');
             }
             $listContent[$content['cont_id']]['list_keyword'] = $arrKeywordList;
         }
+
+        $listContent = array_values($listContent);
 
         $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
         $helper_title->setTitle(html_entity_decode($arrKeyDetail['key_name']) . General::TITLE_META);
@@ -157,50 +159,38 @@ class SearchController extends MyController
 
     public function listKeywordAction()
     {
-        try {
-            $params = array_merge($this->params()->fromRoute(), $this->params()->fromQuery());
-            $intPage = is_numeric($params['page']) ? $params['page'] : 1;
-            $intLimit = 100;
+        $params = array_merge($this->params()->fromRoute(), $this->params()->fromQuery());
+        $intPage = is_numeric($params['page']) ? $params['page'] : 1;
+        $intLimit = 100;
 
-            $instanceSearch = new \My\Search\Keyword();
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
 
-            $arrCondition = array(
-                'word_id_less' => round((time() - 1465036100) / 4)
-            );
-            $arrKeywordList = $instanceSearch->getListLimit($arrCondition, $intPage, $intLimit, ['key_id' => ['order' => 'desc']]);
-            $intTotal = $instanceSearch->getTotal($arrCondition);
-            $helper = $this->serviceLocator->get('viewhelpermanager')->get('Paging');
-            $paging = $helper($params['module'], $params['__CONTROLLER__'], $params['action'], $intTotal, $intPage, $intLimit, 'list-keyword', $params);
+        $arrKeywordList = $serviceKeyword->getListLimit(array(), $intPage, $intLimit, 'key_id ASC', 'key_id, key_name, key_slug');
+        $intTotal = $serviceKeyword->getTotal(array());
 
-            $this->renderer = $this->serviceLocator->get('Zend\View\Renderer\PhpRenderer');
-            $this->renderer->headMeta()->appendName('dc.description', html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
-            $this->renderer->headMeta()->appendName('dc.subject', html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
-            $this->renderer->headTitle('Từ khoá - ' . html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
-            $this->renderer->headMeta()->appendName('keywords', html_entity_decode('Danh sách từ khoá trang ' . $intPage));
-            $this->renderer->headMeta()->appendName('description', html_entity_decode('Danh sách từ khoá trang ' . $intPage . General::TITLE_META));
-            $this->renderer->headMeta()->appendName('social', null);
-            $this->renderer->headMeta()->setProperty('og:url', $this->url()->fromRoute('list-keyword', array('page' => $intPage)));
-            $this->renderer->headMeta()->setProperty('og:title', html_entity_decode('Danh sách từ khoá trang ' . $intPage . General::TITLE_META));
-            $this->renderer->headMeta()->setProperty('og:description', html_entity_decode('Danh sách từ khoá trang ' . $intPage . General::TITLE_META));
+        $helper = $this->serviceLocator->get('viewhelpermanager')->get('Paging');
+        $paging = $helper($params['module'], $params['__CONTROLLER__'], $params['action'], $intTotal, $intPage, $intLimit, 'list-keyword', $params);
 
-            return array(
-                'params' => $params,
-                'arrKeywordList' => $arrKeywordList,
-                'paging' => $paging,
-                'intPage' => $intPage,
-                'intLimit' => $intLimit,
-                'intTotal' => $intTotal,
-                'title' => 'Keyword'
-            );
-        } catch (\Exception $exc) {
-            echo '<pre>';
-            print_r([
-                'code' => $exc->getCode(),
-                'messages' => $exc->getMessage()
-            ]);
-            echo '</pre>';
-            die();
-        }
+        $this->renderer = $this->serviceLocator->get('Zend\View\Renderer\PhpRenderer');
+        $this->renderer->headMeta()->appendName('dc.description', html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
+        $this->renderer->headMeta()->appendName('dc.subject', html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
+        $this->renderer->headTitle('Từ khoá - ' . html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
+        $this->renderer->headMeta()->appendName('keywords', html_entity_decode('Danh sách từ khoá trang ' . $intPage));
+        $this->renderer->headMeta()->appendName('description', html_entity_decode('Danh sách từ khoá trang ' . $intPage . General::TITLE_META));
+        $this->renderer->headMeta()->appendName('social', null);
+        $this->renderer->headMeta()->setProperty('og:url', $this->url()->fromRoute('list-keyword', array('page' => $intPage)));
+        $this->renderer->headMeta()->setProperty('og:title', html_entity_decode('Danh sách từ khoá trang ' . $intPage . General::TITLE_META));
+        $this->renderer->headMeta()->setProperty('og:description', html_entity_decode('Danh sách từ khoá trang ' . $intPage . General::TITLE_META));
+
+        return array(
+            'params' => $params,
+            'arrKeywordList' => $arrKeywordList,
+            'paging' => $paging,
+            'intPage' => $intPage,
+            'intLimit' => $intLimit,
+            'intTotal' => $intTotal,
+            'title' => 'Keyword'
+        );
     }
 
 }

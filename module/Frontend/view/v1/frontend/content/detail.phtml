@@ -85,7 +85,7 @@ $arrContentNew = $this->arrContentNew;
 <!--            (adsbygoogle = window.adsbygoogle || []).push({});-->
 <!--        </script>-->
     </div>
-
+    <?php if($arrContentCate){ ?>
     <div class="similaritems listitems">
         <div class="title">Tham khảo thêm</div>
         <ul>
@@ -98,6 +98,7 @@ $arrContentNew = $this->arrContentNew;
             <?php endforeach; ?>
         </ul>
     </div>
+    <?php } ?>
     
     <div class="comments">
     </div>
@@ -114,10 +115,11 @@ $arrContentNew = $this->arrContentNew;
 <!--        </script>-->
     </div>
 
+    <?php if($arrContentNew){ ?>
     <div class="more-news clearfix">
         <div class="hd">Bài viết mới nhất</div>
         <ul>
-            <?php foreach ($arrContentCate as $content): ?>
+            <?php foreach ($arrContentNew as $content): ?>
                 <li>
                     <a href="<?php echo $this->serverUrl() . $this->Url('view-content', ['contentSlug' => $content['cont_slug'], 'contentId' => $content['cont_id']]) ?>">
                         <span class="thumb">
@@ -129,4 +131,5 @@ $arrContentNew = $this->arrContentNew;
             <?php endforeach; ?>
         </ul>
     </div>
+    <?php } ?>
 </div>

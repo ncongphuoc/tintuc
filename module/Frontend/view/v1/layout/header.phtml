@@ -66,7 +66,7 @@ $arr_category = unserialize(ARR_CATEGORY_INFO);
             </a>
         </li>
         <li class="item tax-keyword">
-            <a href='keyword.html'>
+            <a href='<?php echo $this->serverUrl() . $this->Url('list-keyword', ['page' => 1]);?>'>
                 <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/icon/Greentech.png'; ?>" />
                 Keyword
             </a>
