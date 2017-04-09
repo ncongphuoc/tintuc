@@ -809,8 +809,7 @@ class ConsoleController extends MyController
         $arr_url = array(
             2 => 'ung-dung',
             3 => 'he-thong',
-            4 => 'ios',
-            4 => 'android',
+            4 => array('ios','android'),
             5 => 'phan-cung',
             //
             7 => 'bi-an-chuyen-la',
@@ -818,43 +817,25 @@ class ConsoleController extends MyController
             9 => 'kham-pha-thien-nhien',
             14 => 'kham-pha-khoa-hoc',
             //
-            11 => 'ki-nang',
+            11 => array('ki-nang','am-thuc'),
             12 => 'lam-dep',
-            13 => 'meo-vat'
+            13 => array('meo-vat','chon-qua-tang','giang-sinh-noel','tet')
         );
+        //
         foreach ($arr_url as $cate => $url) {
-            $this->__quantrimang($url, $cate);
+            if(is_array($url)) {
+                foreach ($url as $link) {
+                    $this->__quantrimang($link, $cate);
+                }
+            } else {
+                $this->__quantrimang($url, $cate);
+            }
             sleep(5);
         }
 
         return true;
 
     }
-//    public function crawlerAction()
-//    {
-//        $arr_url = array(
-//            2 => 'ung-dung',
-//            3 => 'he-thong',
-//            4 => 'ios',
-//            4 => 'android',
-//            5 => 'phan-cung',
-//            //
-//            7 => 'bi-an-chuyen-la',
-//            8 => 'suc-khoe',
-//            9 => 'kham-pha-thien-nhien',
-//            14 => 'kham-pha-khoa-hoc',
-//            //
-//            11 => 'ki-nang',
-//            12 => 'lam-dep',
-//            13 => 'meo-vat'
-//        );
-//        foreach ($arr_url as $cate => $url) {
-//            $this->__quantrimang($url, $cate);
-//            sleep(5);
-//        }
-//
-//        return true;
-//    }
 
     public function __quantrimang($tail_url, $cate)
     {

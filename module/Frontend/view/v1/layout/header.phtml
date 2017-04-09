@@ -18,11 +18,11 @@ $arr_category = unserialize(ARR_CATEGORY_INFO);
         <a href="<?php echo $this->serverUrl() . $this->Url('home') ?>" id="logo" title=""></a>
     </div>
     <div id="searchBox">
-        <form action="<?php echo $this->serverUrl() . $this->Url('search') ?>" id="cse-search-box">
+        <form method="get" action="<?php echo $this->serverUrl() . $this->Url('search') ?>" id="cse-search-box">
             <div>
 
                 <input type="text" name="word" size="55" id="q" placeholder="Tìm kiếm"/>
-                <input type="submit" name="sa" value="Tìm" id="btnHeaderFind"/>
+                <input type="submit" value="Tìm" id="btnHeaderFind"/>
 
             </div>
         </form>

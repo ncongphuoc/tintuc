@@ -1,6 +1,9 @@
 <?php
 $arr_content = $this->arrContentList;
+
 $category_detail = $this->arrCategoryDetail;
+$category_parent = $this->arrCategoryParent;
+
 $arr_keyword = $this->arrKeywordList;
 ?>
 
@@ -8,8 +11,23 @@ $arr_keyword = $this->arrKeywordList;
     <div id="adindexcenter" class="adbox" style="margin-bottom:20px;">
         <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/640x60.png'; ?>">
     </div>
-    <div class="breadcrumbs-box">
-    <h1><?php echo $category_detail['cate_name'] ?></h1>
+    <div class="breadcrumbs info-detail">
+        <span class="first breadcrumb">
+            <a href="/"></a>
+        </span>
+        <?php if($category_parent){ ?>
+            <span typeof="v:Breadcrumb" class="breadcrumb">
+            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $category_parent['cate_slug'], 'cateId' => $category_parent['cate_id']]) ?>">
+                <?php echo $category_parent['cate_name'] ?></a>
+        </span>
+        <?php } ?>
+
+        <?php if($category_detail){ ?>
+            <span typeof="v:Breadcrumb" class="breadcrumb">
+            <a rel="v:url" property="v:title" href="<?php echo $this->serverUrl() . $this->Url('category', ['cateSlug' => $category_detail['cate_slug'], 'cateId' => $category_detail['cate_id']]) ?>">
+                <?php echo $category_detail['cate_name'] ?></a>
+        </span>
+        <?php } ?>
     </div>
 
 
@@ -42,7 +60,7 @@ $arr_keyword = $this->arrKeywordList;
     <div class="listview clearfix">
         <ul>
             <?php for ($i = 2; $i < 10; $i++):
-                if(isset($arr_content[$i]) && $arr_content[$i]):
+                if(isset($arr_content[$i]) && $arr_content[$i]){
                 ?>
                 <li class="listitem clearfix">
                     <a class="title"
@@ -56,7 +74,10 @@ $arr_keyword = $this->arrKeywordList;
                     </a>
                     <div class="desc"><?php echo $arr_content[$i]['cont_description'] ?></div>
                 </li>
-            <?php endif; endfor; ?>
+            <?php } else {
+                    break;
+                }
+            endfor; ?>
         </ul>
     </div>
     <div class="pagination-container">

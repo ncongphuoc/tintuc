@@ -19,44 +19,57 @@ class SearchController extends MyController
     {
         $params = array_merge($this->params()->fromRoute(), $this->params()->fromQuery());
 
-        if (empty($params['keyword'])) {
+        if (empty($params['word'])) {
             return $this->redirect()->toRoute('404');
         }
 
-        $key_name = General::clean($params['keyword']);
+        $key_name = General::clean($params['word']);
 
         $intPage = (int)$params['page'] > 0 ? (int)$params['page'] : 1;
         $intLimit = 10;
 
         $arr_condition_content = array(
             'cont_status' => 1,
-            'full_text_title' => $key_name
+            'fulltext_cont_title' => $key_name
         );
 
-        $arrFields = array('cont_id', 'cont_title', 'cont_slug', 'cate_id','cont_main_image','created_date');
-        $instanceSearchContent = new \My\Search\Content();
-        $arrContentList = $instanceSearchContent->getListLimit($arr_condition_content, $intPage, $intLimit, ['_score' => ['order' => 'desc']], $arrFields);
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        $serviceContent = $this->serviceLocator->get('My\Models\Content');
+
+        $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, cont_keyword, cont_description';
+        $arrResult = $serviceContent->getListLimit($arr_condition_content, $intPage, $intLimit, 'cont_id ASC', $arrFields);
+
+        $arrContentList = array();
+        foreach ($arrResult as $content){
+            $arrContentList[$content['cont_id']] = $content;
+        }
+
+        //get keyword
+        $listContent = array();
+        foreach ($arrContentList as $content) {
+            $listContent[$content['cont_id']] = $content;
+
+            $arrKeywordList = array();
+            if($content['cont_keyword'] != '1') {
+                $arrCondition = array(
+                    'in_key_id' => $content['cont_keyword']
+                );
+                $arrKeywordList = $serviceKeyword->getListLimit($arrCondition, 1, 5, 'key_id ASC', 'key_id, key_name, key_slug');
+            }
+            $listContent[$content['cont_id']]['list_keyword'] = $arrKeywordList;
+        }
+
+        $listContent = array_values($listContent);
 
         //phân trang
-        $intTotal = $instanceSearchContent->getTotal($arr_condition_content);
+        $intTotal = $serviceContent->getTotal($arr_condition_content);
+
+
         $helper = $this->serviceLocator->get('viewhelpermanager')->get('Paging');
         $paging = $helper($params['module'], $params['__CONTROLLER__'], $params['action'], $intTotal, $intPage, $intLimit, 'search', $params);
 
         $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
-        $helper_title()->setTitle($params['keyword'] . General::TITLE_META);
-
-        //get keyword
-        $listContent = array();
-        $instanceSearchKeyword = new \My\Search\Keyword();
-        foreach ($arrContentList as $content) {
-            $listContent[$content['cont_id']] = $content;
-            $arrCondition = array(
-                'full_text_keyname' => $content['cont_title'],
-                'in_cate_id' => array($content['cate_id'], -1)
-            );
-            $arrKeywordList = $instanceSearchKeyword->getListLimit($arrCondition, 1, 5, ['_score' => ['order' => 'desc']]);
-            $listContent[$content['cont_id']]['list_keyword'] = $arrKeywordList;
-        }
+        $helper_title->setTitle(html_entity_decode($params['word']) . General::TITLE_META);
 
         $this->renderer = $this->serviceLocator->get('Zend\View\Renderer\PhpRenderer');
         $this->renderer->headTitle($params['keyword'] . General::TITLE_META);
@@ -70,15 +83,11 @@ class SearchController extends MyController
         $this->renderer->headLink(array('rel' => 'amphtml', 'href' => BASE_URL . $this->url()->fromRoute('search', ['keyword' => $params['keyword']])));
         $this->renderer->headLink(array('rel' => 'canonical', 'href' => BASE_URL . $this->url()->fromRoute('search', ['keyword' => $params['keyword']])));
 
-        //get 50 keyword gần giống nhất
-//            $instanceSearchKeyword = new \My\Search\Keyword();
-//            $arrKeywordList = $instanceSearchKeyword->getListLimit(['full_text_keyname' => $key_name], 1, $intLimit, ['_score' => ['order' => 'desc']]);
-
         return array(
             'paging' => $paging,
             'params' => $params,
+            'word' => $key_name,
             'arrContentList' => $listContent,
-            'arrKeywordList' => $arrKeywordList,
             'intTotal' => $intTotal
         );
     }
@@ -110,7 +119,6 @@ class SearchController extends MyController
         $arrResult = $serviceContent->getList($arr_condition_content, 'cont_id ASC', $arrFields);
 
         $arrContentList = array();
-        $arr_temp = array();
         foreach ($arrResult as $content){
             $arrContentList[$content['cont_id']] = $content;
         }

@@ -35,6 +35,11 @@ class CategoryController extends MyController {
             return $this->redirect()->toRoute('404', array());
         }
 
+        $categoryParent = array();
+        if($categoryDetail['parent_id']) {
+            $categoryParent = $serviceCategory->getDetail(array('cate_id'=>$categoryDetail['parent_id']));
+        }
+
         $intPage = (int) $params['page'] > 0 ? (int) $params['page'] : 1;
         $intLimit = 10;
 
@@ -79,6 +84,7 @@ class CategoryController extends MyController {
             'params' => $params,
             'paging' => $paging,
             'arrCategoryDetail' => $categoryDetail,
+            'arrCategoryParent' => $categoryParent,
             'arrContentList' => $arrContentList,
             'intTotal' => $intTotal,
         );

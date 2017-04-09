@@ -6,6 +6,7 @@ $content_gg = json_decode($keyDetail['content_crawler'], true);
 ?>
 
 <div class="content">
+    <h1><?php echo $keyDetail['key_name'] ?></h1>
     <div id="adindexcenter" class="adbox" style="margin-bottom:20px;">
         <img src="<?php echo STATIC_URL . '/f/' . FRONTEND_TEMPLATE . '/images/640x60.png'; ?>">
 <!--        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>-->
@@ -101,7 +102,7 @@ $content_gg = json_decode($keyDetail['content_crawler'], true);
         <!--        </script>-->
     </div>
     <?php } ?>
-    
+
     <div class="listview clearfix">
         <ul>
             <?php for($i = 3; $i <= 9; $i ++):
