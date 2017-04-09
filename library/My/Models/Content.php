@@ -19,6 +19,11 @@ class Content extends ModelAbstract {
     }
 
     public function getListLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields) {
+        $arrResult = $this->getParentTable()->getListLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
+        return $arrResult;
+    }
+
+    public function getListLimitContent($arrCondition, $intPage, $intLimit, $strOrder, $arrFields) {
         $keyCaching = 'getListLimitContent:' . $intPage . ':' . $intLimit . ':' . str_replace(' ', '_', $strOrder) . ':' . $this->cache->read($this->tmpKeyCache);
         if (count($arrCondition) > 0) {
             foreach ($arrCondition as $k => $val) {
@@ -27,9 +32,10 @@ class Content extends ModelAbstract {
         }
         $keyCaching = crc32($keyCaching);
         $arrResult = $this->cache->read($keyCaching);
+
         if (empty($arrResult)) {
             $arrResult = $this->getParentTable()->getListLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
-            $this->cache->add($keyCaching, $arrResult, 60 * 60 * 24 * 7);
+            $this->cache->add($keyCaching, $arrResult, 60 * 60 * 9);
         }
         return $arrResult;
     }
@@ -61,7 +67,7 @@ class Content extends ModelAbstract {
         $arrResult = $this->cache->read($keyCaching);
         if (empty($arrResult)) {
             $arrResult = $this->getParentTable()->getListLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
-            $this->cache->add($keyCaching, $arrResult, 60 * 60 * 24);
+            $this->cache->add($keyCaching, $arrResult, 60 * 60 * 9);
         }
         return $arrResult;
     }
@@ -77,7 +83,7 @@ class Content extends ModelAbstract {
         $arrResult = $this->cache->read($keyCaching);
         if (empty($arrResult)) {
             $arrResult = $this->getParentTable()->getLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
-            $this->cache->add($keyCaching, $arrResult, 60 * 60 * 24 * 7);
+            $this->cache->add($keyCaching, $arrResult, 60 * 60 * 9);
         }
         return $arrResult;
     }
@@ -108,6 +114,11 @@ class Content extends ModelAbstract {
         if ($intResult) {
             $this->cache->increase($this->tmpKeyCache, 1);
         }
+        return $intResult;
+    }
+
+    public function editView($p_arrParams, $intContentID) {
+        $intResult = $this->getParentTable()->edit($p_arrParams, $intContentID);
         return $intResult;
     }
 

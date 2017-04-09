@@ -58,7 +58,7 @@ class ContentController extends MyController
             'cont_views' => $arrContent['cont_views'] + 1,
             'cont_id' => $cont_id
         );
-        $serviceContent->edit($p_arrParams, $cont_id);
+        $serviceContent->editView($p_arrParams, $cont_id);
 
         /*
          render meta
@@ -80,19 +80,20 @@ class ContentController extends MyController
             $categoryParent = $serviceCategory->getDetail(array('cate_id'=>$categoryDetail['parent_id']));
         }
 
+        //content same cate
         $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
-        $arrContentCate = $serviceContent->getListLimit(
-            ['cate_id' => $arrContent['cate_id'], 'not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
+        $arrContentCate = $serviceContent->getListLimitContent(
+            ['cate_id' => $arrContent['cate_id'], 'not_cont_status' => -1],
             1,
             6,
             'cont_id DESC',
             $arrFields
         );
 
-//      //content like title
+//      //content new
         $arrFields = 'cont_id, cont_title, cont_slug, cate_id, cont_main_image, created_date, cont_description';
-        $arrContentNew = $serviceContent->getListLimit(
-            ['not_cont_status' => -1, 'not_cont_id' => $arrContent['cont_id']],
+        $arrContentNew = $serviceContent->getListLimitContent(
+            ['not_cont_status' => -1],
             1,
             6,
             'cont_id DESC',
