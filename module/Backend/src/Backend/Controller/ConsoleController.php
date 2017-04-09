@@ -842,7 +842,7 @@ class ConsoleController extends MyController
         $serviceContent = $this->serviceLocator->get('My\Models\Content');
         $upload_dir = General::mkdirUpload();
 
-        for ($page = 1; $page <=20; $page ++) {
+        for ($page = 1; $page < 2; $page ++) {
             $url_default = 'https://quantrimang.com/';
             $url_crawler = $url_default . $tail_url;
             //
