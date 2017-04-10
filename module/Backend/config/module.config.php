@@ -84,7 +84,7 @@ return array(
                 ),
                 'crawlerkeyword' => array(
                     'options' => array(
-                        'route' => 'crawlerkeyword',
+                        'route' => 'crawlerkeyword [--pid=]',
                         'defaults' => array(
                             '__NAMESPACE__' => 'Backend\Controller',
                             'controller' => 'console',

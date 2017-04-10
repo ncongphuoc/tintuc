@@ -215,8 +215,80 @@ class ConsoleController extends MyController
 
     public function crawlerKeywordAction()
     {
-        $this->getKeyword();
-        return;
+        $params = $this->request->getParams();
+        $PID = $params['pid'];
+        if (!empty($PID)) {
+            shell_exec('kill -9 ' . $PID);
+        }
+
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        //
+        $match = [
+            '', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        ];
+
+        $arr_keyword = current($serviceKeyword->getListLimit(['is_crawler' => 0], 1, 1, 'key_id ASC, key_weight DESC'));
+
+        if (empty($arr_keyword)) {
+            return;
+        }
+
+        $keyword = $arr_keyword['key_name'];
+        $count = str_word_count($keyword);
+        if ($count > 6) {
+            $int_result = $serviceKeyword->edit(array('is_crawler' => 1, 'key_weight' => 1), $arr_keyword['key_id']);
+            unset($serviceKeyword);
+
+            if ($int_result) {
+                echo \My\General::getColoredString("Crawler success keyword_id = {$arr_keyword['key_id']}", 'green');
+            }
+
+            $this->flush();
+            unset($arr_keyword);
+            exec("ps -ef | grep -v grep | grep crawlerkeyword | awk '{ print $2 }'", $PID);
+            return shell_exec('php ' . PUBLIC_PATH . '/index.php crawlerkeyword --pid=' . current($PID));
+
+        }
+
+        foreach ($match as $key => $value) {
+            if ($key == 0) {
+                $key_match = $keyword . $value;
+                $url = 'http://www.google.com/complete/search?output=search&client=chrome&q=' . rawurlencode($key_match) . '&hl=vi&gl=vn';
+                $return = General::crawler($url);
+                //
+                $list_keyword = json_decode($return)[1];
+//print_r($list_keyword);die;
+                $this->add_keyword($list_keyword, $arr_keyword);
+                continue;
+            } else {
+                for ($i = 0; $i < 2; $i++) {
+                    if ($i == 0) {
+                        $key_match = $keyword . ' ' . $value;
+                    } else {
+                        $key_match = $value . ' ' . $keyword;
+                    }
+                    $url = 'http://www.google.com/complete/search?output=search&client=chrome&q=' . rawurlencode($key_match) . '&hl=vi&gl=vn';
+                    $return = General::crawler($url);
+                    $this->add_keyword(json_decode($return)[1]);
+                    continue;
+                }
+            }
+            sleep(3);
+        };
+
+        $int_result = $serviceKeyword->edit(array('is_crawler' => 1, 'key_weight' => 1), $arr_keyword['key_id']);
+        unset($serviceKeyword);
+
+        if ($int_result) {
+            echo \My\General::getColoredString("Crawler success keyword_id = {$arr_keyword['key_id']}", 'green');
+        }
+
+        sleep(3);
+
+        $this->flush();
+        unset($arr_keyword);
+        exec("ps -ef | grep -v grep | grep crawlerkeyword | awk '{ print $2 }'", $PID);
+        return shell_exec('php ' . PUBLIC_PATH . '/index.php crawlerkeyword --pid=' . current($PID));
     }
 
     public function getKeyword()
@@ -788,15 +860,14 @@ class ConsoleController extends MyController
         }
 
         exec("ps -ef | grep -v grep | grep '.$process_name.' | awk '{ print $2 }'", $PID);
-        exec("ps -ef | grep -v grep | grep getcontent | awk '{ print $2 }'", $current_PID);
 
         if (empty($PID)) {
             switch ($process_name) {
                 case 'getcontent':
-                    shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent --pid=' . current($current_PID));
+                    shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent --pid=' . current($PID));
                     break;
                 case 'crawlerkeyword':
-                    shell_exec('php ' . PUBLIC_PATH . '/index.php crawlerkeyword --pid=' . current($current_PID));
+                    shell_exec('php ' . PUBLIC_PATH . '/index.php crawlerkeyword --pid=' . current($PID));
                     break;
             }
         }
