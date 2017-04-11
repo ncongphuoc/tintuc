@@ -36,4 +36,9 @@ class Keyword extends ModelAbstract {
         return $intResult;
     }
 
+    public function getListLimitJob($arrCondition = [], $intPage = 1, $intLimit = 15, $strOrder,$arrFields = '*') {
+        $arrResult = $this->getParentTable()->getListLimitJob($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
+        return $arrResult;
+    }
+
 }

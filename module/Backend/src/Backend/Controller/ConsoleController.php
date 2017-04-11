@@ -1122,7 +1122,7 @@ class ConsoleController extends MyController
             }
             //
             foreach ($arr_content as $content) {
-                $arr_keyword = $serviceKeyword->getListLimit(['fulltext_key_name' => $content['cont_title']], 1, 10);
+                $arr_keyword = $serviceKeyword->getListLimitJob(['fulltext_key_name' => $content['cont_title']], 1, 10);
                 //
                 $list_keyword = '';
                 if (empty($arr_keyword)) {
