@@ -746,7 +746,7 @@ class ConsoleController extends MyController
             //$url = 'http://coccoc.com/composer?q=' . rawurlencode($keyword['key_name']) . '&p=0&reqid=UqRAi2nK&_=1480603345568';
 
             $url = 'https://www.google.com.vn/search?sclient=psy-ab&biw=1366&bih=212&espv=2&q=' . rawurlencode($keyword['key_name']) . '&oq=' . rawurlencode($keyword['key_name']);
-// print_r($keyword);die;
+
             $content = General::crawler($url);
 
 //            $dom = HtmlDomParser::str_get_html($content);
@@ -875,7 +875,6 @@ class ConsoleController extends MyController
         if (empty($PID)) {
             switch ($process_name) {
                 case 'getcontent':
-				print_r('php ' . PUBLIC_PATH . '/index.php getcontent --pid=' . current($current_PID));die;
                     shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent --pid=1');
                     break;
             }
