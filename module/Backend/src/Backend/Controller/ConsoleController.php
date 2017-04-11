@@ -1062,7 +1062,7 @@ class ConsoleController extends MyController
                     $arr_data['cate_id'] = $cate;
                     $arr_data['cont_views'] = 0;
                     $arr_data['cont_status'] = 1;
-                    $arr_data['cont_keyword'] = 1;
+                    $arr_data['cont_keyword'] = $this->searchFullText('keyword', $cont_title, 15);
 
                     //insert Data
                     $id = $serviceContent->add($arr_data);
