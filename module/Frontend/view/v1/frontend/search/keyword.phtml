@@ -77,8 +77,8 @@ $content_gg = json_decode($keyDetail['content_crawler'], true);
                        href="<?php echo $content['href'] ?>">
                         <?php echo $content['title'] ?>
                     </a>
-                    <a class="thumb"
-                        href="<?php $content['href'] ?>">
+                    <a class="thumb" rel="nofollow"
+                        href="<?php echo $content['href'] ?>">
                         <img src="<?php echo STATIC_URL . '/f/v1/images/no-default-thumbnail.png' ?>"
                              alt="<?php echo $content['title'] ?>">
                     </a>
