@@ -727,12 +727,12 @@ class ConsoleController extends MyController
     public function getContentAction()
     {
 
-//        $params = $this->request->getParams();
-//        $PID = $params['pid'];
-//        if (!empty($PID)) {
-//            shell_exec('kill -9 ' . $PID);
-//        }
-
+       $params = $this->request->getParams();
+       $PID = isset($params['pid']) ? $params['pid'] : 123;
+       if (!empty($PID)) {
+           shell_exec('kill -9 ' . $PID);
+       }
+	   
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         //
         $limit = 100;
@@ -746,7 +746,7 @@ class ConsoleController extends MyController
             //$url = 'http://coccoc.com/composer?q=' . rawurlencode($keyword['key_name']) . '&p=0&reqid=UqRAi2nK&_=1480603345568';
 
             $url = 'https://www.google.com.vn/search?sclient=psy-ab&biw=1366&bih=212&espv=2&q=' . rawurlencode($keyword['key_name']) . '&oq=' . rawurlencode($keyword['key_name']);
-
+// print_r($keyword);die;
             $content = General::crawler($url);
 
 //            $dom = HtmlDomParser::str_get_html($content);
@@ -767,7 +767,7 @@ class ConsoleController extends MyController
 
             $arr_description = array();
             foreach ($dom_description as $desc) {
-                $arr_description[] = $desc->plaintext;
+                $arr_description[] = $desc->textContent;
             }
 
             $arr_content_crawler = array();
@@ -789,6 +789,7 @@ class ConsoleController extends MyController
             sleep(rand(6, 10));
         }
         //
+		
         $this->flush();
         unset($arr_keyword);
         exec("ps -ef | grep -v grep | grep getcontent | awk '{ print $2 }'", $PID);
@@ -869,14 +870,13 @@ class ConsoleController extends MyController
         }
 
         exec("ps -ef | grep -v grep | grep '.$process_name.' | awk '{ print $2 }'", $PID);
+        exec("ps -ef | grep -v grep | grep getcontent | awk '{ print $2 }'", $current_PID);
 
         if (empty($PID)) {
             switch ($process_name) {
                 case 'getcontent':
-                    shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent --pid=' . current($PID));
-                    break;
-                case 'crawlerkeyword':
-                    shell_exec('php ' . PUBLIC_PATH . '/index.php crawlerkeyword --pid=' . current($PID));
+				print_r('php ' . PUBLIC_PATH . '/index.php getcontent --pid=' . current($current_PID));die;
+                    shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent --pid=1');
                     break;
             }
         }
