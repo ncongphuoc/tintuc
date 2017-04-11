@@ -67,19 +67,19 @@ $content_gg = json_decode($keyDetail['content_crawler'], true);
         <!--        </script>-->
     </div>
 
-    <?php if(!is_array($content_gg) && !empty($content_gg)){ ?>
+    <?php if(is_array($content_gg) && !empty($content_gg)){ ?>
     <div class="listview clearfix">
         <ul>
             <?php foreach($content_gg as $content):
                 ?>
                 <li class="listitem clearfix">
                     <a class="title"
-                       href="<?php echo $content['link'] ?>">
+                       href="<?php echo $content['href'] ?>">
                         <?php echo $content['title'] ?>
                     </a>
                     <a class="thumb"
-                        href="<?php $content['link'] ?>">
-                        <img src="<?php echo STATIC_URL . '/f/v1/images/no-image-available.jpg' ?>"
+                        href="<?php $content['href'] ?>">
+                        <img src="<?php echo STATIC_URL . '/f/v1/images/no-default-thumbnail.png' ?>"
                              alt="<?php echo $content['title'] ?>">
                     </a>
                     <div class="desc"><?php echo $content['description'] ?></div>
