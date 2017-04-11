@@ -727,17 +727,21 @@ class ConsoleController extends MyController
     public function getContentAction()
     {
 
-        $params = $this->request->getParams();
-        $PID = $params['pid'];
-        if (!empty($PID)) {
-            shell_exec('kill -9 ' . $PID);
-        }
+//        $params = $this->request->getParams();
+//        $PID = $params['pid'];
+//        if (!empty($PID)) {
+//            shell_exec('kill -9 ' . $PID);
+//        }
 
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         //
         $limit = 100;
         $arr_keyword = $serviceKeyword->getListLimit(['content_crawler' => 1], 1, $limit, 'key_id ASC');
 
+        if (empty($arr_keyword)) {
+            return;
+        }
+        //
         foreach ($arr_keyword as $keyword) {
             //$url = 'http://coccoc.com/composer?q=' . rawurlencode($keyword['key_name']) . '&p=0&reqid=UqRAi2nK&_=1480603345568';
 
@@ -745,15 +749,19 @@ class ConsoleController extends MyController
 
             $content = General::crawler($url);
 
-            $dom = HtmlDomParser::str_get_html($content);
-            $dom_a = $dom->find('div._NId div.g div.rc h3.r a');
-            $dom_description = $dom->find('div._NId div.g div.rc div.s span.st');
+//            $dom = HtmlDomParser::str_get_html($content);
+//            $dom_a = $dom->find('div._NId div.g div.rc h3.r a');
+//            $dom_description = $dom->find('div._NId div.g div.rc div.s span.st');
+
+            $dom = new Query($content);
+            $dom_a = $dom->execute('div.g div.rc h3.r a');
+            $dom_description = $dom->execute('div.g div.rc div.s span.st');
 
             $arr_link = array();
             foreach ($dom_a as $a) {
                 $arr_link[] = array(
-                    'link' => $a->href,
-                    'title' => $a->plaintext
+                    'link' => $a->getAttribute('href'),
+                    'title' => $a->textContent
                 );
             }
 
@@ -774,7 +782,8 @@ class ConsoleController extends MyController
             }
 
             $arr_update = array(
-                'content_crawler' => json_encode($arr_content_crawler)
+                'content_crawler' => json_encode($arr_content_crawler),
+                'content_id' => $this->searchFullText('content', $keyword['key_name'], 15)
             );
             $serviceKeyword->edit($arr_update, $keyword['key_id']);
             sleep(rand(6, 10));
@@ -880,7 +889,7 @@ class ConsoleController extends MyController
         $arr_url = array(
             2 => 'ung-dung',
             3 => 'he-thong',
-            4 => array('ios','android'),
+            4 => array('ios', 'android'),
             5 => 'phan-cung',
             //
             7 => 'bi-an-chuyen-la',
@@ -888,13 +897,13 @@ class ConsoleController extends MyController
             9 => 'kham-pha-thien-nhien',
             14 => 'kham-pha-khoa-hoc',
             //
-            11 => array('ki-nang','am-thuc'),
+            11 => array('ki-nang', 'am-thuc'),
             12 => 'lam-dep',
-            13 => array('meo-vat','chon-qua-tang','giang-sinh-noel','tet')
+            13 => array('meo-vat', 'chon-qua-tang', 'giang-sinh-noel', 'tet')
         );
         //
         foreach ($arr_url as $cate => $url) {
-            if(is_array($url)) {
+            if (is_array($url)) {
                 foreach ($url as $link) {
                     $this->__quantrimang($link, $cate);
                 }
@@ -913,7 +922,7 @@ class ConsoleController extends MyController
         $serviceContent = $this->serviceLocator->get('My\Models\Content');
         $upload_dir = General::mkdirUpload();
 
-        for ($page = 1; $page < 2; $page ++) {
+        for ($page = 1; $page < 2; $page++) {
             $url_default = 'https://quantrimang.com/';
             $url_crawler = $url_default . $tail_url;
             //
@@ -1072,22 +1081,33 @@ class ConsoleController extends MyController
         return true;
     }
 
-    public function searchFullText($object, $str_search)
+    public function searchFullText($object, $str_search, $intLimit = 15)
     {
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         $serviceContent = $this->serviceLocator->get('My\Models\Content');
         //
         $intPage = 1;
-        $intLimit = 10;
         switch ($object) {
             case 'keyword':
                 $arr_condition = array(
                     'fulltext_key_name' => $str_search
                 );
-                $arr_keyword = $serviceKeyword->getListLimit($arr_condition, $intPage, $intLimit);
+                $arr_keyword = $serviceKeyword->getListLimitJob($arr_condition, $intPage, $intLimit, '', 'key_id');
+                //
+                if (empty($arr_keyword)) {
+                    $total = $serviceKeyword->getTotal();
+                    $arr_id = array();
+                    for ($i = 1; $i <= 15; $i++) {
+                        $arr_id[] = rand(1, $total);
+                    }
+                    $arr_keyword = $serviceKeyword->getListLimit(['in_key_id' => implode(',', $arr_id)], 1, $intLimit, 'key_id ASC', 'key_id');
+                }
+
                 $str_id = '';
-                foreach ($arr_keyword as $keyword) {
-                    $str_id .= $keyword . ',';
+                if (!empty($arr_keyword)) {
+                    foreach ($arr_keyword as $keyword) {
+                        $str_id .= $keyword['key_id'] . ',';
+                    }
                 }
                 $result = rtrim($str_id, ',');
                 break;
@@ -1095,11 +1115,25 @@ class ConsoleController extends MyController
                 $arr_condition = array(
                     'fulltext_cont_title' => $str_search
                 );
-                $arr_content = $serviceContent->getListLimit($arr_condition, $intPage, $intLimit, 'cont_id DESC', 'cont_id');
-                $str_id = '';
-                foreach ($arr_content as $content) {
-                    $str_id .= $content . ',';
+                $arr_content = $serviceContent->getListLimitJob($arr_condition, $intPage, $intLimit, '', 'cont_id');
+
+                //
+                if (empty($arr_content)) {
+                    $total = $serviceContent->getTotal();
+                    $arr_id = array();
+                    for ($i = 1; $i <= 15; $i++) {
+                        $arr_id[] = rand(1, $total);
+                    }
+                    $arr_content = $serviceContent->getListLimit(['in_cont_id' => implode(',', $arr_id)], 1, $intLimit, 'cont_id ASC', 'cont_id');
                 }
+                $str_id = '';
+
+                if (!empty($arr_content)) {
+                    foreach ($arr_content as $content) {
+                        $str_id .= $content['cont_id'] . ',';
+                    }
+                }
+
                 $result = rtrim($str_id, ',');
                 break;
         }
@@ -1110,92 +1144,58 @@ class ConsoleController extends MyController
     function getKeywordContentAction()
     {
         $intLimit = 20;
-		$intPage = 1;
-        for ($i = 1; $i <= 10000; $i ++) {
-            $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        $intPage = 1;
+        for ($i = 1; $i <= 10000; $i++) {
             $serviceContent = $this->serviceLocator->get('My\Models\Content');
 
             $arr_content = $serviceContent->getListLimit(array('cont_keyword' => '1'), $intPage, $intLimit, 'cont_id ASC', 'cont_id, cont_title');
 
-            if(empty($arr_content)) {
+            if (empty($arr_content)) {
                 break;
             }
             //
             foreach ($arr_content as $content) {
-                $arr_keyword = $serviceKeyword->getListLimitJob(['fulltext_key_name' => $content['cont_title']], 1, 10);
                 //
-                $list_keyword = '';
-                if (empty($arr_keyword)) {
-                    $total = $serviceKeyword->getTotal();
-                    $arr_id = array();
-                    for ($i = 1; $i <= 15; $i++) {
-                        $arr_id[] = rand(1, $total);
-                    }
-                    $arr_keyword = $serviceKeyword->getListLimit(['in_key_id' => implode(',', $arr_id)], 1, 10);
-                }
-
-                if (!empty($arr_keyword)) {
-                    $arr_temp = array();
-                    foreach ($arr_keyword as $keyword) {
-                        $arr_temp[] = $keyword['key_id'];
-                    }
-                    $list_keyword = implode(',', $arr_temp);
-                }
+                $list_keyword = $this->searchFullText('keyword', $content['cont_title'], 15);
                 //edit content
                 $serviceContent->edit(array('cont_keyword' => $list_keyword), $content['cont_id']);
+
                 sleep(1);
             }
         }
+        print_r("done");
     }
 
     function getContentKeywordAction()
     {
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
-        $serviceContent = $this->serviceLocator->get('My\Models\Content');
 
         $intLimit = 20;
 
-        for($i = 1; $i < 1000; $i ++) {
+        for ($i = 1; $i < 1000; $i++) {
             $arr_keyword = $serviceKeyword->getListLimit(array('content_id' => 1), 1, $intLimit, 'key_id ASC');
 
-            if(empty($arr_keyword)) {
+            if (empty($arr_keyword)) {
                 break;
             }
             //
             foreach ($arr_keyword as $keyword) {
-                $arr_content = $serviceContent->getListLimit(['fulltext_cont_title' => $keyword['key_name']], 1, 10, 'cont_id ASC', 'cont_id');
-                //
-                if (empty($arr_content)) {
-                    $total = $serviceContent->getTotal();
-                    $arr_id = array();
-                    for ($i = 1; $i <= 15; $i++) {
-                        $arr_id[] = rand(1, $total);
-                    }
-                    $arr_content = $serviceContent->getListLimit(['in_cont_id' => implode(',', $arr_id)], 1, 10, 'cont_id ASC', 'cont_id');
-                }
 
-                if (!empty($arr_content)) {
-                    $arr_temp = array();
-                    $list_content = '';
-                    //
-                    foreach ($arr_content as $content) {
-                        $arr_temp[] = $content['cont_id'];
-                    }
-                    $list_content = implode(',', $arr_temp);
-
-                    //edit content
-                    $serviceKeyword->edit(array('content_id' => $list_content), $keyword['key_id']);
-                }
+                $list_content = $this->searchFullText('content', $keyword['key_name'], 15);
+                //edit content
+                $serviceKeyword->edit(array('content_id' => $list_content), $keyword['key_id']);
                 sleep(0.5);
             }
         }
+        print_r("done");
     }
 
-    public function initKeywordAction() {
+    public function initKeywordAction()
+    {
         $string = 'Instagram,video,lưu,livestream,tính năng,tương tác,thú vị,biến mất,quá trình,người dùng,bản cập nhật,mới nhất,khả năng,comment,like,người xem,thiết bị,tính năng,facebook,tự động,ứng dụng,di động,live video,mặc định,vĩnh viễn,biến mất,cải thiện,quản lý,lựa chọn,phiên bản,Android,IOS,cập nhật,google assistant,tính năng,trợ lý ảo,điện thoại,tiện ích,giọng nói,ứng dụng,cuộc hẹn,remind,khẩu lệnh,quen thuôc,thực hiện,nút Home,đơn giản,gợi ý,ngón tay,cài đặt,chat,kết nối,trò chuyện,Siri,Apple,dữ liệu di động,địa điểm,du lịch,thao tác,hẹn giờ,chơi nhạc,bản đồ,màn hình,liên quan,công cụ,tự động,tìm kiếm,kết quả,đặt lịch,đặt chỗ,phím,danh bạ,biệt danh,nhân vật,yêu thích,xác nhận,,biểu tượng,người yêu,phát ra,âm thanh,khó chịu,yên lặng,góc phải,Bluetooth,ra lệnh,chế độ,máy bay,danh sách,mua hàng,chơi,hài hước,trích dẫn,mới nhất,Android SDK,hệ điều hành,mobile,thế giới,công nghệ,điên đảo,cơ hội,tiếp cận,may mắn,cung cấp,phiên bản,mô phỏng,chạy thử,,lưu,kích hoạt,tập tin,tệp nén,giải nén,thư mục,hướng dẫn,gỡ bỏ,truy cập,trang web,chính thức,trợ giúp,terminal,thông tin,chạy lệnh,đường dẫn,giải thích,phần mềm,smartphone,WiFi,hữu ích,tốc độ,thanh trạng thái,thời gian thực,mất mã,Passcode,đăng nhập,tài khoản,khôi phục,mật khẩu,tính năng,định vị,Click,mở khóa,kích hoạt,mã số,ra mắt,sự kiện,samsung,tổng hợp,kỹ thuật,thế hệ,tổng thể,màu sắc,trang tin,phục vụ,nhu cầu,bộ nhớ,nghiên cứu,toàn cầu,giá dự kiến,bảo hành,chính thức,chương trình,đặt hàng,mâu thuẫn,camera,lấy nét,cải tiến,điều kiện ánh sáng,camera kép,điểm yếu,bộ cảm biến,định dạng,chống nước,ứng dụng VR,quét vân tay,giắc cắm,bộ xử lý,pin,hiệu năng,tốc độ,hiệu suất,thị trường,hãng điện thoại,khe cắm,dung lượng pin,sạc pin,không dây,doanh thu,tăng trưởng,đồ gia dụng,nhà thông minh,phân tích,ngoại vi,bàn phím,máy quét,nhận dạng,đóng băng,nhiệt độ cao,biến hình,hình dáng,hiện tượng,giả tưởng,phù thủy,nhà khoa học,chất liệu,điều nghịch lý,phủ nano,bộ phim,giáng sinh,tết,gia đình,bạn gái,hóa trang,đạo diễn,năng lượng tái tạo,tiêu thụ,năng lượng,điện năng,kỷ lục,ghế nhựa,áp lực khí,không gian,chân không,áp lực,ảnh hưởng,độ bền,nhà sưu tầm,sở hữu,giá trị,bảo vật,rượu vang,đắt nhất thế giới,bán đấu giá,từ thiện,quảng cáo,súng ngắn,tổng thống,tiền cổ,xe hơi,điện ảnh,chạm khắc,xe mô tô,đồng hồ,kim cương,khôn ngoan,âm nhạc,nhạc cụ,cải thiện,chỉ số IQ,thân hình,vòng eo,giáo dục,sữa mẹ,trẻ em,trí nhớ,thuận tay trái,phản biện,sáng tạo,chiều cao,hài hước,tò mò,tư duy,nổi loạn,trí tuệ,dậy sớm,sản sinh,pha pitstop,thợ cơ khí,năng lượng gió,trang trại,tuabin gió,người giàu,hoàng đế,khối tài sản,tỉ phú,đạo Hồi,học giả,nghệ sĩ,đồ lưu niệm,lạm phát,phân hủy,trái đất,quỹ đạo,hành tinh,nhà khoa học,Basilica Therma,khách du lịch,pho tượng,La Mã,bức tượng,khai quật,tham quan,điện giật,chết người,trăng tròn,siêu trăng,ngôi sao,vũ trụ,bầu trời,trọng lực,cặp đôi,gái xinh,tâm lý con gái,ngoại hình,tích cách,tâm lý gia đình,quan hệ,độc thân,bệnh tim mạch,yêu nhầm người,tình yêu,dạy trẻ,đồ chơi Lego,tài năng,kỳ thi,kỹ năng,cuộc sống hiện nay,khắc nghiệt,tự tin,trò chuyện,làm sạch đồ,mẹo vặt,bí kíp,thủ thuật,phương pháp,căn hộ,không gian nhỏ,sắp xếp đồ,không gian làm việc,tiết kiệm';
         $arr_keyword = explode(',', $string);
 
-        for ($i = 1; $i <= 3; $i ++) {
+        for ($i = 1; $i <= 3; $i++) {
             shuffle($arr_keyword);
         }
         $this->add_keyword($arr_keyword);
@@ -1203,7 +1203,8 @@ class ConsoleController extends MyController
         die("done");
     }
 
-    function testAction() {
+    function testAction()
+    {
         $this->getContentKeyword();
         die("done");
     }

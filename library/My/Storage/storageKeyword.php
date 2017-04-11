@@ -176,7 +176,7 @@ class storageKeyword extends AbstractTableGateway {
     }
 
 
-    public function getListLimitJob($arrCondition, $intPage, $intLimit, $strOrder = '',$arrFields = '*') {
+    public function getListLimitJob($arrCondition, $intPage, $intLimit, $strOrder = '', $arrFields = '*') {
         try {
             $strWhere = $this->_buildWhere($arrCondition);
             $adapter = $this->adapter;
@@ -186,10 +186,11 @@ class storageKeyword extends AbstractTableGateway {
                 . ' where 1=1 ' . $strWhere
                 . ' limit ' . $intLimit
                 . ' offset ' . ($intLimit * ($intPage - 1));
-            
+
             if(!empty($strOrder)) {
                 $query .= ' order by ' . $strOrder;
             }
+            
             return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
 
         } catch (\Exception $exc) {

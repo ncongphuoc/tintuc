@@ -18,12 +18,17 @@ class Content extends ModelAbstract {
         return $this->getParentTable()->getList($arrCondition, $strOrder, $arrFields);
     }
 
-    public function getListLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields) {
+    public function getListLimit($arrCondition, $intPage = 1, $intLimit = 10, $strOrder = 'cont_id DESC', $arrFields = '*') {
         $arrResult = $this->getParentTable()->getListLimit($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
         return $arrResult;
     }
 
-    public function getListLimitContent($arrCondition, $intPage, $intLimit, $strOrder, $arrFields) {
+    public function getListLimitJob($arrCondition, $intPage, $intLimit, $strOrder, $arrFields) {
+        $arrResult = $this->getParentTable()->getListLimitJob($arrCondition, $intPage, $intLimit, $strOrder, $arrFields);
+        return $arrResult;
+    }
+
+    public function getListLimitContent($arrCondition, $intPage, $intLimit, $strOrder = 'cont_id DESC', $arrFields = '*') {
         $keyCaching = 'getListLimitContent:' . $intPage . ':' . $intLimit . ':' . str_replace(' ', '_', $strOrder) . ':' . $this->cache->read($this->tmpKeyCache);
         if (count($arrCondition) > 0) {
             foreach ($arrCondition as $k => $val) {
@@ -40,7 +45,7 @@ class Content extends ModelAbstract {
         return $arrResult;
     }
 
-    public function getListHomePage($arrCondition, $intPage, $intLimit, $strOrder, $arrFields) {
+    public function getListHomePage($arrCondition, $intPage, $intLimit, $strOrder = 'cont_id DESC', $arrFields = '*') {
         $keyCaching = 'getListHomePage:' . $intPage . ':' . $intLimit . ':' . str_replace(' ', '_', $strOrder) . ':' . $this->cache->read($this->tmpKeyCache);
         if (count($arrCondition) > 0) {
             foreach ($arrCondition as $k => $val) {

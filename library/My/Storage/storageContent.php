@@ -52,13 +52,47 @@ class storageContent extends AbstractTableGateway {
         try {
             $strWhere = $this->_buildWhere($arrCondition);
             $adapter = $this->adapter;
-            
+
             $query = 'select ' . $arrFields
                 . ' from ' . $this->table 
                 . ' where 1=1 ' . $strWhere
                 . ' order by ' . $strOrder
                 . ' limit ' . $intLimit
                 . ' offset ' . ($intLimit * ($intPage - 1));
+
+            return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
+        } catch (\Zend\Http\Exception $exc) {
+            $actor = array(
+                "Class" => __CLASS__,
+                "Function" => __FUNCTION__,
+                "Message" => $exc->getMessage()
+            );
+            if (APPLICATION_ENV !== 'production') {
+                echo "<pre>";
+                print_r($actor);
+                echo "</pre>";
+                die;
+            } else {
+                return General::writeLog(General::FILE_ERROR_SQL, $actor);
+            }
+        }
+    }
+
+    public function getListLimitJob($arrCondition = [], $intPage = 1, $intLimit = 15, $strOrder = '', $arrFields = '*') {
+        try {
+            $strWhere = $this->_buildWhere($arrCondition);
+            $adapter = $this->adapter;
+
+            $query = 'select ' . $arrFields
+                . ' from ' . $this->table
+                . ' where 1=1 ' . $strWhere
+                . ' limit ' . $intLimit
+                . ' offset ' . ($intLimit * ($intPage - 1));
+
+            if(!empty($strOrder)) {
+                $query .= ' order by ' . $strOrder;
+            }
+
             return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
         } catch (\Zend\Http\Exception $exc) {
             $actor = array(
