@@ -1109,35 +1109,41 @@ class ConsoleController extends MyController
 
     function getKeywordContentAction()
     {
-        $intPage = 1;
         $intLimit = 20;
-        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
-        $serviceContent = $this->serviceLocator->get('My\Models\Content');
+        for ($intPage = 1; $intPage <= 10000; $intPage ++) {
+            $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+            $serviceContent = $this->serviceLocator->get('My\Models\Content');
 
-        $arr_content = $serviceContent->getListLimit(array('cont_keyword' => '1'), $intPage, $intLimit, 'cont_id ASC', 'cont_id, cont_title');
+            $arr_content = $serviceContent->getListLimit(array('cont_keyword' => '1'), $intPage, $intLimit, 'cont_id ASC', 'cont_id, cont_title');
 
-        foreach ($arr_content as $content) {
-            $arr_keyword = $serviceKeyword->getListLimit(['fulltext_key_name' => $content['cont_title']], 1, 10);
+            if(empty($arr_content)) {
+                break;
+            }
             //
-            $list_keyword = '';
-            if (empty($arr_keyword)) {
-                $total = $serviceKeyword->getTotal();
-                $arr_id = array();
-                for ($i = 1; $i <= 15; $i++) {
-                    $arr_id[] = rand(1, $total);
+            foreach ($arr_content as $content) {
+                $arr_keyword = $serviceKeyword->getListLimit(['fulltext_key_name' => $content['cont_title']], 1, 10);
+                //
+                $list_keyword = '';
+                if (empty($arr_keyword)) {
+                    $total = $serviceKeyword->getTotal();
+                    $arr_id = array();
+                    for ($i = 1; $i <= 15; $i++) {
+                        $arr_id[] = rand(1, $total);
+                    }
+                    $arr_keyword = $serviceKeyword->getListLimit(['in_key_id' => implode(',', $arr_id)], 1, 10);
                 }
-                $arr_keyword = $serviceKeyword->getListLimit(['in_key_id' => implode(',', $arr_id)], 1, 10);
-            }
 
-            if(!empty($arr_keyword)) {
-                $arr_temp = array();
-                foreach ($arr_keyword as $keyword) {
-                    $arr_temp[] = $keyword['key_id'];
+                if (!empty($arr_keyword)) {
+                    $arr_temp = array();
+                    foreach ($arr_keyword as $keyword) {
+                        $arr_temp[] = $keyword['key_id'];
+                    }
+                    $list_keyword = implode(',', $arr_temp);
                 }
-                $list_keyword = implode(',', $arr_temp);
+                //edit content
+                $serviceContent->edit(array('cont_keyword' => $list_keyword), $content['cont_id']);
+                sleep(0.3);
             }
-            //edit content
-            $serviceContent->edit(array('cont_keyword' => $list_keyword), $content['cont_id']);
         }
     }
 
