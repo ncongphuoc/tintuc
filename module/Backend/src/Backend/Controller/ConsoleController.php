@@ -1110,7 +1110,8 @@ class ConsoleController extends MyController
     function getKeywordContentAction()
     {
         $intLimit = 20;
-        for ($intPage = 1; $intPage <= 10000; $intPage ++) {
+		$intPage = 1;
+        for ($i = 1; $i <= 10000; $i ++) {
             $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
             $serviceContent = $this->serviceLocator->get('My\Models\Content');
 
@@ -1142,7 +1143,7 @@ class ConsoleController extends MyController
                 }
                 //edit content
                 $serviceContent->edit(array('cont_keyword' => $list_keyword), $content['cont_id']);
-                sleep(0.3);
+                sleep(1);
             }
         }
     }
