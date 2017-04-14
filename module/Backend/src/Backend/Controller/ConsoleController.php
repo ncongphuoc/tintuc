@@ -726,13 +726,11 @@ class ConsoleController extends MyController
 
     public function getContentAction()
     {
-
        $params = $this->request->getParams();
-       $PID = isset($params['pid']) ? $params['pid'] : 123;
+       $PID = isset($params['pid']) ? $params['pid'] : '';
        if (!empty($PID)) {
            shell_exec('kill -9 ' . $PID);
        }
-	   
         $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
         //
         $limit = 100;
@@ -769,6 +767,10 @@ class ConsoleController extends MyController
             foreach ($dom_description as $desc) {
                 $arr_description[] = $desc->textContent;
             }
+			
+			if(empty($arr_link)|| empty($arr_description)) {
+				return;
+			}
 
             $arr_content_crawler = array();
             foreach ($arr_link as $key => $item) {
@@ -780,19 +782,21 @@ class ConsoleController extends MyController
 
                 $arr_content_crawler[] = $arr_item;
             }
-
+		
             $arr_update = array(
                 'content_crawler' => json_encode($arr_content_crawler),
                 'content_id' => $this->searchFullText('content', $keyword['key_name'], 15)
             );
             $serviceKeyword->edit($arr_update, $keyword['key_id']);
-            sleep(rand(6, 10));
+            sleep(rand(8, 10));
         }
         //
 		
         $this->flush();
         unset($arr_keyword);
         exec("ps -ef | grep -v grep | grep getcontent | awk '{ print $2 }'", $PID);
+		//print_r('php ' . PUBLIC_PATH . '/index.php getcontent --pid=' . current($PID));die;
+		
         return shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent --pid=' . current($PID));
     }
 
@@ -868,15 +872,13 @@ class ConsoleController extends MyController
         if (empty($process_name)) {
             return true;
         }
+        exec("ps -ef | grep -v grep | grep " . $process_name. " | awk '{ print $2 }'", $PID);
+        //exec("ps -ef | grep -v grep | grep getcontent | awk '{ print $2 }'", $current_PID);
 
-        exec("ps -ef | grep -v grep | grep '.$process_name.' | awk '{ print $2 }'", $PID);
-        exec("ps -ef | grep -v grep | grep getcontent | awk '{ print $2 }'", $current_PID);
-
-        if (empty($PID)) {
+        if (count($PID) == 1) {
             switch ($process_name) {
                 case 'getcontent':
-                    shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent --pid=1');
-                    break;
+                    return shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent');
             }
         }
 
