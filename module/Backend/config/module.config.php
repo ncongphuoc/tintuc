@@ -231,6 +231,16 @@ return array(
                             'action' => 'get-keyword-content'
                         ),
                     ),
+                ),
+                'test-google' => array(
+                    'options' => array(
+                        'route' => 'test-google',
+                        'defaults' => array(
+                            '__NAMESPACE__' => 'Backend\Controller',
+                            'controller' => 'console',
+                            'action' => 'test-google'
+                        ),
+                    ),
                 )
             )
         )

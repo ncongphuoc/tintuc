@@ -1204,6 +1204,40 @@ class ConsoleController extends MyController
         die("done");
     }
 
+    public function testGoogleAction()
+    {
+        $serviceKeyword = $this->serviceLocator->get('My\Models\Keyword');
+        //
+        $keyword = current($serviceKeyword->getListLimit(['content_crawler' => 1], 1, 1, 'key_id ASC'));
+
+        if (empty($arr_keyword)) {
+            echo General::getColoredString("Empty keyword", 'yellow');
+            return false;
+        }
+        //
+        $url = 'https://www.google.com.vn/search?sclient=psy-ab&biw=1366&bih=212&espv=2&q=' . rawurlencode($keyword['key_name']) . '&oq=' . rawurlencode($keyword['key_name']);
+
+        $content = General::crawler($url);
+
+        $dom = new Query($content);
+        $dom_a = $dom->execute('div.g div.rc h3.r a');
+
+        $arr_link = array();
+        foreach ($dom_a as $a) {
+            $arr_link[] = array(
+                'link' => $a->getAttribute('href'),
+                'title' => $a->textContent
+            );
+        }
+
+        if(!empty($arr_link)) {
+            echo General::getColoredString("Successfully", 'cyan');
+        } else {
+            echo General::getColoredString("Failed", 'red');
+        }
+        return true;
+    }
+
     function testAction()
     {
         $this->getContentKeyword();
