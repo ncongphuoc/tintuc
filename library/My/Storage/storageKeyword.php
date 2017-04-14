@@ -243,7 +243,7 @@ class storageKeyword extends AbstractTableGateway {
         }
 
         if (!empty($arrCondition['fulltext_key_name'])) {
-            $strWhere .= " AND MATCH (key_name) AGAINST ('" . $arrCondition['fulltext_key_name'] . "')";
+            $strWhere .= ' AND MATCH (key_name) AGAINST ("' . $arrCondition['fulltext_key_name'] . '")';
         }
 
         return $strWhere;

@@ -312,7 +312,7 @@ class storageContent extends AbstractTableGateway {
         }
 
         if (!empty($arrCondition['fulltext_cont_title'])) {
-            $strWhere .= " AND MATCH (cont_title) AGAINST ('" . $arrCondition['fulltext_cont_title'] . "')";
+            $strWhere .= ' AND MATCH (cont_title) AGAINST ("' . $arrCondition['fulltext_cont_title'] . '")';
         }
 
         return $strWhere;
