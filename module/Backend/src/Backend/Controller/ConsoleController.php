@@ -401,7 +401,7 @@ class ConsoleController extends MyController
     public function sitemapAction()
     {
         $this->sitemapOther();
-        $this->siteMapCategory();
+        //$this->siteMapCategory();
         //$this->siteMapContent();
         $this->siteMapSearch();
 
@@ -419,7 +419,7 @@ class ConsoleController extends MyController
             }
         }
 
-        $result = file_put_contents(PUBLIC_PATH . '/xml/hellonews.xml', $xml->asXML());
+        $result = file_put_contents(PUBLIC_PATH . '/xml/tuoitre.xml', $xml->asXML());
         if ($result) {
             echo General::getColoredString("Create sitemap.xml completed!", 'blue', 'cyan');
             $this->flush();
@@ -435,8 +435,9 @@ class ConsoleController extends MyController
         $doc .= '</urlset>';
         $xml = new \SimpleXMLElement($doc);
         $this->flush();
-        $instanceSearchCategory = new \My\Search\Category();
-        $arrCategoryList = $instanceSearchCategory->getList(['cate_status' => 1], [], ['cate_sort' => ['order' => 'asc'], 'cate_id' => ['order' => 'asc']]);
+
+        $serviceCategory = $this->serviceLocator->get('My\Models\Category');
+        $arrCategoryList = $serviceCategory->getList(['cate_status' => 1], [], ['cate_sort' => ['order' => 'asc'], 'cate_id' => ['order' => 'asc']]);
 
         $arrCategoryParentList = [];
         $arrCategoryByParent = [];
@@ -585,7 +586,7 @@ class ConsoleController extends MyController
         $doc .= '</urlset>';
         $xml = new \SimpleXMLElement($doc);
         $this->flush();
-        $arrData = ['https://tintuc360.me/'];
+        $arrData = ['http://tuoitre.mobi/'];
         foreach ($arrData as $value) {
             $href = $value;
             $url = $xml->addChild('url');

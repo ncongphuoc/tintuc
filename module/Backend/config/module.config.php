@@ -31,7 +31,8 @@ return array(
                 ),
             ),
         ),
-    ), 'console' => array(
+    ), 
+    'console' => array(
         'router' => array(
             'routes' => array(
                 'migrate' => array(
