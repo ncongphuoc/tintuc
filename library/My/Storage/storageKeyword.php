@@ -242,6 +242,10 @@ class storageKeyword extends AbstractTableGateway {
             $strWhere .= ' AND content_crawler ="' . $arrCondition['content_crawler'] . '"';
         }
 
+        if(isset($arrCondition['not_content_crawler'])) {
+            $strWhere .= ' AND content_crawler <> "' . $arrCondition['not_content_crawler'] . '"';
+        }
+
         if (!empty($arrCondition['fulltext_key_name'])) {
             $strWhere .= ' AND MATCH (key_name) AGAINST ("' . $arrCondition['fulltext_key_name'] . '")';
         }
