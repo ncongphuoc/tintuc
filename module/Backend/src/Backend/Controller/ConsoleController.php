@@ -782,11 +782,12 @@ class ConsoleController extends MyController
 
                 $arr_content_crawler[] = $arr_item;
             }
-		
+			
             $arr_update = array(
                 'content_crawler' => json_encode($arr_content_crawler),
                 'content_id' => $this->searchFullText('content', $keyword['key_name'], 15)
             );
+			
             $serviceKeyword->edit($arr_update, $keyword['key_id']);
             sleep(rand(8, 10));
         }
@@ -1210,7 +1211,7 @@ class ConsoleController extends MyController
         //
         $keyword = current($serviceKeyword->getListLimit(['content_crawler' => 1], 1, 1, 'key_id ASC'));
 
-        if (empty($arr_keyword)) {
+        if (empty($keyword)) {
             echo General::getColoredString("Empty keyword", 'yellow');
             return false;
         }
@@ -1231,7 +1232,7 @@ class ConsoleController extends MyController
         }
 
         if(!empty($arr_link)) {
-            echo General::getColoredString("Successfully", 'cyan');
+            echo General::getColoredString("Successfully", 'green');
         } else {
             echo General::getColoredString("Failed", 'red');
         }
