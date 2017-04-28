@@ -194,19 +194,16 @@ class storageKeyword extends AbstractTableGateway {
             return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
 
         } catch (\Exception $exc) {
+			echo "<pre>";
+            print_r($query);
+            echo "</pre>";
+            die;
             $actor = array(
                 "Class" => __CLASS__,
                 "Function" => __FUNCTION__,
                 "Message" => $exc->getMessage()
             );
-            if (APPLICATION_ENV !== 'production') {
-                echo "<pre>";
-                print_r($actor);
-                echo "</pre>";
-                die;
-            } else {
-                return General::writeLog(General::FILE_ERROR_SQL, $actor);
-            }
+            return General::writeLog(General::FILE_ERROR_SQL, $actor);
         }
     }
 
@@ -247,7 +244,7 @@ class storageKeyword extends AbstractTableGateway {
         }
 
         if (!empty($arrCondition['fulltext_key_name'])) {
-            $strWhere .= ' AND MATCH (key_name) AGAINST ("' . $arrCondition['fulltext_key_name'] . '")';
+            $strWhere .= ' AND MATCH (key_name) AGAINST ("' . preg_replace('/[^A-Za-z0-9\-]/', '', $arrCondition['fulltext_key_name']) . '")';
         }
 
         return $strWhere;
