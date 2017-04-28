@@ -194,10 +194,6 @@ class storageKeyword extends AbstractTableGateway {
             return $adapter->query($query, $adapter::QUERY_MODE_EXECUTE)->toArray();
 
         } catch (\Exception $exc) {
-			echo "<pre>";
-            print_r($query);
-            echo "</pre>";
-            die;
             $actor = array(
                 "Class" => __CLASS__,
                 "Function" => __FUNCTION__,
