@@ -881,6 +881,10 @@ class ConsoleController extends MyController
             switch ($process_name) {
                 case 'getcontent':
                     return shell_exec('php ' . PUBLIC_PATH . '/index.php getcontent');
+					break;
+				case 'crawlerkeyword':
+                    return shell_exec('php ' . PUBLIC_PATH . '/index.php crawlerkeyword');
+					break;
             }
         }
 
