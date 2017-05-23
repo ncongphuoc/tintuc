@@ -14,7 +14,7 @@ class ConsoleController extends MyController
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		<!-- tuoitre.mobi -->
 		<ins class="adsbygoogle"
-			 style="display:inline-block;"
+			 style="display:inline-block;width: 336px;height: 280px;"
 			 data-ad-client="ca-pub-9166980393030854"
 			 data-ad-slot="5007199245"></ins>
 		<script>
@@ -586,7 +586,7 @@ class ConsoleController extends MyController
         $doc .= '</urlset>';
         $xml = new \SimpleXMLElement($doc);
         $this->flush();
-        $arrData = ['http://tuoitre.mobi/'];
+        $arrData = ['http://tuoitre.mobi/','http://tuoitre.mobi/danh-sach-tu-khoa/'];
         foreach ($arrData as $value) {
             $href = $value;
             $url = $xml->addChild('url');

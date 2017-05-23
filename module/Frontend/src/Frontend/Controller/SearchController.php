@@ -179,6 +179,9 @@ class SearchController extends MyController
         $helper = $this->serviceLocator->get('viewhelpermanager')->get('Paging');
         $paging = $helper($params['module'], $params['__CONTROLLER__'], $params['action'], $intTotal, $intPage, $intLimit, 'list-keyword', $params);
 
+        $helper_title = $this->serviceLocator->get('viewhelpermanager')->get('MyHeadTitle');
+        $helper_title->setTitle('Từ khoá - ' . html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
+
         $this->renderer = $this->serviceLocator->get('Zend\View\Renderer\PhpRenderer');
         $this->renderer->headMeta()->appendName('dc.description', html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
         $this->renderer->headMeta()->appendName('dc.subject', html_entity_decode('Danh sách từ khoá trang ' . $intPage) . General::TITLE_META);
