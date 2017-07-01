@@ -16,8 +16,14 @@ class Module implements AutoloaderProviderInterface {
     public function onBootstrap($e) {
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
-        $moduleRouteListener->attach($eventManager);
-        $eventManager->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) {
+        
+		
+		$eventManager->attach('dispatch.error',
+            array($this,
+                'handleControllerNotFoundAndControllerInvalidAndRouteNotFound'), 100);
+				
+		$moduleRouteListener->attach($eventManager);
+		$eventManager->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) {
             $controller = $e->getTarget();
             $controllerClass = get_class($controller);
             $moduleNamespace = substr($controllerClass, 0, strpos($controllerClass, '\\'));
@@ -85,6 +91,18 @@ class Module implements AutoloaderProviderInterface {
                 __DIR__ . '/autoload_classmap.php',
             ),
         );
+    }
+	
+	public function handleControllerNotFoundAndControllerInvalidAndRouteNotFound(MvcEvent $e)
+    {
+
+        $url = $e->getRouter()->assemble([], array('name' => '404'));
+
+		$response = $e->getResponse();
+		$response->setStatusCode(302);
+		$response->getHeaders()->addHeaderLine('Location', $url);
+		$e->stopPropagation();
+		return;
     }
 
 }
